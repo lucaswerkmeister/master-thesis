@@ -1,0 +1,70 @@
+%% LaTeX2e class for student theses
+%% sections/content.tex
+%% 
+%% Karlsruhe Institute of Technology
+%% Institute for Program Structures and Data Organization
+%% Chair for Software Design and Quality (SDQ)
+%%
+%% Dr.-Ing. Erik Burger
+%% burger@kit.edu
+%%
+%% Version 1.3.3, 2018-04-17
+
+\chapter{Introduction}
+\label{ch:Introduction}
+
+%% -------------------
+%% | Example content |
+%% -------------------
+
+This is the SDQ thesis template.
+For more information on the formatting of theses at SDQ, please refer to
+\url{https://sdqweb.ipd.kit.edu/wiki/Ausarbeitungshinweise} or to your advisor.
+
+\section{Example: Citation}
+\label{sec:Introduction:Citation}
+A citation: \cite{becker2008a} For referencing, see \autoref{sec:Introduction:Figures}
+
+\section{Example: Figures}
+\label{sec:Introduction:Figures}
+\begin{figure}[h]
+\centering
+\includegraphics[width=4cm]{logos/sdqlogo}
+\caption{SDQ logo}
+\label{fig:sdqlogo}
+\end{figure}
+
+A reference: The SDQ logo is displayed in \autoref{fig:sdqlogo}. 
+(Use \code{\textbackslash autoref\{\}} for easy referencing.) 
+
+\section{Example: Tables}
+\label{sec:Introduction:Tables}
+\begin{table}[h]
+\centering
+\begin{tabular}{r l}
+\toprule
+abc & def\\
+ghi & jkl\\
+\midrule
+123 & 456\\
+789 & 0AB\\
+\bottomrule
+\end{tabular}
+\caption{A table}
+\label{tab:atable}
+\end{table}
+
+\section{Example: Todo-Note}
+Meaningless text.
+
+\section{Example: Formula}
+One of the nice things about the Linux Libertine font is that it comes with
+a math mode package.
+\begin{displaymath}
+f(x)=\Omega(g(x))\ (x\rightarrow\infty)\;\Leftrightarrow\;
+\limsup_{x \to \infty} \left|\frac{f(x)}{g(x)}\right|> 0
+\end{displaymath}
+
+%% --------------------
+%% | /Example content |
+%% --------------------
