@@ -30,6 +30,45 @@ not the canonical source of truth.
 \section{Shape Expressions}
 \label{ch:Background:ShEx}
 
+\acrfull{shex} \cite{shex}
+is a standard for describing data shapes within an RDF graph,
+developed by the ShEx Community Group under the umbrella of the \gls{w3c}.
+A ShEx schema consists of a number of shapes,
+each of which describes a focus node,
+expressing restrictions on its node kind, value, and/or incoming and outgoing links.
+
+For example, the schema in \cref{listing:shex-example} defines two shapes,
+one for humans and one for locations,
+in a fictional example vocabulary.
+The shape for humans describes that a human has one or more parents,
+any number of children,
+a date of birth,
+and a place of birth;
+the parents and children should also be humans,
+the date of birth should be a date literal,
+and the place of birth should be a location.
+The shape for locations describes that a location may optionally be contained within another location.
+
+\begin{lstfloat}
+\begin{lstlisting}[language=sparql]
+PREFIX ex: <http://shex.example/>
+
+ex:Human {
+  ex:parent @ex:Human+;
+  ex:child @ex:Human*;
+  ex:dateOfBirth xsd:dateTime;
+  ex:placeOfBirth @ex:Location;
+}
+
+ex:Location {
+  ex:containedWithin @ex:Location?;
+}
+\end{lstlisting}
+\caption{A simple example schema.}
+\label{listing:shex-example}
+% TODO this schema is impossible to satisfy without a circular parent relationship – not a great example :/
+\end{lstfloat}
+
 How they work.
 
 Difference between v1 and v2?
