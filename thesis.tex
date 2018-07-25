@@ -68,6 +68,14 @@
 \usepackage[citestyle=numeric,style=numeric,backend=biber]{biblatex}
 \addbibresource{thesis.bib}
 
+%% --------------------------------
+%% | Glossary                     |
+%% --------------------------------
+
+\usepackage{glossaries}
+\makeglossaries
+\input{sections/glossary-terms.tex}
+
 %% ====================================
 %% ====================================
 %% ||                                ||
@@ -131,6 +139,12 @@
 
 %% Add entry to the table of contents for the bibliography
 \printbibliography[heading=bibintoc]
+
+%% --------------------
+%% |   Glossary       |
+%% --------------------
+
+\printglossaries
 
 %% ----------------
 %% |   Appendix   |

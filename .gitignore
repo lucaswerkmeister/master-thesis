@@ -4,6 +4,11 @@
 *.blg
 *.fdb_latexmk
 *.fls
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.ist
 *.lof
 *.log
 *.lot
