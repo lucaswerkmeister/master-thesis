@@ -76,6 +76,21 @@
 \makeglossaries
 \input{sections/glossary-terms.tex}
 
+%% --------------------------------
+%% | Listings                     |
+%% --------------------------------
+
+% https://tex.stackexchange.com/a/279245/25264
+\usepackage{float}
+\usepackage{listings}
+\usepackage{cleveref}
+\newfloat{lstfloat}{htbp}{lop} % TODO I’m not sure about that placement, perhaps just tbp (top, bottom, own page)?
+\floatname{lstfloat}{Listing}
+\crefalias{lstfloat}{listing}
+\lstset{
+  basicstyle=\ttfamily,
+}
+
 %% ====================================
 %% ====================================
 %% ||                                ||
