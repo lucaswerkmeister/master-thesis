@@ -17,6 +17,79 @@
 \section{Wikidata}
 \label{ch:Background:Wikidata}
 
+Wikidata is a free knowledge base
+and part of the Wikimedia family of sister projects,
+the most famous of which is Wikipedia, the free encyclopedia.
+Its contents are created, maintained and managed by the Wikidata community,
+most of whose members are volunteers,
+as well as the members of Wikidata’s sister projects, e.~g. Wikipedia.
+Anyone can contribute to Wikidata,
+but the community ensures the quality of the contents with various quality control mechanisms.
+Providing another such mechanism is part of the motivation for this thesis. % TODO for this work?
+
+Information on Wikidata is collected in items,
+which represent things or concepts:
+there are items for individual persons,
+for cities, states, geographical features,
+for organizations for corporations,
+items for books, films, newspapers, journals, scientific articles,
+for abstract concepts, phenomena, emotions, philosophical movements, political orientations,
+items for conceptual hierarchies, parent classes, biological taxa,
+and even items for fictional characters, places, or other entities.
+
+All of these items follow the same structure:
+they are identified by their item ID,
+a consecutive number prefixed with the letter “Q”
+(e.~g. \Q{Q25291} for the year 2018),
+have a label, description, and search aliases in various languages
+(for example, \Q{Q7251} is “Alan Turing” in English but «\foreignlanguage{russian}{Алан Тьюринг}» in Russian),
+a set of sitelinks (links to pages about the same concept in various other Wikimedia projects),
+and most importantly, a set of statements.
+
+The statements are where most of the information in Wikidata is stored.
+They consist of a property, such as “place of birth” or “author” or “population”,
+and a value, which can be a reference to another item, a quantity, a point in time, a piece of text,
+or a few other possible types.
+A statement can also have qualifiers
+(further property-value pairs, e.~g. clarifying when or where the statement is valid)
+and references (sets of property-value pairs, listing sources for the statement),
+but those are mostly ignored in the context of this thesis.
+Properties are also identified by an ID
+(prefixed with the letter “P” instead of “Q”)
+and also have labels, descriptions and aliases in different languages:
+for example, \P{P31} is “instance of” in English and „\foreignlanguage{ngerman}{ist ein(e)}“ in German.
+The labels and descriptions are necessary to understand the meaning of statements,
+but they are not themselves part of the statements:
+statements only list references to property and item IDs,
+making most of the information in Wikidata language-agnostic.
+
+It is vital to observe that there is no kind of schema inherent to the Wikidata data model.
+Any property can be used on any item:
+nothing in the software stops one from adding, say,
+a “date of birth” statement to an item for a lake,
+or a “parent taxon” statement to an item for a movie teaser poster.
+The community has several ways to describe schemas to varying degrees of formality
+(such as property lists on WikiProject pages or the property constraints system),
+but they are all realized by community consensus,
+not enforced by the Wikidata software.
+The great flexibility which this lends to the community has proven to be one of Wikidata’s greatest strengths, % TODO citation?
+and though the use of shape expressions % TODO acronym?
+on Wikidata will provide another,
+highly formal way to describe schemas,
+it is not intended to change this fundamental operating principle of Wikidata. % TODO awkward passive voice
+
+The Wikibase data model, as described above,
+is not directly related to RDF. % TODO acronym
+However, to enable usage of RDF technologies and interoperation with RDF-based datasets,
+Wikidata’s data is exported to RDF:
+the data about any item can be downloaded in various RDF formats through a linked data interface, % TODO *the* linked data interface?
+and a full, up-to-date RDF export of Wikidata is available in the Wikidata Query Service,
+a SPARQL endpoint to which anyone may submit queries.
+However, this interface is export-only:
+it is not possible to edit Wikidata via RDF.
+
+
+
 Explain the Wikidata data model,
 the central role of the community,
 and perhaps some fundamental properties.
