@@ -19,9 +19,10 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{sdqthesis}[2017/08/01 v1.3.2 Student thesis class]
-% Language options. German is also needed in English thesis for the abstract
-\DeclareOption{ngerman}{\PassOptionsToPackage{\CurrentOption}{babel}}
-\DeclareOption{english}{\PassOptionsToPackage{main=\CurrentOption,ngerman}{babel}}
+% Language options. German is also needed in English thesis for the abstract,
+% and both need Russian because I want to include some cyrillic text
+\DeclareOption{ngerman}{\PassOptionsToPackage{\CurrentOption,russian}{babel}}
+\DeclareOption{english}{\PassOptionsToPackage{main=\CurrentOption,ngerman,russian}{babel}}
 % Oneside and twoside layout
 \DeclareOption{oneside}{\PassOptionsToClass{\CurrentOption,BCOR=10mm}{scrbook}}
 \DeclareOption{twoside}{\PassOptionsToClass{\CurrentOption,BCOR=20mm}{scrbook}}
