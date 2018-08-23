@@ -88,17 +88,7 @@ a SPARQL endpoint to which anyone may submit queries.
 However, this interface is export-only:
 it is not possible to edit Wikidata via RDF.
 
-
-
-Explain the Wikidata data model,
-the central role of the community,
-and perhaps some fundamental properties.
-
-Also explain the RDF export
-and the query service,
-and how they’re derived from Wikidata,
-not the canonical source of truth.
-
+% TODO explain some fundamental properties? P31, P279?
 
 \section{Shape Expressions}
 \label{ch:Background:ShEx}
@@ -142,10 +132,8 @@ ex:Location {
 % TODO this schema is impossible to satisfy without a circular parent relationship – not a great example :/
 \end{lstfloat}
 
-How they work.
-
-Difference between v1 and v2?
-
+% TODO this needs more content, I think
+% TODO difference between v1 and v2?
 
 \section{RDF2Graph}
 \label{ch:Background:RDF2Graph}
@@ -378,9 +366,3 @@ applies some transformations to them via SPARQL,
 converts them to JSON-LD,
 further transforms the JSON,
 and finally exports the result into ShExC text via the Jade template engine.
-
-
-Summarize how RDF2Graph works?
-The distinction between the steps
-(main, simplify, ShEx export)
-is likely to be significant for the rest of the thesis.
