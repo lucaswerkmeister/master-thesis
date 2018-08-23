@@ -150,6 +150,236 @@ Difference between v1 and v2?
 \section{RDF2Graph}
 \label{ch:Background:RDF2Graph}
 
+% TODO review the layout of the figures here
+
+RDF2Graph % TODO glossary
+\cite{vanDam2015}
+is a tool to automatically determine the structure of an RDF graph
+and export it as a ShEx % TODO glossary
+schema (other output formats are also supported).
+It relies heavily on the type information of each node and the class hierarchy in the graph,
+determining the valid predicates and their value types and cardinalities for each type in the graph.
+There is also an optional step to simplify the resulting schema.
+
+To discover the structure of an RDF graph,
+RDF2Graph runs a set of queries against a SPARQL endpoint serving that graph.
+(This can be a local server, perhaps simply based on a single file containing the graph,
+or a remote server.)
+It enumerates all the classes that occur in the graph
+and then collects all the predicates that are used on instances of each class.
+For each predicate of each class,
+it then gets the types referenced in the values for those predicates
+(usually the classes of the referenced nodes,
+but values can also be literals or external references),
+as well as forward and reverse multiplicity for each such type link.
+All this information is stored in a separate RDF graph private to RDF2Graph.
+
+If the simplification step is enabled,
+RDF2Graph will afterwards apply some transformations to the structure
+based on the hierarchy of the classes involved.
+First, all predicates from child classes are copied to parent classes,
+as outlined in \cref{fig:simplify-7.4.2}.
+
+\begin{figure}[h]
+  \begin{subfigure}[t]{0.45\textwidth}
+    \begin{lstlisting}
+A1 extends X {
+  a A;
+}
+A2 extends X {
+  a A;
+}
+B extends X {
+  b B;
+}
+X {}
+    \end{lstlisting}
+    \caption{Before the simplification step.}
+    \label{fig:simplify-7.4.2-before}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.45\textwidth}
+    \begin{lstlisting}
+A1 extends X {
+  a A;
+}
+A2 extends X {
+  a A;
+}
+B extends X {
+  b B;
+}
+X {
+  a A;
+  b B;
+}
+    \end{lstlisting}
+    \caption{After the simplification step.}
+    \label{fig:simplify-7.4.2-after}
+  \end{subfigure}
+  \caption{The first simplification step (in pseudo-syntax).}
+  \label{fig:simplify-7.4.2}
+\end{figure}
+
+The next step removes predicates which are only found in a single subclass
+from the parent class again.
+In the example from \cref{fig:simplify-7.4.2},
+the predicate \lstinline{a} will be kept in \lstinline{X}
+because it occurs in both \lstinline{A1} and \lstinline{A2},
+but the predicate \lstinline{b} will be dropped
+because it only occurs in the single subclass \lstinline{B} –
+see \cref{fig:simplify-7.4.3}.
+
+\begin{figure}[h]
+  \begin{subfigure}[t]{0.45\textwidth}
+    \begin{lstlisting}
+A1 extends X {
+  a A;
+}
+A2 extends X {
+  a A;
+}
+B extends X {
+  b B;
+}
+X {
+  a A;
+  b B;
+}
+    \end{lstlisting}
+    \caption{Before the simplification step.}
+    \label{fig:simplify-7.4.3-before}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.45\textwidth}
+    \begin{lstlisting}
+A1 extends X {
+  a A;
+}
+A2 extends X {
+  a A;
+}
+B extends X {
+  b B;
+}
+X {
+  a A;
+}
+    \end{lstlisting}
+    \caption{After the simplification step.}
+    \label{fig:simplify-7.4.3-after}
+  \end{subfigure}
+  \caption{The second simplification step (in pseudo-syntax).}
+  \label{fig:simplify-7.4.3}
+\end{figure}
+
+After that, all references which are still found in a parent class
+are removed from the child classes, where they are now redundant.
+See \cref{fig:simplify-7.4.4} for applying this to the same example.
+
+\begin{figure}[h]
+  \begin{subfigure}[t]{0.45\textwidth}
+    \begin{lstlisting}
+A1 extends X {
+  a A;
+}
+A2 extends X {
+  a A;
+}
+B extends X {
+  b B;
+}
+X {
+  a A;
+  b B;
+}
+    \end{lstlisting}
+    \caption{Before the simplification step.}
+    \label{fig:simplify-7.4.4-before}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.45\textwidth}
+    \begin{lstlisting}
+A1 extends X {}
+A2 extends X {}
+B extends X {
+  b B;
+}
+X {
+  a A;
+}
+    \end{lstlisting}
+    \caption{After the simplification step.}
+    \label{fig:simplify-7.4.4-after}
+  \end{subfigure}
+  \caption{The third simplification step (in pseudo-syntax).}
+  \label{fig:simplify-7.4.4}
+\end{figure}
+
+The first step also merges references to parent classes,
+as outlined in \cref{fig:simplify-7.4.2-classes}.
+The other steps take this into account by respecting subclass relations as well.
+
+\begin{figure}[h]
+  \begin{subfigure}[t]{0.3\textwidth}
+    \begin{lstlisting}
+A1 extends A {}
+A2 extends A {}
+A extends B {}
+    \end{lstlisting}
+    \caption{The class hierarchy for this example.}
+    \label{fig:simplify-7.4.2-classes-hierarchy}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \begin{lstlisting}
+M extends X {
+  r A1
+}
+N extends X {
+  r A2
+}
+O extends X {
+  r B
+}
+X {}
+    \end{lstlisting}
+    \caption{Before the simplification step.}
+    \label{fig:simplify-7.4.2-classes-before}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \begin{lstlisting}
+M extends X {
+  r A1
+}
+N extends X {
+  r A2
+}
+O extends X {
+  r B
+}
+X {
+  r B;
+}
+    \end{lstlisting}
+    \caption{After the simplification step.}
+    \label{fig:simplify-7.4.2-classes-after}
+  \end{subfigure}
+  \caption{
+    The first simplification step (in pseudo-syntax), with class relations.
+    (This example is independent from the previous example.)
+  }
+  \label{fig:simplify-7.4.2-classes}
+\end{figure}
+
+% TODO I haven’t looked too closely into any of these steps except the very last one,
+% which I practically rewrote from scratch.
+% Does that show in the text? Do I need to investigate the rest of the ShEx exporter further?
+At this point, the information which RDF2Graph extracted is available in a private RDF graph.
+From there, it can be exported into various formats by different exporters.
+The ShEx exporter loads parts of these results into a temporary RDF database of its own,
+applies some transformations to them via SPARQL,
+converts them to JSON-LD,
+further transforms the JSON,
+and finally exports the result into ShExC text via the Jade template engine.
+
+
 Summarize how RDF2Graph works?
 The distinction between the steps
 (main, simplify, ShEx export)
