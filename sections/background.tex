@@ -73,30 +73,30 @@ The community has several ways to describe schemas to varying degrees of formali
 but they are all realized by community consensus,
 not enforced by the Wikidata software.
 The great flexibility which this lends to the community has proven to be one of Wikidata’s greatest strengths, % TODO citation?
-and though the use of shape expressions % TODO acronym?
+and though the use of \gls{shex}
 on Wikidata will provide another,
 highly formal way to describe schemas,
 it is not intended to change this fundamental operating principle of Wikidata. % TODO awkward passive voice
 
 Wikidata’s data model, as described above,
-is not directly related to RDF. % TODO acronym
-However, to enable usage of RDF technologies and interoperation with RDF-based datasets,
-Wikidata’s data is exported to RDF:
-the data about any item can be downloaded in various RDF formats through a linked data interface, % TODO *the* linked data interface?
-and a full, up-to-date RDF export of Wikidata is available in the Wikidata Query Service,
-a SPARQL endpoint to which anyone may submit queries.
+is not directly related to \gls{rdf}.
+However, to enable usage of \gls{rdf} technologies and interoperation with \gls{rdf}-based datasets,
+Wikidata’s data is exported to \gls{rdf}:
+the data about any item can be downloaded in various \gls{rdf} formats through a linked data interface, % TODO *the* linked data interface?
+and a full, up-to-date \gls{rdf} export of Wikidata is available in the Wikidata Query Service,
+a \acrshort{sparql} endpoint to which anyone may submit queries.
 However, this interface is export-only:
-it is not possible to edit Wikidata via RDF.
+it is not possible to edit Wikidata via \gls{rdf}.
 
 % TODO explain some fundamental properties? P31, P279?
 
 \section{RDF}
 \label{ch:Background:RDF}
 
-RDF % TODO acronym
+\acrfull{rdf}
 \cite{Lanthaler:14:RCA}
 is a framework for describing and working with linked data.
-In RDF, information is arranged in subject-predicate-object triples,
+In \gls{rdf}, information is arranged in subject-predicate-object triples,
 such as “<Alan Turing> <is a> <human>”
 or “<Lima> <was founded in> <18 January 1535>”.
 All three elements of a triple are typically URIs, % TODO acronym? URLs vs URIs vs IRIs?
@@ -107,8 +107,7 @@ A collection of such triples forms a graph,
 where the triples describe individual edges
 and the nodes are the subjects and objects of the triples:
 triples with the same subject constitute different outgoing arcs from the same node.
-This graph can then be queried using the SPARQL % TODO acronym
-query language \cite{9569543}. % TODO is SPARQL really important enough to be mentioned here, and nothing else?
+This graph can then be queried using the \acrlong{sparql} \cite{9569543}. % TODO is SPARQL really important enough to be mentioned here, and nothing else?
 For a more detailed introduction,
 see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
 
@@ -118,7 +117,7 @@ see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
 \label{ch:Background:ShEx}
 
 \acrfull{shex} \cite{shex}
-is a standard for describing data shapes within an RDF graph,
+is a standard for describing data shapes within an \gls{rdf} graph,
 developed by the ShEx Community Group under the umbrella of the \gls{w3c}.
 A ShEx schema consists of a number of shapes,
 each of which describes a focus node,
@@ -166,15 +165,15 @@ ex:Location {
 
 RDF2Graph % TODO glossary
 \cite{vanDam2015}
-is a tool to automatically determine the structure of an RDF graph
-and export it as a ShEx % TODO glossary
-schema (other output formats are also supported).
+is a tool to automatically determine the structure of an \gls{rdf} graph
+and export it as a \gls{shex} schema
+(other output formats are also supported).
 It relies heavily on the type information of each node and the class hierarchy in the graph,
 determining the valid predicates and their value types and cardinalities for each type in the graph.
 There is also an optional step to simplify the resulting schema.
 
-To discover the structure of an RDF graph,
-RDF2Graph runs a set of queries against a SPARQL endpoint serving that graph.
+To discover the structure of an \gls{rdf} graph,
+RDF2Graph runs a set of queries against a \gls{sparql} endpoint serving that graph.
 (This can be a local server, perhaps simply based on a single file containing the graph,
 or a remote server.)
 It enumerates all the classes that occur in the graph
@@ -184,7 +183,7 @@ it then gets the types referenced in the values for those predicates
 (usually the classes of the referenced nodes,
 but values can also be literals or external references),
 as well as forward and reverse multiplicity for each such type link.
-All this information is stored in a separate RDF graph private to RDF2Graph.
+All this information is stored in a separate \gls{rdf} graph private to RDF2Graph.
 
 If the simplification step is enabled,
 RDF2Graph will afterwards apply some transformations to the structure
@@ -383,10 +382,10 @@ X {
 % TODO I haven’t looked too closely into any of these steps except the very last one,
 % which I practically rewrote from scratch.
 % Does that show in the text? Do I need to investigate the rest of the ShEx exporter further?
-At this point, the information which RDF2Graph extracted is available in a private RDF graph.
+At this point, the information which RDF2Graph extracted is available in a private \gls{rdf} graph.
 From there, it can be exported into various formats by different exporters.
-The ShEx exporter loads parts of these results into a temporary RDF database of its own,
-applies some transformations to them via SPARQL,
+The ShEx exporter loads parts of these results into a temporary \gls{rdf} database of its own,
+applies some transformations to them via \gls{sparql},
 converts them to JSON-LD,
 further transforms the JSON,
 and finally exports the result into ShExC text via the Jade template engine.
