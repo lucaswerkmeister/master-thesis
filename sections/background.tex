@@ -90,6 +90,30 @@ it is not possible to edit Wikidata via RDF.
 
 % TODO explain some fundamental properties? P31, P279?
 
+\section{RDF}
+\label{ch:Background:RDF}
+
+RDF % TODO acronym
+\cite{Lanthaler:14:RCA}
+is a framework for describing and working with linked data.
+In RDF, information is arranged in subject-predicate-object triples,
+such as “<Alan Turing> <is a> <human>”
+or “<Lima> <was founded in> <18 January 1535>”.
+All three elements of a triple are typically URIs, % TODO acronym? URLs vs URIs vs IRIs?
+but the object of a triple can also be some other kind of value,
+such as a textual, numerical or other literal
+(e.~g. the date literal “18 January 1535” above). % TODO blank nodes are elided for brevity, but perhaps rephrase this to make sure the text isn’t factually wrong
+A collection of such triples forms a graph,
+where the triples describe individual edges
+and the nodes are the subjects and objects of the triples:
+triples with the same subject constitute different outgoing arcs from the same node.
+This graph can then be queried using the SPARQL % TODO acronym
+query language \cite{9569543}. % TODO is SPARQL really important enough to be mentioned here, and nothing else?
+For a more detailed introduction,
+see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
+
+% TODO should perhaps be more than one paragraph
+
 \section{Shape Expressions}
 \label{ch:Background:ShEx}
 
