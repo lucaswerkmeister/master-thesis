@@ -22,6 +22,26 @@
 \section{Wikidata Support}
 \label{sec:RDF2Graph+Wikidata:Wikidata}
 
+The most fundamental change to make RDF2Graph support Wikidata
+was % TODO is?
+to change the type predicates used.
+RDF2Graph heavily relies on the type information of the RDF graph it inspects,
+assuming a one-to-one mapping between classes and shapes,
+and it uses the standard predicates \PName{rdf:type} and \PName{rdfs:subClassOf}
+to determine the class of a subject and the superclasses of a class, respectively.
+However, Wikidata does not use these standard predicates:
+The “instance of” and “subclass of” information of an item
+are regular statements like any other Wikidata statement, % TODO the information are? hm
+using the properties \P{P31} and \P{P279}, respectively.
+In the \gls{rdf} export, \PName{rdf:type} and \PName{rdfs:subClassOf} are only used
+as part of the meta-model, % TODO meta-model? hm
+assigning each item the class \PName{wikibase:Item}, a subclass of \PName{wikibase:Entity}.
+To use the type information within the data instead of this meta-model,
+RDF2Graph was changed to use the predicates \PName{wdt:P31} and \PName{wdt:P279} % TODO we haven’t seen the wdt: syntax yet, should that be in the Background?
+instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
+
+
+
 % TODO find a better title for this section
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
