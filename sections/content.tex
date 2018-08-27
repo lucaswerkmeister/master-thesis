@@ -137,3 +137,28 @@ and could also be made configurable if deemed necessary in the future.) % TODO l
 % TODO find a better title for this section
 \section{Utilities}
 \label{sec:wdsi:utilities}
+
+To make the ShEx output more readable,
+support for the ShExC syntax was added to the popular Pygments syntax highlighter. % TODO link to pull request?
+If the ShEx code for a job % TODO is “a job” okay?
+is requested by a browser
+or some other kind of client which declares that it can accept HTML
+(using HTTP content negotiation),
+the tool applies the Pygments syntax highlighter to the code on-the-fly
+and sends a complete HTML document containing the prettified code and associated CSS rules.
+Clients which do not accept HTML documents receive the plain ShExC code instead.
+
+The HTML document that is sent to browsers
+also includes a client-side script,
+which searches for Wikidata item IDs in the ShExC code,
+fetches the labels of all mentioned item IDs from Wikidata,
+and adds them to the document in \lstinline[language=html]{<abbr>} abbreviation elements.
+It also hyperlinks each reference of a shape to its definition,
+and the definition to the corresponding entity on Wikidata.
+This makes it much more convenient to read the schema in the browser:
+the user merely has to hover their mouse over a class to see its label instead of the item ID;
+clicking on it brings the user to the shape for that class;
+and clicking on the ID there brings the user to the Wikidata page for the class,
+where they can further explore the related data.
+
+% TODO side-by-side screenshots of plain ShExC vs. HTML + hover?
