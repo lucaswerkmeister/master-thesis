@@ -164,10 +164,12 @@ where they can further explore the related data.
 A comparison of the effects of these two features
 can be seen in \cref{fig:shexc-syntax-highlighting}.
 
-\begin{figure}
+% TODO revisit layout of this figure when the thesis is close to done,
+% perhaps adjust the widths and/or trimming depending on how the figure fits on a page
+\begin{figure}[t]
   \begin{subfigure}[t]{0.45\textwidth}
     \centering
-    \includegraphics{screenshots/shexc-no-syntax-highlighting}
+    \includegraphics[trim={0 2.5cm 0 0},clip]{screenshots/shexc-no-syntax-highlighting}
     \caption{
       Excerpt of an inferred schema for Linux distributions.
     }
@@ -175,7 +177,7 @@ can be seen in \cref{fig:shexc-syntax-highlighting}.
   \end{subfigure}
   \begin{subfigure}[t]{0.45\textwidth}
     \centering
-    \includegraphics{screenshots/shexc-with-syntax-highlighting}
+    \includegraphics[trim={0 2.5cm 0 0},clip]{screenshots/shexc-with-syntax-highlighting}
     \caption{
       The same schema with syntax highlighting and the script applied.
       The cursor is over the \lstinline{P277} property ID.
