@@ -126,6 +126,18 @@ and could also be made configurable if deemed necessary in the future.) % TODO l
 \chapter{The Wikidata ShEx Inference Tool}
 \label{ch:wdsi}
 
+Once the schema inference process against Wikidata was more or less settled,
+it was time to begin making it available to others. % TODO is “it was time to” appropriate language?
+RDF2Graph, its ShEx exporter, and the Makefile-based process around them
+require several different programs and programming runtimes to be available,
+which it would be unreasonable to expect every interested user to install
+(not to mention that the Makefile assumes a Unix-like environment and almost certainly does not work on Windows).
+Instead, a common approach in the Wikimedia universe
+is to install such a program on Wikimedia Toolforge
+and make it available to users via a web interface.
+
+% TODO continue writing this part
+
 % TODO find a better title for this section
 \section{Toolforge Support}
 \label{sec:wdsi:Toolforge}
