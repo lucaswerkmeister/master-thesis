@@ -97,6 +97,26 @@ specifies the Wikidata Query Service SPARQL endpoint for this option,
 so that RDF2Graph can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
 even when running against a subset of Wikidata. % TODO “subset of Wikidata”? not quite happy with that phrasing
 
+The simplification process also required some changes to support Wikidata.
+Originally, RDF2Graph would merge all classes into their superclass,
+almost completely unconditionally,
+stopping only at the root class \PName{owl:Thing}.
+This was much too aggressive for Wikidata:
+not only does Wikidata have a different root class (\QL{Q35120}{entity}),
+but it also has a complex hierarchy of abstract classes below that root class,
+and merging other classes into those abstract classes
+(like \QL{Q151885}{concept}, \QL{Q7184903}{abstract object} or \QL{Q830077}{subject})
+would not result in useful schemas.
+Therefore, the merging step in the simplification process was adapted % TODO awkward passive voice
+to add a number of Wikidata items to the set of classes which other classes should not be merged into
+(originally only containing \PName{owl:Thing}),
+and to stop looking for common superclasses of two classes after checking five levels in the class hierarchy.
+(The limit of five levels is an arbitrary choice
+and could also be made configurable if deemed necessary in the future.) % TODO look a bit more into this?
+% TODO also disabled step 7.4.4 (dropping predicates that were found in superclasses)
+% because the superclass support in the ShEx export changed,
+% but that requires explanation of how the ShEx export changed
+
 % TODO find a better title for this section
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
