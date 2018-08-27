@@ -56,8 +56,8 @@ serve that file via a local Fuseki SPARQL server,
 run RDF2Graph against that server,
 and finally run the ShEx exporter against RDF2Graph’s results.
 To make it easier to run, the entire process is controlled by a Makefile in the RDF2Graph repository,
-so that after creating a \filename{example.entities.sparql} file with a SPARQL query selecting the exemplary items,
-it is sufficient to run \command{make example.shex} to run the entire process and generate the ShEx file.
+so that after creating a \filename{\variable{example}.entities.sparql} file with a SPARQL query selecting the exemplary items,
+it is sufficient to run \command{make \variable{example}.shex} to run the entire process and generate the ShEx file.
 
 This data download step also presents a convenient opportunity to drop some data from the items.
 For one, the labels, descriptions and aliases of an item can make up a large portion of its data,
