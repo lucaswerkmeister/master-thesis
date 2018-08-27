@@ -161,4 +161,29 @@ clicking on it brings the user to the shape for that class;
 and clicking on the ID there brings the user to the Wikidata page for the class,
 where they can further explore the related data.
 
-% TODO side-by-side screenshots of plain ShExC vs. HTML + hover?
+A comparison of the effects of these two features
+can be seen in \cref{fig:shexc-syntax-highlighting}.
+
+\begin{figure}
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics{screenshots/shexc-no-syntax-highlighting}
+    \caption{
+      Excerpt of an inferred schema for Linux distributions.
+    }
+    \label{fig:shexc-syntax-highlighting-without}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics{screenshots/shexc-with-syntax-highlighting}
+    \caption{
+      The same schema with syntax highlighting and the script applied.
+      The cursor is over the \lstinline{P277} property ID.
+    }
+    \label{fig:shexc-syntax-highlighting-with}
+  \end{subfigure}
+  \caption{
+    Comparison of the effects of syntax highlighting and the client-side script.
+  }
+  \label{fig:shexc-syntax-highlighting}
+\end{figure}
