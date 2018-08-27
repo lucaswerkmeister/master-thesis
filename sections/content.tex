@@ -30,9 +30,9 @@ assuming a one-to-one mapping between classes and shapes,
 and it uses the standard predicates \PName{rdf:type} and \PName{rdfs:subClassOf}
 to determine the class of a subject and the superclasses of a class, respectively.
 However, Wikidata does not use these standard predicates:
-The “instance of” and “subclass of” information of an item
-are regular statements like any other Wikidata statement, % TODO the information are? hm
-using the properties \P{P31} and \P{P279}, respectively.
+the class(es) and superclass(es) of an item
+are regular statements like any other Wikidata statement,
+using the properties \PL{P31}{instance of} and \PL{P279}{subclass of}.
 In the \gls{rdf} export, \PName{rdf:type} and \PName{rdfs:subClassOf} are only used
 as part of the meta-model, % TODO meta-model? hm
 assigning each item the class \PName{wikibase:Item}, a subclass of \PName{wikibase:Entity}.
