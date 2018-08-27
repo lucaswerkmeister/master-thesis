@@ -83,6 +83,20 @@ and to reduce clutter in the inferred schemas,
 the labels, descriptions, aliases, and external identifiers of an item
 are therefore excluded when downloading the data for a set of exemplary items.
 
+However, one unfortunate consequence of running RDF2Graph against a reduced data set
+is that RDF2Graph cannot see the full type hierarchy of the classes involved:
+for example, depending on how much data was downloaded,
+it may or may not be aware that the classes \QL{Q112099}{island nation} and \QL{Q3624078}{sovereign state}
+have a common superclass, \QL{Q7275}{state},
+which reduces the available options during the simplification step. % TODO not happy with this phrasing
+To mitigate this, RDF2Graph was patched % TODO awkward passive voice
+to allow specifying an alternative SPARQL endpoint for all queries that require a full view of the data,
+and uses this alternative endpoint for the query to get all parent and child classes of a class.
+The Makefile-controlled process mentioned above % TODO awkward phrasing
+specifies the Wikidata Query Service SPARQL endpoint for this option,
+so that RDF2Graph can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
+even when running against a subset of Wikidata. % TODO “subset of Wikidata”? not quite happy with that phrasing
+
 % TODO find a better title for this section
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
