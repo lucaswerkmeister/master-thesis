@@ -40,7 +40,24 @@ To use the type information within the data instead of this meta-model,
 RDF2Graph was changed to use the predicates \PName{wdt:P31} and \PName{wdt:P279} % TODO we haven’t seen the wdt: syntax yet, should that be in the Background?
 instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
 
-
+Another important aspect is that it’s not feasible to run RDF2Graph on the entirety of Wikidata at once.
+For example, the 2018-08-20 full Wikidata dump is \SI{42.7}{\giga\byte} large after gzip compression % TODO >300GB uncompressed (309657344438 bytes), which is probably more impressive
+and \num{8316156305} lines long uncompressed,
+with most lines corresponding to one triple (except for some blank lines).
+More importantly, inferring a single schema from all of Wikidata is also not the intention of this work:
+the intention is to infer a schema from a particular set of exemplary items, % TODO awkward passive voice (“*the* intention” is *my* intention, I guess)
+and ignore similar items which are not as exemplary (e.~g. not as well maintained)
+as well as unrelated items. % TODO that should be explained in more detail in the Introduction, which I haven’t written yet as of this writing
+So instead of running RDR2Graph directly against the SPARQL endpoint of the Wikidata Query Service,
+a process was set up % TODO super awkward passive voice
+to download the data of all selected items as well as the items they directly link to,
+load that into a single N-Triples file,
+serve that file via a local Fuseki SPARQL server,
+run RDF2Graph against that server,
+and finally run the ShEx exporter against RDF2Graph’s results.
+To make it easier to run, the entire process is controlled by a Makefile in the RDF2Graph repository,
+so that after creating a \filename{example.entities.sparql} file with a SPARQL query selecting the exemplary items,
+it is sufficient to run \command{make example.shex} to run the entire process and generate the ShEx file.
 
 % TODO find a better title for this section
 \section{Schema Reduction}
