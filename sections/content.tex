@@ -59,6 +59,30 @@ To make it easier to run, the entire process is controlled by a Makefile in the 
 so that after creating a \filename{example.entities.sparql} file with a SPARQL query selecting the exemplary items,
 it is sufficient to run \command{make example.shex} to run the entire process and generate the ShEx file.
 
+This data download step also presents a convenient opportunity to drop some data from the items.
+For one, the labels, descriptions and aliases of an item can make up a large portion of its data,
+but are generally not interesting for ShEx schemas,
+since there is rarely more to say about them than
+“an item has one or more labels, zero or more descriptions, and zero or more aliases”. % TODO express as ShExC?
+% TODO in theory it’s possible for items to have zero labels…
+(A manually curated schema might go beyond this –
+perhaps requiring, for example, that items about Spanish municipalities have a label in Spanish –
+but such details are beyond the ability of RDF2Graph to infer.)
+Additionally, Wikidata items often have a number of statements listing external identifiers for the item
+(that is, identifiers in other databases for the same concept described by this item):
+for example, Wikidata’s \Q{Q80} corresponds to \loc{no99010609} in the \gls{loc},
+\viaf{85312226} in the \gls{viaf},
+\imdbName{nm3805083} in the \gls{imdb},
+\TwitterAccount{timberners\_lee} on Twitter,
+and dozens of other external identifiers. % TODO is a vague “dozens” okay?
+All these external identifiers are technically just ordinary statements,
+but since they are generally not very interesting compared to other statements,
+they are sorted into a separate section when viewing the item on the Wikidata website.
+To reduce the runtime of the RDF2Graph inference process,
+and to reduce clutter in the inferred schemas,
+the labels, descriptions, aliases, and external identifiers of an item
+are therefore excluded when downloading the data for a set of exemplary items.
+
 % TODO find a better title for this section
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
