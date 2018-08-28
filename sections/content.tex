@@ -126,6 +126,8 @@ and could also be made configurable if deemed necessary in the future.) % TODO l
 \chapter{The Wikidata ShEx Inference Tool}
 \label{ch:wdsi}
 
+% TODO all of the below probably needs to go in a \section, I’m not sure what the rules on chapter introductions are
+
 Once the schema inference process against Wikidata was more or less settled,
 it was time to begin making it available to others. % TODO is “it was time to” appropriate language?
 RDF2Graph, its ShEx exporter, and the Makefile-based process around them
@@ -136,7 +138,71 @@ Instead, a common approach in the Wikimedia universe
 is to install such a program on Wikimedia Toolforge
 and make it available to users via a web interface.
 
-% TODO continue writing this part
+% TODO what tense / mood to use in this section? not sure if subjunctive mood makes sense
+In this Wikimedia-hosted tool,
+users would enter a SPARQL query selecting the set of exemplary items from which to infer a schema,
+and the tool would download the associated data,
+run RDF2Graph and the ShEx exporter,
+and make the ShExC output available to the user.
+The simplest process for that would be
+to directly return the ShExC code in the server’s response to the user’s HTTP request,
+but that is not possible:
+even simple inference jobs % TODO “jobs” okay?
+from a single item take at least several minutes,
+and more complicated jobs % TODO “jobs” again
+over several dozens of items can take multiple hours –
+the connection to the user would time out long before that,
+and the user might also become impatient and simply close their browser window or tab.
+
+Instead, the inference process runs in the background,
+and after submitting the SPARQL query and starting the process,
+the user is redirected to a page describing the currently running job.
+They can periodically reload the page,
+and each time the page is loaded,
+the tool checks if the background process is still running.
+If the background process has finished in the meantime,
+the tool collects the output,
+cleans up the temporary files left behind by the process,
+and finally makes the output
+(primarely the ShExC code, but also debugging outputs)
+available to the user.
+
+Since this already more or less requires storing inputs and outputs persistently,
+a natural extension of this scheme is to make this job page available to others,
+so that not only the original submitter but also other users can inspect a running or completed job.
+(The input data is entirely public data from Wikidata,
+so there is no reason to restrict the visibility of the outputs.)
+This facilitates easy collaboration on schemas between multiple users
+and allows even casual visitors to see how the tool operates,
+and what kinds of results it produces,
+without having to start their own inference process.
+To make each result easier to comprehend for others,
+users can also submit a title, description, and/or URL for additional information
+along with their SPARQL query. % TODO strictly speaking, the title isn’t optional. does that matter?
+
+As the inference process consumes a lot of resources,
+it doesn’t run directly on the same system as the web server providing the tool’s front-end.
+Instead, it is submitted as a job for the Sun Grid Engine system also offered by the Toolforge environment,
+where it will be run on some execution host with sufficient free resources.
+To ensure that the system’s resources are not exhausted by this one tool,
+the tool only allows at most two jobs to run in parallel,
+and prevents users from submitting any more jobs if too many jobs are currently running,
+instead asking them to try again later.
+Job submission is also restricted to users with a valid Wikidata account,
+atuhenticated via OAuth.
+The identity of the submitting user is another attribute of a job,
+along with its title, description, URL, and SPARQL query,
+and can be seen by other users who look at the pending or finished jobs of the tool.
+
+% TODO is this paragraph relevant?
+Details of each job,
+such as its title, submitting user, and submission time,
+are stored in a tool-specific SQL database on the Toolforge database servers.
+However, the outputs of a job
+(ShExC file, standard output of the process, standard error of the process),
+as well as to a lesser degree the SPARQL query forming its input,
+are too large to store in a database.
+Instead, they are stored directly on the file system.
 
 % TODO find a better title for this section
 \section{Toolforge Support}
@@ -145,6 +211,9 @@ and make it available to users via a web interface.
 % TODO find a better title for this section
 \section{Abstract Considerations}
 \label{sec:wdsi:abstract}
+
+% TODO I suppose the current paragraphs directly below the chapter mostly cover this section,
+% needs to be suitably rearranged
 
 % TODO find a better title for this section
 \section{Utilities}
