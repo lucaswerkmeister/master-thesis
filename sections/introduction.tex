@@ -13,6 +13,37 @@
 \chapter{Introduction}
 \label{ch:Introduction}
 
+Data quality has been identified as one of the most important areas of development for Wikidata in the future \cite{wdcon2017-sotp}: % TODO \cite before colon looks ugly
+in order for Wikidata to be useful,
+its data must be trustworthy and available in a consistent format.
+Unchecked vandalism discourages data reuse,
+while inconsistent data models make it significantly more difficult or even impossible.
+
+To combat these problems,
+several quality control mechanisms are used on Wikidata.
+Recently, editors have begun exploring the use of \acrlong{shex}
+as another quality control mechanism to use.
+Compared to the more established, Wikidata-specific quality constraints system,
+\acrlong{shex} are more powerful and expressive,
+and are also not specific to Wikidata alone.
+However, schemas for \acrlong{shex} are tedious to write by hand.
+
+Automatically inferring schemas from Wikidata items
+promises to simplify the schema authoring process:
+instead of manually putting together the schema,
+describing shapes for different classes of items,
+one simply selects a set of items,
+and a schema is automatically generated based on the data about these items.
+If the selected items have been carefully edited
+to conform to a pre-existing schema,
+perhaps described informally or only present in the minds of the editors,
+then the result may be a formalization of that schema;
+alternatively, applying the same process to a less curated set of input items
+may result in a concise summary of the current schema of those items % TODO “concise” is not really the right word…
+and possibly even demonstrate problems in the input data.
+
+% TODO probably mention WikiProject ShEx?
+
 %% -------------------
 %% | Example content |
 %% -------------------
