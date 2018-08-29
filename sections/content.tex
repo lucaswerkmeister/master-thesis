@@ -18,6 +18,36 @@
 \section{General RDF2Graph Updates}
 \label{sec:RDF2Graph+Wikidata:updates}
 
+The \branchname{master} branch of the RDF2Graph source code repository
+has not seen any updates since 2015 (when \cite{vanDam2015} was published), % TODO is in-sentence \cite{} like that okay?
+% TODO a) check phrasing – it’s not my intention to “call out” the RDF2Graph authors or anything :)
+% TODO b) the dev branch did see some updates, I just wasn’t aware of that when I started working :/
+so some updates were needed to make the program run on newer software versions
+and to target a more recent version of \gls{shex}.
+Many of these were rather minor in nature,
+but a few of the major ones are described in this section.
+
+The final step of the ShEx export was mostly written from scratch.
+This is the step that translates a JSON-LD file describing the shapes of the schema
+into a ShExC file;
+the previous version did this using Jade,
+a templating engine for HTML documents (renamed to Pug in 2016),
+constructing an HTML document containing a single plain-text \lstinline[language=html]{<pre>} element,
+then extracting this text from the document using an HTML-to-text converter.
+The new version directly produces the text from JavaScript
+and includes several improvements:
+datatypes are now properly supported,
+whereas the previous version only supported a handful of hard-coded URIs as datatypes
+and exported all other datatypes as if they were actually shapes;
+prefixes are used everywhere in the output, highly improving readability;
+and the output is sorted, making the whole generation process more deterministic
+and thus making it easier to compare the results of multiple inference processes.
+
+% TODO updates to ShEx v2 syntax – worth mentioning?
+% TODO if the ShEx exporter rewrite is the only thing worth mentioning,
+% the first paragraph needs to be rephrased a little,
+% and perhaps the final sentence of the second paragraph can also be split up into multiple sentences
+
 % TODO find a better title for this section
 \section{Wikidata Support}
 \label{sec:RDF2Graph+Wikidata:Wikidata}
