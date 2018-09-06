@@ -229,7 +229,54 @@ and this recursion would never terminate when encountering a cycle of subclasses
 Instead, the new implementation collects all direct and indirect subclasses up-front using \cref{alg:GetAllChildren}
 and then sums up their direct instance counts.
 
-% TODO fixes for simplifyStep3, simplifyStep4, markParentList, hasParent
+Two steps of the simplification process % TODO give the step numbers in the Introduction and reference them here
+remove some of the temporary (added) type links of a node,
+based on the temporary type links of its neighboring node:
+one step removes temporary type links from parent classes that are only found in one child class,
+the other removes temporary type links from child classes that are made redundant by a type link in the parent class.
+Both steps were originally implemented as inspecting the neighboring nodes’ temporary type links
+and then directly manipulating the node’s own temporary type links.
+This required that each step traversed the nodes in the correct order
+(parents before children for the first step,
+children before parents for the second step)
+and was implemented by traversing the graph recursively,
+which is problematic if the graph contains cycles.
+% TODO all this anonymous steps and parts business sounds clumsy
+% give all of them numbers and/or names and then rephrase this
+This problem was solved by splitting up the analysis and modification of the temporary type links:
+each step now has two parts,
+where the first part marks all temporary type links that should be removed,
+and the second part actually removes them from a node’s temporary type links.
+As long as the first part for all nodes is run before the second part for any node,
+these parts can now be run in any order,
+and instead of recursively traversing the graph,
+both steps now first collect all child nodes of the root node
+and then iterate them twice,
+running the first part the first time and the second part the second time.
+% TODO pseudocode algorithms for any of this paragraph?
+
+RDF2Graph also has a method to determine the distance of all indirect parents from a certain node,
+which is used when searching for common superclasses of a class.
+Like the other methods, this was implemented recursively,
+setting the distance of a parent node to the current value of a counter
+and then calling the same method on all parent nodes of that node with the counter incremented by one.
+In this case, the recursion was kept,
+but the method was adjusted to only visit a parent node
+if it has not been visited before, or if its current distance is larger than the counter value.
+The second part of the condition is necessary to ensure that the distance is set correctly
+if a node is visited first via a longer path and then later again via a shorter path,
+which is possible since the method implements a depth-first search instead of a breadth-first search.
+(In fact, the previous implementation had a bug here,
+where the distance would be incorrect if a node was visited first via a shorter path and then later again via a longer path,
+since it would always unconditionally override the distance.)
+% TODO pseudocode for this?
+
+% TODO perhaps just drop this paragraph? it’s really trivial
+And finally, there is also a method to determine whether a certain node is a (direct or indirect) parent node of another node.
+This was originally implemented recursively,
+% TODO phrasing here feels convoluted
+but could be replaced with a simple check whether the potential parent node is an element of the set of the child node’s parent nodes,
+using \cref{alg:GetAllChildren}.
 
 % TODO find a better title for this chapter
 \chapter{The Wikidata ShEx Inference Tool}
