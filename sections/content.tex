@@ -151,6 +151,22 @@ and could also be made configurable if deemed necessary in the future.) % TODO l
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
 
+An unexpected problem emerged once the schema inference itself was in place: % TODO phrasing: “in place”?
+it proved to be almost impossible to validate items against the inferred schemas
+for all but the most simple data sets.
+Two ShEx implementations were evaluated:
+shex.js, % TODO link? cite?
+a JavaScript implementation running in Node.js,
+and shex-java,
+a Java implementation offering two different validation algorithms \cite{boneva:hal-01590350}.
+shex.js would usually crash with an out-of-memory error from Node.js within a few minutes,
+whereas shex-java would run for hours on end without any output or apparent progress
+(with either algorithm).
+
+% TODO describe:
+% * attempts to drop infrequently-used shapes, predicates, or type links
+% * attempts to implement a depth limit in shex.js and shex-java
+
 % TODO find a better title for this section
 \section{Support for cyclic graphs}
 \label{sec:RDF2Graph+Wikidata:cyclic-graphs}
