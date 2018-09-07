@@ -163,9 +163,63 @@ shex.js would usually crash with an out-of-memory error from Node.js within a fe
 whereas shex-java would run for hours on end without any output or apparent progress
 (with either algorithm).
 
-% TODO describe:
-% * attempts to drop infrequently-used shapes, predicates, or type links
-% * attempts to implement a depth limit in shex.js and shex-java
+One attempted strategy to be able to validate the inferred schemas % TODO “attempted strategy”? feels awkward
+was to reduce the size of the schemas by dropping some less-relevant elements.
+This was part of the motivation for dropping labels, descriptions, aliases, and external identifiers of an item
+from the data set that the inference would be run against
+(see \cref{sec:RDF2Graph+Wikidata:Wikidata});
+however, reducing the input data set is not the only way to reduce the resulting schema:
+it is also possible to further trim the schema after the inference process has finished.
+This was implemented in the final step of the ShEx exporter, % TODO mention shexbuilder.js file name?
+which had already been mostly rewritten for different reasons
+(see \cref{sec:RDF2Graph+Wikidata:updates}).
+RDF2Graph tracks the number of instances of each class it encounters,
+and this information is still available to the ShEx exporter,
+which makes it possible to decide which elements of a schema to keep and which to drop
+based on how often those elements were used in the original data. % TODO add example?
+
+% TODO somewhere around here we need to explain why it’s okay to drop elements.
+% type links → our schemas aren’t perfect anyways; predicates → shapes are not closed; shapes → unused
+% (does “open world” vs. “closed world” factor into this?)
+
+Elements can be removed from a schema on three different levels:
+an individual type link can be removed from a predicate, % TODO probably needs explanation
+a predicate can be removed from a shape,
+or an entire shape can be removed from the schema.
+Removal on the first two levels can be decided for each element independently,
+but whether a shape can be removed from the schema depends not only on how many instances of that shape exist,
+but also whether the shape is referred to by any type links that were not dropped from this schema.
+To avoid dropping shapes which are needed by other parts of the schema,
+while still dropping shapes that are otherwise unused,
+the exporter maintains two sets of shapes:
+one for shapes which are referenced from type links,
+and one for shapes which may be dropped.
+When printing the final schema, only shapes found in the latter set but not in the former are skipped.
+
+The decision whether to drop an element or not
+was implemented as a simple numeric threshold on all three levels:
+if a type link is used less than $m$ times, % TODO verify this: is the “count” of a typelink really the number of times it occurs?
+a predicate is used less than $n$ times (sum of all type link uses),
+or a class has less than $o$ instances,
+the element is dropped.
+The three limits are independent,
+though in practice it makes most sense to choose them such that $m > n > o$.
+% TODO does it make sense to describe this strategy here?
+An alternative strategy to explore in the future might be
+to turn those fixed thresholds into ratios,
+so that the same parameters can be used for vastly different data sets
+with varying numbers of class instances overall.
+
+Unfortunately, this strategy was not very successful in enabling validation of the schemas.
+Only at almost draconian thresholds for dropping elements,
+where only a few shapes and predicates would remain in the schema,
+would validation succeed;
+manual bisecting of the schemas which failed to validate
+would often turn up a fairly small problematic part of a schema
+which a simple count-based threshold was ill-suited to detect automatically.
+
+% TODO describe attempts to implement a depth limit in shex.js and shex-java
+% but this section has already gotten rather long… should it be split? subsections? two sections?
 
 % TODO find a better title for this section
 \section{Support for cyclic graphs}
