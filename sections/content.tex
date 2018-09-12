@@ -218,8 +218,54 @@ manual bisecting of the schemas which failed to validate
 would often turn up a fairly small problematic part of a schema
 which a simple count-based threshold was ill-suited to detect automatically.
 
-% TODO describe attempts to implement a depth limit in shex.js and shex-java
-% but this section has already gotten rather long… should it be split? subsections? two sections?
+% TODO find a better title for this section
+\section{Depth Limits in Validation}
+\label{sec:RDF2Graph+Wikidata:depth-limit}
+
+Another attempt to make validation of the inferred schemas more feasible
+was to limit the maximum depth during the validation process. % TODO better word than “process”?
+Consider, for example, a simple shape for humans, % TODO only prose or also ShExC?
+which describes a human as having any number of human parents and a date of birth.
+To validate whether any given node is actually a human,
+all its direct and indirect parents must also be validated,
+potentially thousands of ancestors, no matter how remote.
+If the shape is more complicated,
+with more predicates potentially linking to other shapes as well,
+this can get very expensive rather quickly.
+On the other hand, it is not clear that the more remote validations here are useful,
+at least in the context of validating Wikidata items
+(where different areas of items may be edited by very different sets of editors)
+against automatically inferred schemas
+(which are likely to have inherited some imperfections from the input data): % TODO there should be a longer paragraph on this somewhere else, perhaps add a \cref once it exists
+experience shows that % TODO is “experience shows” acceptable?
+most inferred schemas tend to include shapes for certain core classes,
+e.~g. \QL{Q5}{human} or \QL{Q3624078}{sovereign state},
+but someone attempting to validate an item for a mammalian protein
+is unlikely to care that the item for the protein’s discoverer’s husband’s country of citizenship % TODO too many ’s?
+happens to be missing an \PL{P1279}{inflation rate} statement.
+
+Therefore, % TODO is it okay to start a paragraph with “therefore”?
+in an attempt to reduce the amount of irrelevant violations
+and to make the validation terminate without crashing,
+a patch to add an optional depth limit to the shex.js implementation was developed.
+With this change, if the depth limit was reached,
+the validator would skip recursing into another shape
+and instead only record the fact that the limit was reached before continuing.
+Unfortunately, however, this proved unsuccessful.
+When testing some items against several inferred schemas,
+low limits (2–4) would yield unpredictable results
+(sometimes validate successfully, sometimes report problems, sometimes crash),
+whereas higher limits (up to 10) would typically have the same result as validation without any depth limit
+(either validation failure or crash),
+though sometimes with wildly varying runtimes. % TODO include the data… perhaps in an appendix?
+One possible explanation for this is that pruning one part of the validation process when reaching the depth limit
+may cause the validator to spend more time in other areas,
+which may previously not have been necessary if the pruned part would otherwise have resulted in a violation.
+% TODO I’m not sure if that makes sense
+
+% TODO also mention the attempted depth limit in shex-java?
+% I have a patch stashed away for that, but I don’t remember how it worked out,
+% except that generally it didn’t help that much, I think
 
 % TODO find a better title for this section
 \section{Support for cyclic graphs}
