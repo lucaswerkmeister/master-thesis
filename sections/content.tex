@@ -148,126 +148,6 @@ and could also be made configurable if deemed necessary in the future.) % TODO l
 % but that requires explanation of how the ShEx export changed
 
 % TODO find a better title for this section
-\section{Schema Reduction}
-\label{sec:RDF2Graph+Wikidata:schema-reduction}
-
-An unexpected problem emerged once the schema inference itself was in place: % TODO phrasing: “in place”?
-it proved to be almost impossible to validate items against the inferred schemas
-for all but the most simple data sets.
-Two ShEx implementations were evaluated:
-shex.js, % TODO link? cite?
-a JavaScript implementation running in Node.js,
-and shex-java,
-a Java implementation offering two different validation algorithms \cite{boneva:hal-01590350}.
-shex.js would usually crash with an out-of-memory error from Node.js within a few minutes,
-whereas shex-java would run for hours on end without any output or apparent progress
-(with either algorithm).
-
-One attempted strategy to be able to validate the inferred schemas % TODO “attempted strategy”? feels awkward
-was to reduce the size of the schemas by dropping some less-relevant elements.
-This was part of the motivation for dropping labels, descriptions, aliases, and external identifiers of an item
-from the data set that the inference would be run against
-(see \cref{sec:RDF2Graph+Wikidata:Wikidata});
-however, reducing the input data set is not the only way to reduce the resulting schema:
-it is also possible to further trim the schema after the inference process has finished.
-This was implemented in the final step of the ShEx exporter, % TODO mention shexbuilder.js file name?
-which had already been mostly rewritten for different reasons
-(see \cref{sec:RDF2Graph+Wikidata:updates}).
-RDF2Graph tracks the number of instances of each class it encounters,
-and this information is still available to the ShEx exporter,
-which makes it possible to decide which elements of a schema to keep and which to drop
-based on how often those elements were used in the original data. % TODO add example?
-
-% TODO somewhere around here we need to explain why it’s okay to drop elements.
-% type links → our schemas aren’t perfect anyways; predicates → shapes are not closed; shapes → unused
-% (does “open world” vs. “closed world” factor into this?)
-
-Elements can be removed from a schema on three different levels:
-an individual type link can be removed from a predicate, % TODO probably needs explanation
-a predicate can be removed from a shape,
-or an entire shape can be removed from the schema.
-Removal on the first two levels can be decided for each element independently,
-but whether a shape can be removed from the schema depends not only on how many instances of that shape exist,
-but also whether the shape is referred to by any type links that were not dropped from this schema.
-To avoid dropping shapes which are needed by other parts of the schema,
-while still dropping shapes that are otherwise unused,
-the exporter maintains two sets of shapes:
-one for shapes which are referenced from type links,
-and one for shapes which may be dropped.
-When printing the final schema, only shapes found in the latter set but not in the former are skipped.
-
-The decision whether to drop an element or not
-was implemented as a simple numeric threshold on all three levels:
-if a type link is used less than $m$ times, % TODO verify this: is the “count” of a typelink really the number of times it occurs?
-a predicate is used less than $n$ times (sum of all type link uses),
-or a class has less than $o$ instances,
-the element is dropped.
-The three limits are independent,
-though in practice it makes most sense to choose them such that $m > n > o$.
-% TODO does it make sense to describe this strategy here?
-An alternative strategy to explore in the future might be
-to turn those fixed thresholds into ratios,
-so that the same parameters can be used for vastly different data sets
-with varying numbers of class instances overall.
-
-Unfortunately, this strategy was not very successful in enabling validation of the schemas.
-Only at almost draconian thresholds for dropping elements,
-where only a few shapes and predicates would remain in the schema,
-would validation succeed;
-manual bisecting of the schemas which failed to validate
-would often turn up a fairly small problematic part of a schema
-which a simple count-based threshold was ill-suited to detect automatically.
-
-% TODO find a better title for this section
-\section{Depth Limits in Validation}
-\label{sec:RDF2Graph+Wikidata:depth-limit}
-
-Another attempt to make validation of the inferred schemas more feasible
-was to limit the maximum depth during the validation process. % TODO better word than “process”?
-Consider, for example, a simple shape for humans, % TODO only prose or also ShExC?
-which describes a human as having any number of human parents and a date of birth.
-To validate whether any given node is actually a human,
-all its direct and indirect parents must also be validated,
-potentially thousands of ancestors, no matter how remote.
-If the shape is more complicated,
-with more predicates potentially linking to other shapes as well,
-this can get very expensive rather quickly.
-On the other hand, it is not clear that the more remote validations here are useful,
-at least in the context of validating Wikidata items
-(where different areas of items may be edited by very different sets of editors)
-against automatically inferred schemas
-(which are likely to have inherited some imperfections from the input data): % TODO there should be a longer paragraph on this somewhere else, perhaps add a \cref once it exists
-experience shows that % TODO is “experience shows” acceptable?
-most inferred schemas tend to include shapes for certain core classes,
-e.~g. \QL{Q5}{human} or \QL{Q3624078}{sovereign state},
-but someone attempting to validate an item for a mammalian protein
-is unlikely to care that the item for the protein’s discoverer’s husband’s country of citizenship % TODO too many ’s?
-happens to be missing an \PL{P1279}{inflation rate} statement.
-
-Therefore, % TODO is it okay to start a paragraph with “therefore”?
-in an attempt to reduce the amount of irrelevant violations
-and to make the validation terminate without crashing,
-a patch to add an optional depth limit to the shex.js implementation was developed.
-With this change, if the depth limit was reached,
-the validator would skip recursing into another shape
-and instead only record the fact that the limit was reached before continuing.
-Unfortunately, however, this proved unsuccessful.
-When testing some items against several inferred schemas,
-low limits (2–4) would yield unpredictable results
-(sometimes validate successfully, sometimes report problems, sometimes crash),
-whereas higher limits (up to 10) would typically have the same result as validation without any depth limit
-(either validation failure or crash),
-though sometimes with wildly varying runtimes. % TODO include the data… perhaps in an appendix?
-One possible explanation for this is that pruning one part of the validation process when reaching the depth limit
-may cause the validator to spend more time in other areas,
-which may previously not have been necessary if the pruned part would otherwise have resulted in a violation.
-% TODO I’m not sure if that makes sense
-
-% TODO also mention the attempted depth limit in shex-java?
-% I have a patch stashed away for that, but I don’t remember how it worked out,
-% except that generally it didn’t help that much, I think
-
-% TODO find a better title for this section
 \section{Support for cyclic graphs}
 \label{sec:RDF2Graph+Wikidata:cyclic-graphs}
 % TODO this whole section mixes parent/child and parent class / subclass terminology :/
@@ -393,6 +273,126 @@ This was originally implemented recursively,
 % TODO phrasing here feels convoluted
 but could be replaced with a simple check whether the potential parent node is an element of the set of the child node’s parent nodes,
 using \cref{alg:GetAllChildren}.
+
+% TODO find a better title for this section
+\section{Schema Reduction}
+\label{sec:RDF2Graph+Wikidata:schema-reduction}
+
+An unexpected problem emerged once the schema inference itself was in place: % TODO phrasing: “in place”?
+it proved to be almost impossible to validate items against the inferred schemas
+for all but the most simple data sets.
+Two ShEx implementations were evaluated:
+shex.js, % TODO link? cite?
+a JavaScript implementation running in Node.js,
+and shex-java,
+a Java implementation offering two different validation algorithms \cite{boneva:hal-01590350}.
+shex.js would usually crash with an out-of-memory error from Node.js within a few minutes,
+whereas shex-java would run for hours on end without any output or apparent progress
+(with either algorithm).
+
+One attempted strategy to be able to validate the inferred schemas % TODO “attempted strategy”? feels awkward
+was to reduce the size of the schemas by dropping some less-relevant elements.
+This was part of the motivation for dropping labels, descriptions, aliases, and external identifiers of an item
+from the data set that the inference would be run against
+(see \cref{sec:RDF2Graph+Wikidata:Wikidata});
+however, reducing the input data set is not the only way to reduce the resulting schema:
+it is also possible to further trim the schema after the inference process has finished.
+This was implemented in the final step of the ShEx exporter, % TODO mention shexbuilder.js file name?
+which had already been mostly rewritten for different reasons
+(see \cref{sec:RDF2Graph+Wikidata:updates}).
+RDF2Graph tracks the number of instances of each class it encounters,
+and this information is still available to the ShEx exporter,
+which makes it possible to decide which elements of a schema to keep and which to drop
+based on how often those elements were used in the original data. % TODO add example?
+
+% TODO somewhere around here we need to explain why it’s okay to drop elements.
+% type links → our schemas aren’t perfect anyways; predicates → shapes are not closed; shapes → unused
+% (does “open world” vs. “closed world” factor into this?)
+
+Elements can be removed from a schema on three different levels:
+an individual type link can be removed from a predicate, % TODO probably needs explanation
+a predicate can be removed from a shape,
+or an entire shape can be removed from the schema.
+Removal on the first two levels can be decided for each element independently,
+but whether a shape can be removed from the schema depends not only on how many instances of that shape exist,
+but also whether the shape is referred to by any type links that were not dropped from this schema.
+To avoid dropping shapes which are needed by other parts of the schema,
+while still dropping shapes that are otherwise unused,
+the exporter maintains two sets of shapes:
+one for shapes which are referenced from type links,
+and one for shapes which may be dropped.
+When printing the final schema, only shapes found in the latter set but not in the former are skipped.
+
+The decision whether to drop an element or not
+was implemented as a simple numeric threshold on all three levels:
+if a type link is used less than $m$ times, % TODO verify this: is the “count” of a typelink really the number of times it occurs?
+a predicate is used less than $n$ times (sum of all type link uses),
+or a class has less than $o$ instances,
+the element is dropped.
+The three limits are independent,
+though in practice it makes most sense to choose them such that $m > n > o$.
+% TODO does it make sense to describe this strategy here?
+An alternative strategy to explore in the future might be
+to turn those fixed thresholds into ratios,
+so that the same parameters can be used for vastly different data sets
+with varying numbers of class instances overall.
+
+Unfortunately, this strategy was not very successful in enabling validation of the schemas.
+Only at almost draconian thresholds for dropping elements,
+where only a few shapes and predicates would remain in the schema,
+would validation succeed;
+manual bisecting of the schemas which failed to validate
+would often turn up a fairly small problematic part of a schema
+which a simple count-based threshold was ill-suited to detect automatically.
+
+% TODO find a better title for this section
+\section{Depth Limits in Validation}
+\label{sec:RDF2Graph+Wikidata:depth-limit}
+
+Another attempt to make validation of the inferred schemas more feasible
+was to limit the maximum depth during the validation process. % TODO better word than “process”?
+Consider, for example, a simple shape for humans, % TODO only prose or also ShExC?
+which describes a human as having any number of human parents and a date of birth.
+To validate whether any given node is actually a human,
+all its direct and indirect parents must also be validated,
+potentially thousands of ancestors, no matter how remote.
+If the shape is more complicated,
+with more predicates potentially linking to other shapes as well,
+this can get very expensive rather quickly.
+On the other hand, it is not clear that the more remote validations here are useful,
+at least in the context of validating Wikidata items
+(where different areas of items may be edited by very different sets of editors)
+against automatically inferred schemas
+(which are likely to have inherited some imperfections from the input data): % TODO there should be a longer paragraph on this somewhere else, perhaps add a \cref once it exists
+experience shows that % TODO is “experience shows” acceptable?
+most inferred schemas tend to include shapes for certain core classes,
+e.~g. \QL{Q5}{human} or \QL{Q3624078}{sovereign state},
+but someone attempting to validate an item for a mammalian protein
+is unlikely to care that the item for the protein’s discoverer’s husband’s country of citizenship % TODO too many ’s?
+happens to be missing an \PL{P1279}{inflation rate} statement.
+
+Therefore, % TODO is it okay to start a paragraph with “therefore”?
+in an attempt to reduce the amount of irrelevant violations
+and to make the validation terminate without crashing,
+a patch to add an optional depth limit to the shex.js implementation was developed.
+With this change, if the depth limit was reached,
+the validator would skip recursing into another shape
+and instead only record the fact that the limit was reached before continuing.
+Unfortunately, however, this proved unsuccessful.
+When testing some items against several inferred schemas,
+low limits (2–4) would yield unpredictable results
+(sometimes validate successfully, sometimes report problems, sometimes crash),
+whereas higher limits (up to 10) would typically have the same result as validation without any depth limit
+(either validation failure or crash),
+though sometimes with wildly varying runtimes. % TODO include the data… perhaps in an appendix?
+One possible explanation for this is that pruning one part of the validation process when reaching the depth limit
+may cause the validator to spend more time in other areas,
+which may previously not have been necessary if the pruned part would otherwise have resulted in a violation.
+% TODO I’m not sure if that makes sense
+
+% TODO also mention the attempted depth limit in shex-java?
+% I have a patch stashed away for that, but I don’t remember how it worked out,
+% except that generally it didn’t help that much, I think
 
 % TODO find a better title for this chapter
 \chapter{The Wikidata ShEx Inference Tool}
