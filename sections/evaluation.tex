@@ -21,7 +21,48 @@ In general, the quality of the inferred schemas is satisfactory.
 % TODO more about the schema quality (with examples!)
 % TODO problems in the schema can point to problems in the input data
 
-% TODO duration of the inference process
+% TODO find a better title for this section
+\section{Duration of the inference process}
+\label{sec:Evaluation:duration}
+
+While attempts to validate data against the inferred schema
+suffer due to the size of the input data and the schemas,
+no such problems appear to plague the inference process,
+which, while slow, has a more reliable runtime.
+The various jobs that were run on the Wikidata Shape Expressions Inference Tool,
+whose execution times range from five or ten minutes to several hours,
+generally show a linear relationship between the number of triples in the input data
+and the total duration of the inference job.
+It is expected that this linear relationship will continue to hold for larger input data sets,
+and that there is no fundamental limit barring the inference of ever larger data sets,
+provided one is willing to wait long enough for the results.
+% TODO add the data – here or in an appendix?
+
+It should be noted % TODO awkward passive voice
+that this is a relation between the number of triples and the execution time,
+but the triples are not directly the input of the inference process:
+that input is a SPARQL query which selects a set of input \emph{entities},
+and the triples are the statements of those entities and the entities they link to,
+downloaded in an early step of the inference process.
+The relationship between the \emph{number of entities} selected and the execution time
+is much more chaotic, % TODO add the data for this as well?
+since it highly depends on the selected entities:
+how many statements they themselves have,
+as well as how many other entities they link to.
+However, the data download step is itself a fairly cheap % TODO “cheap” acceptable?
+step of the inference process,
+so it is not very difficult to derive the number of triples,
+from which it is then possible to predict the total execution type of the inference process fairly reliably.
+
+This suggests two possible future improvements
+for the Wikidata Shape Expressions Inference Tool:
+to report to the user how long a job is expected to take,
+as soon as the download step has finished;
+and to reject jobs which resulted in too much data,
+and are expected to take far too long to be tolerable.
+Currently, the tool merely suggests to its users
+that their queries should not select more than about fifty entities,
+but does not implement any kind of hard limit beyond that.
 
 % TODO user feedback for the tool
 
