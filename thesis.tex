@@ -127,6 +127,12 @@
 \newcommand{\Instruction}[1]{\text{\textit{#1}}}
 \newcommand{\Variable}[1]{\textup{#1}}
 
+\newcommand{\wdsiJob}[1]{\href{https://tools.wmflabs.org/wd-shex-infer/job/#1}{job \##1}}
+
+% \minsec is always used in a context where it is clear that m means minutes and not metres
+\DeclareSIUnit{\shortMinute}{m}
+\newcommand{\minsec}[2]{\SI{#1}{\shortMinute}~\SI{#2}{\second}}
+
 %% ====================================
 %% ====================================
 %% ||                                ||

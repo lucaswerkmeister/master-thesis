@@ -384,7 +384,8 @@ low limits (2–4) would yield unpredictable results
 (sometimes validate successfully, sometimes report problems, sometimes crash),
 whereas higher limits (up to 10) would typically have the same result as validation without any depth limit
 (either validation failure or crash),
-though sometimes with wildly varying runtimes. % TODO include the data… perhaps in an appendix?
+though sometimes with wildly varying runtimes.
+(More details can be found in \cref{sec:appendix:depth-limit}.)
 One possible explanation for this is that pruning one part of the validation process when reaching the depth limit
 may cause the validator to spend more time in other areas,
 which may previously not have been necessary if the pruned part would otherwise have resulted in a violation.

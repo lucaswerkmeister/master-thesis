@@ -15,23 +15,147 @@
 {\chapter{Anhang}}      % german style
 \label{chap:appendix}
 
+\section{Results of validation with depth limit}
+\label{sec:appendix:depth-limit}
 
-%% -------------------
-%% | Example content |
-%% -------------------
-\section{First Appendix Section}
-\label{sec:appendix:FirstSection}
-		
-\setcounter{figure}{0}
-		
-\begin{figure} [ht]
+The following tables show the results
+when attempting various validations against inferred schemas
+with different depth limits.
+The meaning of the result column is as follows:
+
+\begin{description}
+\item[solved] validation completed successfully (found a solution)
+\item[fail] validation completed unsuccessfully (reported violations)
+\item[limit] the result is directly “depth limit reached” % TODO perhaps just remove these lines?
+\item[core] the process crashed and dumped core (out-of-memory error)
+\item[abort] the process was manually killed after a long time with no apparent progress
+\end{description}
+
+\begin{table}[h]
   \centering
-  \caption{A figure}
-  \label{fig:anotherfigure}
-\end{figure}
+  \begin{tabular}{r r r l}
+    limit & real time & CPU time & result \\
+    \hline
+    - & \minsec{2}{50} & \minsec{8}{51} & core \\
+    1 & \minsec{0}{0} & \minsec{0}{0} & limit \\
+    2 & \minsec{4}{41} & \minsec{17}{22} & core \\
+    3 & \minsec{3}{57} & \minsec{13}{31} & core \\
+    4 & \minsec{2}{51} & \minsec{9}{1} & core \\
+    5 & \minsec{2}{48} & \minsec{8}{54} & core \\
+    6 & \minsec{2}{50} & \minsec{8}{58} & core \\
+    7 & \minsec{2}{48} & \minsec{8}{41} & core \\
+    8 & \minsec{2}{47} & \minsec{8}{44} & core \\
+    9 & \minsec{2}{48} & \minsec{8}{48} & core \\
+    10 & \minsec{2}{48} & \minsec{8}{53} & core
+  \end{tabular}
+  \caption{
+    Results when validating the item \QL{Q44578}{Titanic}
+    against the shape for the class \QL{Q11424}{film}
+    from a schema inferred from the set of films that won ten or more Oscars
+    (\wdsiJob{29}).
+  }
+  \label{tab:appendix:depth-limit:1}
+\end{table}
 
+\begin{table}[h]
+  \centering
+  \begin{tabular}{r r r l}
+    limit & real time & CPU time & result \\
+    \hline
+    - & \minsec{0}{1} & \minsec{0}{3} & fail \\
+    1 & \minsec{0}{0} & \minsec{0}{0} & limit \\
+    2 & \minsec{0}{16} & \minsec{0}{21} & core \\
+    3 & \minsec{0}{1} & \minsec{0}{2} & fail \\
+    4 & \minsec{0}{1} & \minsec{0}{3} & fail \\
+    5 & \minsec{0}{1} & \minsec{0}{3} & fail \\
+    6 & \minsec{0}{1} & \minsec{0}{3} & fail \\
+    7 & \minsec{0}{1} & \minsec{0}{3} & fail \\
+    8 & \minsec{0}{1} & \minsec{0}{2} & fail \\
+    10 & \minsec{0}{1} & \minsec{0}{3} & fail
+  \end{tabular}
+  \caption{
+    Results when validating the item \QL{Q42}{Douglas Adams}
+    against the shape for the class \QL{Q5}{human}
+    from a schema inferred from the set of films that won ten or more Oscars
+    (\wdsiJob{29}).
+  }
+  \label{tab:appendix:depth-limit:2}
+\end{table}
 
-\dots
-%% ---------------------
-%% | / Example content |
-%% ---------------------
+\begin{table}[h]
+  \centering
+  \begin{tabular}{r r r l}
+    limit & real time & CPU time & result \\
+    \hline
+    - & \minsec{0}{17} & \minsec{0}{7} & fail \\
+    1 & \minsec{0}{0} & \minsec{0}{0} & limit \\
+    2 & \minsec{0}{0} & \minsec{0}{1} & solved \\
+    3 & \minsec{0}{18} & \minsec{0}{7} & fail \\
+    4 & \minsec{0}{19} & \minsec{0}{8} & fail \\
+    5 & \minsec{0}{17} & \minsec{0}{7} & fail \\
+    6 & \minsec{0}{18} & \minsec{0}{8} & fail \\
+    7 & \minsec{0}{18} & \minsec{0}{8} & fail \\
+    8 & \minsec{0}{18} & \minsec{0}{8} & fail \\
+    9 & \minsec{0}{18} & \minsec{0}{7} & fail \\
+    10 & \minsec{0}{18} & \minsec{0}{7} & fail
+  \end{tabular}
+  \caption{
+    Results when validating the item \QL{Q42}{Douglas Adams}
+    against the shape for the class \QL{Q5}{human}
+    from a schema inferred from the members of the 13th Riigikogu
+    (the Estonian parliament; \wdsiJob{30}).
+  }
+  \label{tab:appendix:depth-limit:3}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{r r r l}
+    limit & real time & CPU time & result \\
+    \hline
+    - & \minsec{2}{50} & \minsec{8}{51} & core \\
+    1 & \minsec{0}{0} & \minsec{0}{0} & limit \\
+    2 & \minsec{4}{41} & \minsec{17}{22} & core \\
+    3 & \minsec{3}{57} & \minsec{13}{31} & core \\
+    4 & \minsec{2}{51} & \minsec{9}{1} & core \\
+    5 & \minsec{2}{48} & \minsec{8}{54} & core \\
+    6 & \minsec{2}{50} & \minsec{8}{58} & core \\
+    7 & \minsec{2}{48} & \minsec{8}{41} & core \\
+    8 & \minsec{2}{47} & \minsec{8}{44} & core \\
+    9 & \minsec{2}{48} & \minsec{8}{48} & core \\
+    10 & \minsec{2}{48} & \minsec{8}{53} & core
+  \end{tabular}
+  \caption{
+    Results when validating the item \QL{Q449851}{Mailis Reps}
+    against the shape for the class \QL{Q5}{human}
+    from a schema inferred from the members of the 13th Riigikogu
+    (\wdsiJob{30}).
+  }
+  \label{tab:appendix:depth-limit:4}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{r r r l}
+    limit & real time & CPU time & result \\
+    \hline
+    - & \minsec{1}{25} & \minsec{4}{14} & core \\
+    1 & \minsec{0}{1} & \minsec{0}{1} & limit \\
+    2 & \minsec{0}{1} & \minsec{0}{1} & fail \\
+    3 & \minsec{0}{55} & \minsec{2}{6} & core \\
+    4 & \minsec{7}{34} & 1\minsec{3}{54} & core \\
+    5 & \minsec{0}{10} & \minsec{0}{27} & core \\
+    6 & \minsec{0}{30} & \minsec{1}{5} & core \\
+    7 & \minsec{0}{51} & \minsec{1}{59} & core \\
+    8 & \minsec{5}{29} & 1\minsec{2}{54} & core \\
+    9 & \minsec{0}{9} & \minsec{0}{19} & core \\
+    10 & 8\minsec{6}{39} & 15\minsec{3}{35} & abort
+  \end{tabular}
+  \caption{
+    Results when validating the item \QL{Q30}{United States of America}
+    against the shape for the class \QL{Q3624078}{sovereign state}
+    from a schema inferred from a set of items for bus stops
+    (\wdsiJob{15}).
+  }
+  \label{tab:appendix:depth-limit:5}
+\end{table}
