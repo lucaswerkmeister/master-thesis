@@ -201,7 +201,7 @@ based on the hierarchy of the classes involved.
 First, all predicates from child classes are copied to parent classes,
 as outlined in \cref{fig:simplify-7.4.2}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}
 A1 extends X {
@@ -250,7 +250,7 @@ but the predicate \lstinline{b} will be dropped
 because it only occurs in the single subclass \lstinline{B} –
 see \cref{fig:simplify-7.4.3}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}
 A1 extends X {
@@ -296,7 +296,7 @@ After that, all references which are still found in a parent class
 are removed from the child classes, where they are now redundant.
 See \cref{fig:simplify-7.4.4} for applying this to the same example.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}
 A1 extends X {
@@ -338,7 +338,7 @@ The first step also merges references to parent classes,
 as outlined in \cref{fig:simplify-7.4.2-classes}.
 The other steps take this into account by respecting subclass relations as well.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \begin{subfigure}[t]{0.3\textwidth}
     \begin{lstlisting}
 A1 extends A {}
