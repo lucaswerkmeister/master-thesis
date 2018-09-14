@@ -18,8 +18,15 @@
 \label{sec:Evaluation:quality}
 
 In general, the quality of the inferred schemas is satisfactory.
+On occasion, parts of the schema may not make sense –
+for example, if a shape declares that the value for a \PL{P735}{given name} statement
+should be a \QL{Q202444}{given name} or a \QL{Q101352}{family name} –
+but these problems are usually not the fault of the inference process,
+but rather point to problems in the input data:
+in this example, someone probably used an item for a family name
+instead of the identical given name. % TODO example!
 % TODO more about the schema quality (with examples!)
-% TODO problems in the schema can point to problems in the input data
+% TODO elaborate
 
 % TODO find a better title for this section
 \section{Duration of the inference process}
