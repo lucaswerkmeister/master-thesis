@@ -39,7 +39,8 @@ which, while slow, has a more reliable runtime.
 The various jobs that were run on the Wikidata Shape Expressions Inference Tool,
 whose execution times range from five or ten minutes to several hours,
 generally show a linear relationship between the number of triples in the input data
-and the total duration of the inference job.
+and the total duration of the inference job
+(see \cref{fig:jobs-over-triples}).
 It is expected that this linear relationship will continue to hold for larger input data sets,
 and that there is no fundamental limit barring the inference of ever larger data sets,
 provided one is willing to wait long enough for the results.
@@ -52,7 +53,8 @@ that input is a SPARQL query which selects a set of input \emph{entities},
 and the triples are the statements of those entities and the entities they link to,
 downloaded in an early step of the inference process.
 The relationship between the \emph{number of entities} selected and the execution time
-is much more chaotic, % TODO add the data for this as well?
+is much more chaotic
+(see \cref{fig:jobs-over-entities}), % TODO add the data for this as well?
 since it highly depends on the selected entities:
 how many statements they themselves have,
 as well as how many other entities they link to.
@@ -60,6 +62,38 @@ However, the data download step is itself a fairly cheap % TODO “cheap” acce
 step of the inference process,
 so it is not very difficult to derive the number of triples,
 from which it is then possible to predict the total execution type of the inference process fairly reliably.
+
+% TODO describe where the data (#entities, #lines, job execution times) comes from?
+% to what level of detail? should I mention the custom script to read the accounting file backwards?
+
+\begin{figure}
+  \centering
+  \input{graphs/jobs-over-triples}
+  \caption{
+    A chart of job execution time over number of triples in the input data set,
+    along with three different functions fit to the data.
+    All three fits resulted in roughly the same linear function
+    and approximate the data reasonably well.
+    % TODO explain the “0.00” x² coefficient?
+  }
+  \label{fig:jobs-over-triples}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \input{graphs/jobs-over-entities}
+  \caption{
+    A chart of job execution time over number of entities in the input data set,
+    along with three different functions fit to the data.
+    The three fits resulted in very different functions
+    and don’t approximate the data very well;
+    in fact, the quadratic function appears to suggest
+    that execution time shall become negative if one only supplies enough entities,
+    which is clearly nonsensical. % TODO is “clearly nonsensical” appropriate style?
+    % TODO improve wording so it’s not quite as derivative of the previous figure
+  }
+  \label{fig:jobs-over-entities}
+\end{figure}
 
 This suggests two possible future improvements
 for the Wikidata Shape Expressions Inference Tool:
