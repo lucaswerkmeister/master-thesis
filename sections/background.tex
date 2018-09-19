@@ -275,7 +275,7 @@ as outlined in \cref{fig:simplify-7.4.2}.
 
 \begin{figure}[ht]
   \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[showlines=true]
 A1 extends X {
   a A;
 }
@@ -286,6 +286,9 @@ B extends X {
   b B;
 }
 X {}
+
+
+
     \end{lstlisting}
     \caption{Before step 2.}
     \label{fig:simplify-7.4.2-before}
@@ -343,7 +346,7 @@ X {
     \label{fig:simplify-7.4.3-before}
   \end{subfigure}
   \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[showlines=true]
 A1 extends X {
   a A;
 }
@@ -356,6 +359,7 @@ B extends X {
 X {
   a A;
 }
+
     \end{lstlisting}
     \caption{After step 3.}
     \label{fig:simplify-7.4.3-after}
@@ -389,7 +393,7 @@ X {
     \label{fig:simplify-7.4.4-before}
   \end{subfigure}
   \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[showlines=true]
 A1 extends X {}
 A2 extends X {}
 B extends X {
@@ -398,6 +402,11 @@ B extends X {
 X {
   a A;
 }
+
+
+
+
+
     \end{lstlisting}
     \caption{After step 4.}
     \label{fig:simplify-7.4.4-after}
@@ -412,16 +421,25 @@ The other steps take this into account by respecting subclass relations as well.
 
 \begin{figure}[ht]
   \begin{subfigure}[t]{0.3\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[showlines=true]
 A1 extends A {}
 A2 extends A {}
 A extends B {}
+
+
+
+
+
+
+
+
+
     \end{lstlisting}
     \caption{The class hierarchy for this example.}
     \label{fig:simplify-7.4.2-classes-hierarchy}
   \end{subfigure}
   \begin{subfigure}[t]{0.3\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[showlines=true]
 M extends X {
   r A1
 }
@@ -432,6 +450,8 @@ O extends X {
   r B
 }
 X {}
+
+
     \end{lstlisting}
     \caption{Before step 2.}
     \label{fig:simplify-7.4.2-classes-before}
