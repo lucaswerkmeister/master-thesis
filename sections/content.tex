@@ -137,7 +137,7 @@ but it also has a complex hierarchy of abstract classes below that root class,
 and merging other classes into those abstract classes
 (like \QL{Q151885}{concept}, \QL{Q7184903}{abstract object} or \QL{Q830077}{subject})
 would not result in useful schemas.
-Therefore, the merging step in the simplification process was adapted % TODO awkward passive voice
+Therefore, step 2 in the simplification process was adapted % TODO awkward passive voice
 to add a number of Wikidata items to the set of classes which other classes should not be merged into
 (originally only containing \PName{owl:Thing}),
 and to stop looking for common superclasses of two classes after checking five levels in the class hierarchy.
@@ -225,16 +225,16 @@ and this recursion would never terminate when encountering a cycle of subclasses
 Instead, the new implementation collects all direct and indirect subclasses up-front using \cref{alg:GetAllChildren}
 and then sums up their direct instance counts.
 
-Two steps of the simplification process % TODO give the step numbers in the Introduction and reference them here
+Two steps of the simplification process
 remove some of the temporary (added) type links of a node,
 based on the temporary type links of its neighboring node:
-one step removes temporary type links from parent classes that are only found in one child class,
-the other removes temporary type links from child classes that are made redundant by a type link in the parent class.
+step 3 removes temporary type links from parent classes that are only found in one child class,
+and step 4 removes temporary type links from child classes that are made redundant by a type link in the parent class.
 Both steps were originally implemented as inspecting the neighboring nodes’ temporary type links
 and then directly manipulating the node’s own temporary type links.
 This required that each step traversed the nodes in the correct order
-(parents before children for the first step,
-children before parents for the second step)
+(parents before children for step 3,
+children before parents for step 4)
 and was implemented by traversing the graph recursively,
 which is problematic if the graph contains cycles.
 % TODO all this anonymous steps and parts business sounds clumsy
