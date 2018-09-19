@@ -183,6 +183,21 @@ triples with the same subject constitute different outgoing arcs from the same n
 This graph can then be queried using the \acrlong{sparql} \cite{9569543}. % TODO is SPARQL really important enough to be mentioned here, and nothing else?
 For a more detailed introduction,
 see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
+% TODO the previous sentence should probably be at the end of the section, not of the paragraph
+
+While RDF can be used with any URIs,
+one of its strengths is the ability to reuse the same \emph{vocabularies}
+(effectively, sets of URIs)
+in many different graphs.
+For example, many graphs use the same predicate
+to link a URI to a human-readable version of its name (its label);
+a tool based on RDF can thus offer human-readable names for resources from all these graphs
+without requiring any specific knowledge about them,
+and the graphs are more useful when used in combination.
+One common vocabulary is RDF Schema \cite{Guha:14:RS}, % acronym for RDFS?
+which among others provides two important URIs: % TODO URIs → resources? probably in the whole section
+\PName{rdf:type} and \PName{rdfs:subClassOf}.
+% TODO continue writing
 
 % TODO should perhaps be more than one paragraph
 
