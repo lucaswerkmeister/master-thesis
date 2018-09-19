@@ -1,0 +1,13 @@
+#contentSub,
+.wikibase-entitytermsview-heading,
+.wikibase-entitytermsview .wikibase-entitytermsview-entitytermsforlanguagelistview-toggler,
+.wikibase-entitytermsview .wikibase-entitytermsview-entitytermsforlanguagelistview-configure,
+.wikibase-entitytermsview .wikibase-entitytermsforlanguagelistview-more,
+.wikibase-entitytermsforlanguageview.wikibase-entitytermsforlanguageview-fr,
+.wikibase-entitytermsforlanguageview.wikibase-entitytermsforlanguageview-bar {
+  display: none;
+}
+
+h2.wb-section-heading {
+  margin-top: 0em;
+}
