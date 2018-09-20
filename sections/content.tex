@@ -69,7 +69,7 @@ and then describes several changes to RDF2Graph that were necessary to support t
 
 Usually, RDF2Graph is run against a \gls{sparql} endpoint
 which serves the RDF graph for which one wants to infer the structure.
-However, simply running RDF2Graph against \gls{wdqs}, the public SPARQL endpoint for Wikidata,
+However, simply running RDF2Graph against \gls{wdqs}, the public \gls{sparql} endpoint for Wikidata,
 would mean attempting to infer a schema from all of Wikidata,
 which is neither the goal of this thesis
 (that is to infer schemas from a small set of exemplary items)
@@ -209,10 +209,10 @@ it may or may not be aware that the classes \QL{Q112099}{island nation} and \QL{
 have a common superclass, \QL{Q7275}{state},
 which reduces the available options during the simplification step. % TODO not happy with this phrasing
 To mitigate this, RDF2Graph was patched % TODO awkward passive voice
-to allow specifying an alternative SPARQL endpoint for all queries that require a full view of the data,
+to allow specifying an alternative \gls{sparql} endpoint for all queries that require a full view of the data,
 and uses this alternative endpoint for the query to get all parent and child classes of a class.
 The Makefile-controlled process mentioned above % TODO awkward phrasing
-specifies the Wikidata Query Service SPARQL endpoint for this option,
+specifies the Wikidata Query Service \gls{sparql} endpoint for this option,
 so that RDF2Graph can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
 even when running against a subset of Wikidata. % TODO “subset of Wikidata”? not quite happy with that phrasing
 
@@ -522,7 +522,7 @@ and make it available to users via a web interface.
 
 % TODO what tense / mood to use in this section? not sure if subjunctive mood makes sense
 In this Wikimedia-hosted tool,
-users would enter a SPARQL query selecting the set of exemplary items from which to infer a schema,
+users would enter a \gls{sparql} query selecting the set of exemplary items from which to infer a schema,
 and the tool would download the associated data,
 run RDF2Graph and the ShEx exporter,
 and make the ShExC output available to the user.
@@ -537,7 +537,7 @@ the connection to the user would time out long before that,
 and the user might also become impatient and simply close their browser window or tab.
 
 Instead, the inference process runs in the background,
-and after submitting the SPARQL query and starting the process,
+and after submitting the \gls{sparql} query and starting the process,
 the user is redirected to a page describing the currently running job.
 They can periodically reload the page,
 and each time the page is loaded,
@@ -560,7 +560,7 @@ and what kinds of results it produces,
 without having to start their own inference process.
 To make each result easier to comprehend for others,
 users can also submit a title, description, and/or URL for additional information
-along with their SPARQL query. % TODO strictly speaking, the title isn’t optional. does that matter?
+along with their \gls{sparql} query. % TODO strictly speaking, the title isn’t optional. does that matter?
 
 As the inference process consumes a lot of resources,
 it doesn’t run directly on the same system as the web server providing the tool’s front-end.
@@ -573,7 +573,7 @@ instead asking them to try again later.
 Job submission is also restricted to users with a valid Wikidata account,
 authenticated via OAuth.
 The identity of the submitting user is another attribute of a job,
-along with its title, description, URL, and SPARQL query,
+along with its title, description, URL, and \gls{sparql} query,
 and can be seen by other users who look at the pending or finished jobs of the tool.
 
 % TODO is this paragraph relevant?
@@ -582,7 +582,7 @@ such as its title, submitting user, and submission time,
 are stored in a tool-specific SQL database on the Toolforge database servers.
 However, the outputs of a job
 (ShExC file, standard output of the process, standard error of the process),
-as well as to a lesser degree the SPARQL query forming its input,
+as well as to a lesser degree the \gls{sparql} query forming its input,
 are too large to store in a database.
 Instead, they are stored directly on the file system.
 
