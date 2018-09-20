@@ -60,6 +60,41 @@ and thus making it easier to compare the results of multiple inference processes
 \section{Wikidata Support}
 \label{sec:RDF2Graph+Wikidata:Wikidata}
 
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{file} = [rectangle, draw, rounded corners, text centered]
+    \tikzstyle{pipe} = [style=file, dashed]
+    \tikzstyle{directory} = [rectangle, draw, text centered]
+    \tikzstyle{arrow} = [draw, -latex', right]
+
+    % TODO more details for RDF2Graph (first “normal stuff”, then simplification)
+
+    \begin{scope}[node distance=2cm]
+      \node[file] (entities) {\filename{\variable{example}.entities.sparql}};
+      \node[file, below of=entities] (data) {\filename{\variable{example}.data.sparql}};
+      \node[pipe, below of=data] (JSON) {\filename{\variable{example}.json}};
+      \node[file, below of=JSON] (N-Triples) {\filename{\variable{example}.nt}};
+      \node[directory, below of=N-Triples] (Fuseki) [align=center] {\dirname{\variable{example}-fuseki} \\ \texttt{http://localhost:3030/\variable{example}/query}};
+      \node[directory, below of=Fuseki] (RDF2Graph) {\dirname{\variable{example}-results}};
+      \node[file, below of=RDF2Graph] (ShEx) {\filename{\variable{example}.shex}};
+      \node[file, below of=ShEx] (HTML) {\filename{\variable{example}.html}};
+    \end{scope}
+
+    \begin{scope}[every path/.style=arrow, midway]
+      \path (entities.south) -- node {\command{sed}} (data.north);
+      \path (data.south) -- node {WDQS} (JSON.north);
+      \path (JSON.south) -- node {\command{jq}} (N-Triples.north);
+      \path (N-Triples.south) -- node {Fuseki} (Fuseki.north);
+      \path (Fuseki.south) -- node {RDF2Graph} (RDF2Graph.north);
+      \path (RDF2Graph.south) -- node {ShEx exporter} (ShEx);
+      \path (ShEx.south) -- node {\command{pygmentize}} (HTML);
+    \end{scope}
+  \end{tikzpicture}
+  \caption{An overview of the overall process.}
+  \label{fig:process}
+\end{figure}
+
 % TODO look over the subsections again.
 % in general, each should first introduce a problem and then state my solution.
 % some of them should also probably be longer than one paragraph
