@@ -69,7 +69,7 @@ and then describes several changes to RDF2Graph that were necessary to support t
 
 Usually, RDF2Graph is run against a \gls{sparql} endpoint
 which serves the RDF graph for which one wants to infer the structure.
-However, simply running RDF2Graph against \gls{wdqs}, the public \gls{sparql} endpoint for Wikidata,
+However, simply running RDF2Graph against \acrfull{wdqs}, the public \gls{sparql} endpoint for Wikidata,
 would mean attempting to infer a schema from all of Wikidata,
 which is neither the goal of this thesis
 (that is to infer schemas from a small set of exemplary items)
@@ -110,7 +110,7 @@ to run the entire process and generate the ShEx file.
 
     \begin{scope}[every path/.style=arrow, midway]
       \path (entities.south) -- node {\command{sed}} (data.north);
-      \path (data.south) -- node {WDQS} (JSON.north);
+      \path (data.south) -- node {\gls{wdqs}} (JSON.north);
       \path (JSON.south) -- node {\command{jq}} (N-Triples.north);
       \path (N-Triples.south) -- node {Fuseki} (Fuseki.north);
       \path (Fuseki.south) -- node {RDF2Graph} (RDF2Graph.north);
@@ -212,7 +212,7 @@ To mitigate this, RDF2Graph was patched % TODO awkward passive voice
 to allow specifying an alternative \gls{sparql} endpoint for all queries that require a full view of the data,
 and uses this alternative endpoint for the query to get all parent and child classes of a class.
 The Makefile-controlled process mentioned above % TODO awkward phrasing
-specifies the Wikidata Query Service \gls{sparql} endpoint for this option,
+specifies the \gls{wdqs} \gls{sparql} endpoint for this option,
 so that RDF2Graph can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
 even when running against a subset of Wikidata. % TODO “subset of Wikidata”? not quite happy with that phrasing
 
