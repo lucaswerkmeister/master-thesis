@@ -210,6 +210,9 @@ several algorithms in the simplification step were adjusted to be able to cope w
 % TODO explain why we even bother with this:
 % though the results *in the cycle* may be nonsensical, the rest of the schema should not be affected
 
+\subsection{\FunctionName{GetAllChildren}}
+\label{subsec:RDF2Graph+Wikidata:cyclic-graphs:GetAllChildren}
+
 A general component of the new algorithms are methods to get all children and parents of a node,
 in a matter that is guaranteed to terminate even if there are cycles among the children or parents.
 The method for collecting all child nodes is outlined in \cref{alg:GetAllChildren},
@@ -242,6 +245,9 @@ provided that the set of nodes reachable from the initial node is finite.
   \label{alg:GetAllChildren}
 \end{algorithm}
 
+\subsection{Counting instances}
+\label{subsec:RDF2Graph+Wikidata:cyclic-graphs:count-instances}
+
 With this in place,
 it becomes easy to reimplement the method which counts the number of direct and indirect instances of each class,
 based on the direct instance counts on each class node.
@@ -251,6 +257,9 @@ all the way up to the class itself,
 and this recursion would never terminate when encountering a cycle of subclasses.
 Instead, the new implementation collects all direct and indirect subclasses up-front using \cref{alg:GetAllChildren}
 and then sums up their direct instance counts.
+
+\subsection{Simplification steps 3 and 4}
+\label{subsec:RDF2Graph+Wikidata:cyclic-graphs:simplify-step-3+4}
 
 Two steps of the simplification process
 remove some of the temporary (added) type links of a node,
@@ -278,6 +287,9 @@ and then iterate them twice,
 running the first part the first time and the second part the second time.
 % TODO pseudocode algorithms for any of this paragraph?
 
+\subsection{Node distances}
+\label{subsec:RDF2Graph+Wikidata:cyclic-graph:distance}
+
 RDF2Graph also has a method to determine the distance of all indirect parents from a certain node,
 which is used when searching for common superclasses of a class.
 Like the other methods, this was implemented recursively,
@@ -293,6 +305,9 @@ which is possible since the method implements a depth-first search instead of a 
 where the distance would be incorrect if a node was visited first via a shorter path and then later again via a longer path,
 since it would always unconditionally override the distance.)
 % TODO pseudocode for this?
+
+\subsection{Parent check}
+\label{subsec:RDF2Graph+Wikidata:cyclic-graph:IsParent}
 
 % TODO perhaps just drop this paragraph? it’s really trivial
 And finally, there is also a method to determine whether a certain node is a (direct or indirect) parent node of another node.
