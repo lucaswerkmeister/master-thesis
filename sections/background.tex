@@ -172,7 +172,8 @@ is a framework for describing and working with linked data.
 In \gls{rdf}, information is arranged in subject-predicate-object triples,
 such as “<Alan Turing> <is a> <human>”
 or “<Lima> <was founded in> <18 January 1535>”.
-All three elements of a triple are typically URIs, % TODO acronym? URLs vs URIs vs IRIs?
+All three elements of a triple are typically \emph{resources},
+identified by a URI like \url{http://example.com/Alan_Turing} or \url{http://www.wikidata.org/entity/Q5}, % TODO acronym? URLs vs URIs vs IRIs?
 but the object of a triple can also be some other kind of value,
 such as a textual, numerical or other literal
 (e.~g. the date literal “18 January 1535” above). % TODO blank nodes are elided for brevity, but perhaps rephrase this to make sure the text isn’t factually wrong
@@ -185,17 +186,17 @@ For a more detailed introduction,
 see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
 % TODO the previous sentence should probably be at the end of the section, not of the paragraph
 
-While RDF can be used with any URIs,
+While RDF can be used with any resource URIs,
 one of its strengths is the ability to reuse the same \emph{vocabularies}
-(effectively, sets of URIs)
+(effectively, sets of resources)
 in many different graphs.
 For example, many graphs use the same predicate
-to link a URI to a human-readable version of its name (its label);
+to link a resource to a human-readable version of its name (its label);
 a tool based on RDF can thus offer human-readable names for resources from all these graphs
 without requiring any specific knowledge about them,
 and the graphs are more useful when used in combination.
 One common vocabulary is RDF Schema \cite{Guha:14:RS}, % acronym for RDFS?
-which among others provides two important URIs: % TODO URIs → resources? probably in the whole section
+which among others provides two important predicates:
 \PName{rdf:type} and \PName{rdfs:subClassOf}.
 % TODO continue writing
 
