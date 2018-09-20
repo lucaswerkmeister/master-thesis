@@ -60,6 +60,13 @@ and thus making it easier to compare the results of multiple inference processes
 \section{Wikidata Support}
 \label{sec:RDF2Graph+Wikidata:Wikidata}
 
+% TODO look over the subsections again.
+% in general, each should first introduce a problem and then state my solution.
+% some of them should also probably be longer than one paragraph
+
+\subsection{Type predicates}
+\label{subsec:RDF2Graph+Wikidata:Wikidata:predicates}
+
 The most fundamental change to make RDF2Graph support Wikidata
 was % TODO is?
 to change the type predicates used.
@@ -77,6 +84,9 @@ assigning each item the class \PName{wikibase:Item}, a subclass of \PName{wikiba
 To use the type information within the data instead of this meta-model,
 RDF2Graph was changed to use the predicates \PName{wdt:P31} and \PName{wdt:P279}
 instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
+
+\subsection{Data download}
+\label{subsec:RDF2Graph+Wikidata:Wikidata:download}
 
 Another important aspect is that it’s not feasible to run RDF2Graph on the entirety of Wikidata at once.
 For example, the 2018-08-20 full Wikidata dump is \SI{42.7}{\giga\byte} large after gzip compression % TODO >300GB uncompressed (309657344438 bytes), which is probably more impressive
@@ -96,6 +106,9 @@ and finally run the ShEx exporter against RDF2Graph’s results.
 To make it easier to run, the entire process is controlled by a Makefile in the RDF2Graph repository,
 so that after creating a \filename{\variable{example}.entities.sparql} file with a SPARQL query selecting the exemplary items,
 it is sufficient to run \command{make \variable{example}.shex} to run the entire process and generate the ShEx file.
+
+\subsection{Data reduction}
+\label{subsec:RDF2Graph+Wikidata:Wikidata:reduction}
 
 This data download step also presents a convenient opportunity to drop some data from the items.
 For one, the labels, descriptions and aliases of an item can make up a large portion of its data,
@@ -121,6 +134,9 @@ and to reduce clutter in the inferred schemas,
 the labels, descriptions, aliases, and external identifiers of an item
 are therefore excluded when downloading the data for a set of exemplary items.
 
+\subsection{Full type hierarchy}
+\label{subsec:RDF2Graph+Wikidata:Wikidata:hierarchy}
+
 However, one unfortunate consequence of running RDF2Graph against a reduced data set
 is that RDF2Graph cannot see the full type hierarchy of the classes involved:
 for example, depending on how much data was downloaded,
@@ -134,6 +150,9 @@ The Makefile-controlled process mentioned above % TODO awkward phrasing
 specifies the Wikidata Query Service SPARQL endpoint for this option,
 so that RDF2Graph can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
 even when running against a subset of Wikidata. % TODO “subset of Wikidata”? not quite happy with that phrasing
+
+\subsection{Simplification}
+\label{subsec:RDF2Graph+Wikidata:Wikidata:simplification}
 
 The simplification process also required some changes to support Wikidata.
 Originally, RDF2Graph would merge all classes into their superclass,
@@ -302,7 +321,7 @@ One attempted strategy to be able to validate the inferred schemas % TODO “att
 was to reduce the size of the schemas by dropping some less-relevant elements.
 This was part of the motivation for dropping labels, descriptions, aliases, and external identifiers of an item
 from the data set that the inference would be run against
-(see \cref{sec:RDF2Graph+Wikidata:Wikidata});
+(see \cref{subsec:RDF2Graph+Wikidata:Wikidata:reductionx});
 however, reducing the input data set is not the only way to reduce the resulting schema:
 it is also possible to further trim the schema after the inference process has finished.
 This was implemented in the final step of the ShEx exporter, % TODO mention shexbuilder.js file name?
