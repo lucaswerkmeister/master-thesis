@@ -186,19 +186,39 @@ For a more detailed introduction,
 see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
 % TODO the previous sentence should probably be at the end of the section, not of the paragraph
 
+To improve readability, the URIs identifying a resource are usually abbreviated using \emph{prefixes}:
+for example, once the prefix \prefix{wd:} has been defined to mean \url{http://www.wikidata.org/entity/},
+the URIs \url{http://www.wikidata.org/entity/Q7251} and \url{http://www.wikidata.org/entity/Q5}
+can be abbreviated as \PName{wd:Q7251} and \PName{wd:Q5}.
+The rest of the thesis will use the prefixes given in \cref{listing:prefixes}
+without explicitly mentioning it again.
+
+\begin{lstfloat}
+\begin{lstlisting}[language=sparql]
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+\end{lstlisting}
+\caption{Default prefixes used in this thesis.}
+\label{listing:prefixes}
+\end{lstfloat}
+
 While RDF can be used with any resource URIs,
 one of its strengths is the ability to reuse the same \emph{vocabularies}
 (effectively, sets of resources)
 in many different graphs.
-For example, many graphs use the same predicate
+For example, many graphs use the same predicate, \PName{rdfs:label},
 to link a resource to a human-readable version of its name (its label);
 a tool based on RDF can thus offer human-readable names for resources from all these graphs
 without requiring any specific knowledge about them,
 and the graphs are more useful when used in combination.
 One common vocabulary is RDF Schema \cite{Guha:14:RS}, % acronym for RDFS?
 which among others provides two important predicates:
-\PName{rdf:type} and \PName{rdfs:subClassOf}. % TODO prefixes weren’t introduced yet
-% TODO continue writing
+\PName{rdf:type} and \PName{rdfs:subClassOf}.
+\PName{rdf:type} connects an object to its class,
+and \PName{rdfs:subClassOf} connects a class to its parent class.
+% TODO continue writing: example for rdf:type and rdfs:subClassOf
 
 % TODO should perhaps be more than one paragraph
 

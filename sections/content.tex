@@ -75,7 +75,7 @@ In the \gls{rdf} export, \PName{rdf:type} and \PName{rdfs:subClassOf} are only u
 as part of the meta-model, % TODO meta-model? hm
 assigning each item the class \PName{wikibase:Item}, a subclass of \PName{wikibase:Entity}.
 To use the type information within the data instead of this meta-model,
-RDF2Graph was changed to use the predicates \PName{wdt:P31} and \PName{wdt:P279} % TODO we haven’t seen the wdt: syntax yet, should that be in the Background?
+RDF2Graph was changed to use the predicates \PName{wdt:P31} and \PName{wdt:P279}
 instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
 
 Another important aspect is that it’s not feasible to run RDF2Graph on the entirety of Wikidata at once.
