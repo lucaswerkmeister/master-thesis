@@ -188,8 +188,21 @@ To improve readability, the URIs identifying a resource are usually abbreviated 
 for example, once the prefix \prefix{wd:} has been defined to mean \url{http://www.wikidata.org/entity/},
 the URIs \url{http://www.wikidata.org/entity/Q7251} and \url{http://www.wikidata.org/entity/Q5}
 can be abbreviated as \PName{wd:Q7251} and \PName{wd:Q5}.
-The rest of the thesis will use the prefixes given in \cref{listing:prefixes}
-without explicitly mentioning it again.
+The rest of the thesis will use the following prefixes,
+also given in \cref{listing:prefixes}:
+
+\begin{description}
+\item[\PName{wd:}] A Wikidata entity (usually an item, like \PName{wd:Q7251}).
+\item[\PName{wdt:}] Predicate for a triple representing a Wikidata statement, e.~g. \PName{wdt:P31}.
+\item[\PName{rdf:}] Part of the RDF Schema vocabulary (see below).
+\item[\PName{rdfs:}] Part of the RDF Schema vocabulary.
+  (The distinction between \PName{rdf:} and \PName{rdfs:} is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
+  with no real significance today.)
+\item[\PName{ex:}] An example entity.
+  Following the naming conventions of schema.org, % TODO cite https://schema.org/docs/old_extension.html ? I couldn’t find a better source
+  types and entities are in upper camel case (\PName{ex:Human})
+  while predicates are in lower camel case (\PName{ex:dateOfBirth}).
+\end{description}
 
 \begin{lstfloat}
 \begin{lstlisting}[language=sparql]
@@ -197,6 +210,7 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ex: <http://shex.example/>
 \end{lstlisting}
 \caption{Default prefixes used in this thesis.}
 \label{listing:prefixes}
@@ -244,8 +258,6 @@ The shape for locations describes that a location may optionally be contained wi
 
 \begin{lstfloat}
 \begin{lstlisting}[language=sparql]
-PREFIX ex: <http://shex.example/>
-
 ex:Human {
   ex:parent @ex:Human+;
   ex:child @ex:Human*;
