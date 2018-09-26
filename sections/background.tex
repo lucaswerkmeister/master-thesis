@@ -76,58 +76,56 @@ but they are not themselves part of the statements:
 statements only list references to property and item IDs,
 making most of the information in Wikidata language-agnostic \cite{Kaffee:2017:GBA:3125433.3125465}.
 
-% TODO refer to this figure somewhere in the text
+% TODO split the following paragraph into multiple, under a dedicated subsection?
+\Cref{fig:montblanc} shows two screenshots of the same Wikidata item,
+\QL{Q761735}{Montblanc}, viewed in different languages.
+% TODO mention the revision ID? 704641959
+The page structure is the same regardless of language:
+first, there is a heading, showing the label in the current language and the item ID;
+below it on the left side is the “term box”,
+listing labels, descriptions and aliases in several languages relevant to the user;
+below that is the list of statements;
+to the right are lists of sitelinks for different Wikimedia projects.
+The screenshots are truncated
+(the page has also been lightly edited for the screenshots
+to remove some spacing and a few less relevant page elements)
+and do not show the full list of statements,
+but the statements pictured are:
+\begin{itemize}
+\item A statement for the property \P{P31},
+  where the value is an item, \Q{Q33146843}.
+\item A statement for the property \P{P18},
+  where the value is a media file on Wikimedia Commons.
+  Image credit:
+  \href{https://commons.wikimedia.org/wiki/User:Mariarosafg}{Mariarosafg}
+  (\url{https://commons.wikimedia.org/wiki/File:Ciutat_de_Montblanc.jpg}),
+  “Ciutat de Montblanc”,
+  \url{https://creativecommons.org/licenses/by-sa/3.0/legalcode}
+\item Two statements for the property \P{P1448},
+  where the values are monolingual text strings.
+  Both statements also have qualifiers and references.
+\end{itemize}
+In \cref{fig:montblanc-en},
+the item is viewed as an anonymous user in the default English language
+(German is shown as a second language in the term box
+because the request was made from a German IP address;
+logged in users can configure which languages they want to be shown here).
+In \cref{fig:montblanc-ca},
+the item is viewed as an anonymous user, explicitly requested in the Catalan language:
+notice that all property and item labels are now different.
+
 \begin{figure}
-  \captionsetup{singlelinecheck=off}
-  \caption[Two screenshots of the same item viewed in different languages.]{
-    Two screenshots of the same item viewed in different languages.
-    % TODO mention the revision ID? 704641959
-
-    The page structure is the same regardless of language.
-    First, there is a heading, showing the label in the current language and the item ID.
-    Below it on the left side is the “term box”,
-    listing labels, descriptions and aliases in several languages relevant to the user.
-    Below that is the list of statements.
-    To the right are lists of sitelinks for different Wikimedia projects.
-
-    The screenshots are truncated and do not show the full list of statements,
-    but the statements pictured are:
-    \begin{itemize}
-    \item A statement for the property \P{P31},
-      where the value is an item, \Q{Q33146843}.
-    \item A statement for the property \P{P18},
-      where the value is a media file on Wikimedia Commons.
-      Image credit:
-      \href{https://commons.wikimedia.org/wiki/User:Mariarosafg}{Mariarosafg}
-      (\url{https://commons.wikimedia.org/wiki/File:Ciutat_de_Montblanc.jpg}),
-      “Ciutat de Montblanc”,
-      \url{https://creativecommons.org/licenses/by-sa/3.0/legalcode}
-    \item Two statements for the property \P{P1448},
-      where the values are monolingual text strings.
-      Both statements also have qualifiers and references.
-    \end{itemize}
-
-    (The page has been lightly edited for the screenshots
-    to remove some spacing and a few less relevant page elements.)
-  }
+  \caption{Two screenshots of the same item viewed in different languages.}
   \label{fig:montblanc}
   \begin{subfigure}{\textwidth}
-    \caption[The item viewed as an anonymous user in the default English language.]{
-      The item viewed as an anonymous user in the default English language.
-      German is shown as a second language in the term box
-      because the request was made from a German IP address.
-      Logged in users can configure which languages they want to be shown here.
-    }
+    \caption{The item viewed as an anonymous user in the default English language.}
     \label{fig:montblanc-en}
     \includegraphics[width=\textwidth]{screenshots/montblanc-en}
   \end{subfigure}
 \end{figure}
 \begin{figure}\ContinuedFloat
   \begin{subfigure}{\textwidth}
-    \caption[The item viewed as an anonymous user, explicitly requested in the Catalan language.]{
-      The item viewed as an anonymous user, explicitly requested in the Catalan language.
-      Notice that all property and item labels are now different.
-    }
+    \caption{The item viewed as an anonymous user, explicitly requested in the Catalan language.}
     \label{fig:montblanc-ca}
     \includegraphics[width=\textwidth]{screenshots/montblanc-ca}
   \end{subfigure}
