@@ -10,43 +10,39 @@ set terminal latex
 SSR(SST) = SST - (FIT_WSSR / (FIT_NDF + 2)) # assuming a function with two variables (i. e. two less degrees of freedom than records)
 R2(SST) = SSR(SST) / SST
 
-fit mean 'graphs/jobs.tsv' using 3:4 via mean
-SST = FIT_WSSR / (FIT_NDF + 1)
-fit linear(x) 'graphs/jobs.tsv' using 3:4 via linear_a, linear_b
-linear_r2 = R2(SST)
-fit quadratic(x) 'graphs/jobs.tsv' using 3:4 via quadratic_a, quadratic_b, quadratic_c
-quadratic_r2 = R2(SST)
-fit power(x) 'graphs/jobs.tsv' using 3:4 via power_a, power_b, power_c
-power_r2 = R2(SST)
+set datafile separator tab
+total_real = '(column("download (real)") + column("r2g (real)") + column("simplify (real)") + column("shex (real)") + column("html (real)"))'
 
-set output 'graphs/jobs-over-triples.tex'
-set key left # position
-set key Left # alignment
-set key reverse # sample to the left of text
-# set xlabel 'input triples'
-plot 'graphs/jobs.tsv' using 3:4 title 'data', \
-     linear(x) title sprintf('$%.2f %+.2fx$ ($r^2 = %.2f$)', linear_a, linear_b, linear_r2), \
-     quadratic(x) title sprintf('$%.2f %+.2fx %+.2fx^2$ ($r^2 = %.2f$)', quadratic_a, quadratic_b, quadratic_c, quadratic_r2), \
-     power(x) title sprintf('$%.2f %+.2fx^{%.2f}$ ($r^2 = %.2f$)', power_a, power_b, power_c, power_r2)
+do for [file in 'jobs jobs-without-outliers'] {
+  do for [x_axis in 'entities triples P31s classes'] {
+    infile = 'graphs/' . file . '.tsv'
+    outfile = 'graphs/' . file . '-over-' . x_axis . '.tex'
+    linear_a = 1
+    linear_b = 1
+    quadratic_a = 1
+    quadratic_b = 1
+    quadratic_c = 1
+    power_a = 1
+    power_b = 1
+    power_c = 1
 
-fit mean 'graphs/jobs.tsv' using 2:4 via mean
-SST = FIT_WSSR / (FIT_NDF + 1)
-fit linear(x) 'graphs/jobs.tsv' using 2:4 via linear_a, linear_b
-linear_r2 = R2(SST)
-fit quadratic(x) 'graphs/jobs.tsv' using 2:4 via quadratic_a, quadratic_b, quadratic_c
-quadratic_r2 = R2(SST)
-fit power(x) 'graphs/jobs.tsv' using 2:4 via power_a, power_b, power_c
-power_r2 = R2(SST)
+    fit mean infile using (column(x_axis)):@total_real via mean
+    SST = FIT_WSSR / (FIT_NDF + 1)
+    fit linear(x) infile using (column(x_axis)):@total_real via linear_a, linear_b
+    linear_r2 = R2(SST)
+    fit quadratic(x) infile using (column(x_axis)):@total_real via quadratic_a, quadratic_b, quadratic_c
+    quadratic_r2 = R2(SST)
+    fit power(x) infile using (column(x_axis)):@total_real via power_a, power_b, power_c
+    power_r2 = R2(SST)
 
-set output 'graphs/jobs-over-entities.tex'
-set key right # position
-set key Right # alignment
-set key noreverse # sample to the right of text
-# set xlabel 'input entities'
-plot 'graphs/jobs.tsv' using 2:4 title 'data', \
-     linear(x) title sprintf('$%.2f %+.2fx$ ($r^2 = %.2f$)', linear_a, linear_b, linear_r2), \
-     quadratic(x) title sprintf('$%.2f %+.2fx %+.2fx^2$ ($r^2 = %.2f$)', quadratic_a, quadratic_b, quadratic_c, quadratic_r2), \
-     power(x) title sprintf('$%.2f %+.2fx^{%.2f}$ ($r^2 = %.2f$)', power_a, power_b, power_c, power_r2)
-
-# TODO export fit data?
+    set output outfile
+    set key left # position
+    set key Left # alignment
+    set key reverse # sample to the left of text
+    plot infile using (column(x_axis)):@total_real title 'data', \
+         linear(x) title sprintf('$%.2f %+.2fx$ ($r^2 = %.2f$)', linear_a, linear_b, linear_r2), \
+         quadratic(x) title sprintf('$%.2f %+.2fx %+.2fx^2$ ($r^2 = %.2f$)', quadratic_a, quadratic_b, quadratic_c, quadratic_r2), \
+         power(x) title sprintf('$%.2f %+.2fx^{%.2f}$ ($r^2 = %.2f$)', power_a, power_b, power_c, power_r2)
+  }
+}
 # TODO probably check the r² calculations

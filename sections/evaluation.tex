@@ -38,76 +38,126 @@ While attempts to validate data against the inferred schema
 suffer due to the size of the input data and the schemas,
 no such problems appear to plague the inference process,
 which, while slow, has a more reliable runtime.
-The various jobs that were run on the Wikidata Shape Expressions Inference Tool,
-whose execution times range from five or ten minutes to several hours,
-generally show a linear relationship between the number of triples in the input data
-and the total duration of the inference job
-(see \cref{fig:jobs-over-triples}).
-It is expected that this linear relationship will continue to hold for larger input data sets,
-and that there is no fundamental limit barring the inference of ever larger data sets,
-provided one is willing to wait long enough for the results.
-% TODO add the data – here or in an appendix?
+To some degree, this was already apparent in the execution times
+of the various jobs that were run on the Wikidata Shape Expressions Inference Tool:
+ranging from five or ten minutes to several hours,
+they roughly follow the size of the input data linearly.
 
-It should be noted % TODO awkward passive voice
-that this is a relation between the number of triples and the execution time,
-but the triples are not directly the input of the inference process:
-that input is a SPARQL query which selects a set of input \emph{entities},
-and the triples are the statements of those entities and the entities they link to,
-downloaded in an early step of the inference process.
-The relationship between the \emph{number of entities} selected and the execution time
-is much more chaotic
-(see \cref{fig:jobs-over-entities}), % TODO add the data for this as well?
-since it highly depends on the selected entities:
-how many statements they themselves have,
-as well as how many other entities they link to.
-However, the data download step is itself a fairly cheap % TODO “cheap” acceptable?
-step of the inference process,
-so it is not very difficult to derive the number of triples,
-from which it is then possible to predict the total execution type of the inference process fairly reliably.
+However, the data from the Wikidata Shape Expressions Inference tool
+is not without its problems:
+as the tool was tested with different jobs,
+various problems were discovered and subsequently fixed
+(some of them described in more detail earlier, others too minor to be worth mentioning),
+so the runtimes available from the tool apply to a range of software versions,
+with several instances of the same job being repeated (to verify a software fix)
+with highly different runtimes.
+Therefore, a subset of the tool’s jobs was selected
+and repeated locally, with a single software version,
+to get more reliable execution times. % TODO mention my hardware? at least the CPU and amount of RAM?
+\Cref{sec:jobs-over-various} contains graphs of runtime over various factors,
+which are explained in more detail in the following paragraphs,
+each with three different functions fitted to the data:
+a simple linear function $a+bx$,
+a quadratic function $a+bx+cx^2$,
+and a power function $a+bx^c$.
+Each figure contains two subfigures,
+one for the full data and one with two records removed, which are outliers:
+a job for \num{20000} mammals, with reasonable execution time compared to an absurd number of selected entities, % TODO “absurd” okay?
+and a job for humans with most sitelinks, with unusually high execution time compared to the amount of input data. % TODO find better justification for this outlier.
+The full data is available in the source code repository for this thesis.
+% TODO okay to mention the repository? if yes, dump its url somewhere!
 
-% TODO describe where the data (#entities, #lines, job execution times) comes from?
-% to what level of detail? should I mention the custom script to read the accounting file backwards?
+The most obvious possible relation is
+to directly compare the runtime to the number of entities selected by the user’s query,
+as shown in \cref{fig:jobs-over-entities}.
+However, it is clear from the graphs that there is no direct relation
+between the number of entities and the runtime,
+which is not surprising because the amount of work that RDF2Graph has to do
+highly depends on the size of the entities,
+as well as the number of entities indirectly selected as the values of statements on the original entities (and their size).
 
-% TODO with the latest jobs, the data doesn’t really fit the text anymore :(
+Instead, a much more sensible relation is the total amount of input data:
+the number of triples which Fuseki serves to RDF2Graph
+(that is, the number of lines in the N-Triples file). % TODO \cref background?
+As can be seen in \cref{fig:jobs-over-triples},
+this results in a fairly linear relation,
+especially if two outliers are removed,
+in which case the functions fit the data very well.
+However, with the outliers included the fit is much less satisfactory.
 
-\begin{figure}
-  \centering
-  \input{graphs/jobs-over-triples}
-  \caption[A chart of job execution time over number of triples in the input data set.]{
-    A chart of job execution time over number of triples in the input data set,
-    along with three different functions fit to the data.
-    All three fits resulted in roughly the same linear function
-    and approximate the data reasonably well.
-    % TODO explain the “0.00” x² coefficient?
-  }
-  \label{fig:jobs-over-triples}
-\end{figure}
+\begin{lstfloat}[b]
+\begin{lstlisting}[language=awk]
+BEGINFILE {
+  count = 0;
+}
 
-\begin{figure}
-  \centering
-  \input{graphs/jobs-over-entities}
-  \caption[A chart of job execution time over number of entities in the input data set.]{
-    A chart of job execution time over number of entities in the input data set,
-    along with three different functions fit to the data.
-    The three fits resulted in very different functions
-    and don’t approximate the data very well;
-    in fact, the quadratic function appears to suggest
-    that execution time shall become negative if one only supplies enough entities,
-    which is clearly nonsensical. % TODO is “clearly nonsensical” appropriate style?
-    % TODO improve wording so it’s not quite as derivative of the previous figure
-  }
-  \label{fig:jobs-over-entities}
-\end{figure}
+$2 == "<http://www.wikidata.org/prop/direct/P31>" {
+  count++;
+}
 
-This suggests two possible future improvements
-for the Wikidata Shape Expressions Inference Tool:
-to report to the user how long a job is expected to take,
-as soon as the download step has finished;
-and to reject jobs which resulted in too much data,
-and are expected to take far too long to be tolerable.
-Currently, the tool merely suggests to its users
-that their queries should not select more than about fifty entities,
-but does not implement any kind of hard limit beyond that.
+ENDFILE {
+  print FILENAME, count
+}
+\end{lstlisting}
+\caption{GNU AWK script to count the number of \PName{wdt:P31} triples in the input.}
+\label{listing:P31}
+\end{lstfloat}
+
+\begin{lstfloat}[b]
+\begin{lstlisting}[language=awk]
+BEGINFILE {
+  count = 0;
+  delete classes;
+}
+
+$2 == "<http://www.wikidata.org/prop/direct/P31>" {
+  classes[$3]++
+}
+
+ENDFILE {
+  for (class in classes)
+    count++;
+  print FILENAME, count;
+}
+\end{lstlisting}
+\caption{GNU AWK script to count distinct classes in the input.}
+\label{listing:classes}
+\end{lstfloat}
+
+Since RDF2Graph heavily relies on type information,
+another possible factor for execution time
+is just the number of \PName{wdt:P31} triples in the input,
+rather than the overall number of triples.
+(Recall that \PL{P31}{instance of} is the Wikidata property linking an item to its class.)
+% TODO a) is that “recall” appropriate? b) was that even clearly explained yet?
+The number of \PName{wdt:P31} triples was counted
+using the GNU AWK snippet found in \cref{listing:P31},
+and the result is shown in \cref{fig:jobs-over-P31s}:
+the functions are more linear and fit the data better, both with and without outliers.
+However, with outliers included the fit is still not completely satisfactory.
+
+Alternatively, instead of counting \PName{wdt:P31} triples
+it is also possible to count the distinct number of classes in the input data.
+Classes were counted using the GNU AWK snippet found in \cref{listing:classes},
+and the result is shown in \cref{fig:jobs-over-classes}:
+the functions are significantly less linear now
+(though this is not visible in the function equations shown in the graphs, due to rounding),
+but they finally fit the data well without excluding the outliers:
+in fact, the graph with outliers has slightly better fits than the one without outliers.
+
+Two conclusions are possible from this:
+the execution time could derive linearly from the number of input triples or \PName{wdt:P31} triples,
+or it could derive nonlinearly from the number of input classes.
+The first conclusion has no satisfactory explanation for the outliers
+which need to be excluded to get good function fits,
+whereas the second conclusion requires no cherry-picking in the data
+but lacks an explanation for the nonlinear runtime.
+% TODO is this undecidedness between the conclusions acceptable?
+
+% TODO explain more clearly why it’s useful to relate runtime to triples
+% even though the triples are not direct user input
+% and possible improvements for the tool
+% (check git log for the deleted paragraphs on this)
 
 % TODO user feedback for the tool
 
