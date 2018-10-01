@@ -165,6 +165,74 @@ The meaning of the result column is as follows:
 % TODO section heading is currently separated from the graphs
 % by some of the tables above
 
+The following charts show the total execution time of the inference process
+for various input queries collected from the Wikidata Shape Expressions Inference tool:
+
+\begin{itemize}
+\item Members of the 30th Riigikogu (the Estonian parliament),
+  limited to 50 entities.
+  Originally \wdsiJob{30}.
+\item The Federal Chancellors of Germany,
+  originally \wdsiJob{1}.
+\item Films that won three or more Academy Awards (“Oscars”). % glossary? ™?
+  Originally \wdsiJob{32}, later repeated as \wdsiJob{34}, \wdsiJob{35}, \wdsiJob{36}.
+  (Some earlier jobs used a similar query with a limit of ten or five Oscars.)
+\item The human items with most sitelinks to other Wikimedia projects
+  (including but not limited to Wikipedia articles in different language editions),
+  limited to 50 entities.
+  Originally \wdsiJob{24}, later repeated as \wdsiJob{26}, \wdsiJob{27}.
+
+  This is one of the two outliers removed for the first version of each chart,
+  since it has an unusually high execution time compared to the amount of input data.
+  My best explanation for that is that this is a less “coherent” set of entities:
+  since the selection criterion (the number of sitelinks) is not directly related to the data,
+  this includes politicians, authors, religious figures, scientists, philosophers, celebrities, composers, and other kinds of people
+  (though none of these are \emph{classes} in the sense relevant to RDF2Graph).
+\item The largest cities in the world by population,
+  limited to 25 entities.
+  Originally \wdsiJob{3}.
+\item Mammal taxa (including species but also genera, families etc.).
+  Limited to \num{20000} entities,
+  a limit that was experimentally determined to produce a high but not exorbitant number of triples.
+  Originally \wdsiJob{33}.
+
+  This is the second of the two outliers removed for the first version of each chart,
+  due to the absurd number of input entities:
+  compare especially the $X$-axes of
+  \cref{fig:jobs-over-entities-with-outliers} and \cref{fig:jobs-over-entities-without-outliers}.
+\item Programming languages with the highest number of statements,
+  limited to 50 entities.
+  Originally \wdsiJob{17}, later repeated as \wdsiJob{18}.
+\item Recently edited items for \glspl{rfc},
+  limited to 500 entities.
+  Originally \wdsiJob{21}, based on the earlier \wdsiJob{20} (equivalent but with a lower limit),
+  which in turn was inspired by \wdsiJob{8}.
+\item The member states of the United Nations, % TODO acronym?
+  originally \wdsiJob{23}.
+\item The presidents of the United States of America,
+  originally \wdsiJob{2}.
+\item The chapter organizations of the Wikimedia Foundation,
+  originally \wdsiJob{5}.
+\end{itemize}
+
+For each input query,
+the different steps of the inference process
+(data download, initial RDF2Graph run, RDF2Graph simplification, \gls{shex} export)
+were timed individually,
+recording the real (“wall-clock”) time, user CPU time and system CPU time separately.
+Only the sum of the real time was used for the charts below,
+but the full data is available in the source code repository for this thesis.
+% TODO okay to mention the repository? if yes, dump its url somewhere!
+
+In addition to the graphs shown here,
+the full data also shows that the simplification step of the process
+never takes more than a minute,
+which means that while the changes in \cref{sec:RDF2Graph+Wikidata:cyclic-graphs} potentially slowed this step down to some degree,
+it doesn’t make a big difference for the total execution time,
+which is mostly dominated by other steps
+(RDF2Graph without simplification and \gls{shex} export)
+anyways.
+
 \begin{figure}[ht]
   \begin{subfigure}{\textwidth}
     \centering
