@@ -505,19 +505,29 @@ which may previously not have been necessary if the pruned part would otherwise 
 \chapter{The Wikidata ShEx Inference Tool}
 \label{ch:wdsi}
 
-% TODO this is way too long as a chapter introduction.
-% split into sections, then write a separate introduction paragraph
+This chapter describes the major user-facing result of this thesis:
+the Wikidata Shape Expressions Inference Tool,
+which makes the Wikidata-aware % “Wikidata-aware”?
+version of RDF2Graph easily available to Wikidata editors.
+This includes the general design and implementation of the tool (\cref{sec:wdsi:abstract}),
+some specifics to make it run on the Wikimedia Toolforge platform (\cref{sec:wdsi:Toolforge}),
+and a few utilities to make it more pleasant to use (\cref{sec:wdsi:utilities}).
+The tool is online at \url{https://tools.wmflabs.org/wd-shex-infer/}
+and its source code may be found at \url{https://phabricator.wikimedia.org/source/tool-wd-shex-infer/}.
 
-Once the schema inference process against Wikidata was more or less settled,
-it was time to begin making it available to others. % TODO is “it was time to” appropriate language?
-RDF2Graph, its ShEx exporter, and the Makefile-based process around them
+% TODO find a better title for this section
+\section{General design and implementation}
+\label{sec:wdsi:abstract}
+
+The goal of the tool is to make the schema inference process available to other Wikidata editors,
+which is necessary because RDF2Graph, its ShEx exporter, and the Makefile-based process around them
 require several different programs and programming runtimes to be available,
 which it would be unreasonable to expect every interested user to install
 (not to mention that the Makefile assumes a Unix-like environment,
 whereas the potential users are likely to use Windows).
-Instead, a common approach in the Wikimedia universe
-is to install such a program on Wikimedia Toolforge
-and make it available to users via a web interface.
+Installing such a program on Wikimedia Toolforge
+and making it available to users via a web interface
+is a common approach in the Wikimedia universe.
 
 % TODO what tense / mood to use in this section? not sure if subjunctive mood makes sense
 In this Wikimedia-hosted tool,
@@ -586,17 +596,6 @@ are too large to store in a database.
 Instead, they are stored directly on the file system.
 
 % TODO find a better title for this section
-\section{Toolforge Support}
-\label{sec:wdsi:Toolforge}
-
-% TODO find a better title for this section
-\section{Abstract Considerations}
-\label{sec:wdsi:abstract}
-
-% TODO I suppose the current paragraphs directly below the chapter mostly cover this section,
-% needs to be suitably rearranged
-
-% TODO find a better title for this section
 \section{Utilities}
 \label{sec:wdsi:utilities}
 
@@ -651,3 +650,32 @@ can be seen in \cref{fig:shexc-syntax-highlighting}.
   }
   \label{fig:shexc-syntax-highlighting}
 \end{figure}
+
+% TODO find a better title for this section
+\section{Toolforge Support}
+\label{sec:wdsi:Toolforge}
+
+Since Wikimedia Toolforge runs on a rather old Linux distribution
+(Ubuntu 14.04 “Trusty Tahr”, originally released April 2014),
+the versions of various software used by RDF2Graph and the rest of the inference process
+were too outdated to use out-of-the-box.
+The response to this was twofold:
+to cope with older software versions where feasible,
+and to install newer software versions where not.
+
+RDF2Graph required Java 8,
+but only Java 7 is installed on Toolforge.
+Fortunately, RDF2Graph only used Java 8 for syntactic constructs (“lambda” syntax)
+and those only sparingly, so it was not too much work to make it compatible with Java 7 again.
+Similarly, Apache Jena and Fuseki have required Java 8 for some time already,
+but fortunately RDF2Graph is compatible with their older versions which support Java 7,
+and which could therefore be installed.
+
+On the other hand, there is no obvious way to make the \command{jq}-based part of the data download step
+work with \command{jq} version 1.4, which has no general string replacement capabilities.
+Therefore, \command{jq} version 1.5 was installed locally into the tool’s home directory –
+as was the latest version of Node.js, which was similarly outdated.
+(The Pygments syntax highlighter mentioned in \cref{sec:wdsi:utilities} was also installed locally,
+since ShExC syntax support is not yet available in any released version.)
+
+Full installation instructions may be found in the \filename{README} file of the source code repository.
