@@ -19,16 +19,171 @@
 \section{Schema Quality}
 \label{sec:Evaluation:quality}
 
-In general, the quality of the inferred schemas is satisfactory.
-On occasion, parts of the schema may not make sense –
-for example, if a shape declares that the value for a \PL{P735}{given name} statement
-should be a \QL{Q202444}{given name} or a \QL{Q101352}{family name} –
-but these problems are usually not the fault of the inference process,
-but rather point to problems in the input data:
-in this example, someone probably used an item for a family name
-instead of the identical given name. % TODO example!
-% TODO more about the schema quality (with examples!)
-% TODO elaborate
+Unfortunately, without being able to reliably validate datasets against schemas –
+for example, to verify whether an item for an author matches a schema inferred from fifty other authors –
+it is not possible to objectively assess the quality of the inferred schemas.
+However, there are still several options to evaluate the schema quality more subjectively.
+
+The simplest option is to look at the schemas and see if they “make sense” on their own.
+Generally, the inferred schemas are much too large to read the entire schema,
+but one can select the shapes for individual classes
+(randomly or by searching for the item IDs of specific classes)
+and check their type links.
+For example, \cref{listing:13th-riigikogu-Q5} shows the shape for the class \QL{Q5}{human}
+from the schema inferred from 50 members of the 13th Riigikogu (the Estonian parliament).
+In textual form, it means that a human should have the following statements:
+\begin{itemize}
+\item Member of any number of political parties, where the values are political parties.
+\item Any number of occupations, where the values are positions.
+  This likely reflects the fact that the input data only contained politicians –
+  other schemas often include other possible classes for this property,
+  such as “occupation” or “profession”.
+\item Any number of spoken, written or signed languages, where the values are languages.
+\item Optionally, a name in the subject’s native language.
+\item Any number of awards received, where the values are classes of awards.
+  The target class, “class of award”, is an artifact of the not completely consistent modeling of awards in Wikidata:
+  there is sometimes confusion about the relationship between different “levels” of awards,
+  such as “award”, “peace prize”, “Nobel Prize”, “Nobel Peace Prize”, “2018 Nobel Peace Prize”,
+  and whether they should be instances or subclasses of each other.
+\item Optionally, a place of birth, where the value is a human settlement.
+\item Optionally, a sex or gender, where the value is a sex of humans or a gender.
+  The two target classes are the result of the two most common gender items in Wikidata,
+  \QL{Q6581097}{male} and \QL{Q6581072}{female},
+  each having several \PL{P31}{instance of} statements.
+\item Optionally, a country of citizenship, where the value is a political territorial entity.
+\item Optionally, a Wikimedia Commons category.
+\item Any number of positions held by the subject, where the values are positions.
+\item Optionally, a date of birth.
+\item Any number of places where the subject was educated, where the values are educational institutions.
+\item Optionally, a family name, where the value is a family name.
+\item Optionally, a given name, where the value is a given name.
+\item Any number of work locations, where the values are human settlements.
+\end{itemize}
+
+\begin{lstfloat}[t]
+\begin{lstlisting}[language=sparql]
+wd:Q5 { # & wd:Q215627
+  wdt:P102 @wd:Q7278*;
+  wdt:P106 @wd:Q4164871*;
+  wdt:P1412 @wd:Q34770*;
+  wdt:P1559 rdf:langString?;
+  wdt:P166 @wd:Q38033430*;
+  wdt:P19 @wd:Q486972?;
+  (
+    wdt:P21 @wd:Q4369513? |
+    wdt:P21 @wd:Q48277?
+  );
+  wdt:P27 @wd:Q1048835?;
+  wdt:P373 xsd:string?;
+  wdt:P39 @wd:Q4164871*;
+  wdt:P569 xsd:dateTime?;
+  wdt:P69 @wd:Q2385804*;
+  wdt:P734 @wd:Q101352?;
+  wdt:P735 @wd:Q202444?;
+  wdt:P937 @wd:Q486972*
+}
+\end{lstlisting}
+\caption{Excerpt of a schema inferred from 50 members of the 13th Riigikogu.}
+\label{listing:13th-riigikogu-Q5}
+\end{lstfloat}
+
+Aside from some quirks of the input data, all of these seem reasonable to me.
+The most obvious missing predicates are date and place of death,
+which is again due to the input data set:
+all the members of the current Estonian parliament are alive,
+and while one might expect to see dates of death on some items they link to,
+the fact that currently only 33 parents of members of the 13th Riigikogu are known to Wikidata
+makes it seem plausible enough that there simply happened to be no dead humans in the full input data.
+
+As the input data sets get larger,
+the schemas also tend to grow:
+in the number of shapes (classes),
+the number of predicates in each shape,
+and also in the number of possible classes for a predicate.
+For example, before simplification,
+the \QL{Q5}{human} shape from the schema inferred from the set of US presidents
+lists \emph{nine} possible classes for someone’s \PL{P735}{given name}:
+\begin{itemize}
+\item A generic \QL{Q202444}{given name},
+  such as \QL{Q18396847}{Boylston} in Thomas Boylston Adams, the third son of President John Adams.
+  (The more common given names generally have a more specific class,
+  usually one of the next three listed here.)
+\item A \QL{Q12308941}{male given name},
+  such as \QL{Q677191}{James} in President James A.~ Garfield.
+\item A \QL{Q11879590}{female given name},
+  such as \QL{Q644599}{Ida} in Ida Stover Eisenhower, mother of President Eisenhower.
+\item A \QL{Q3409032}{unisex given name},
+  such as \QL{Q564684}{Anne} in Nancy Reagan (born Anne Frances Robbins), wife of President Reagan.
+  (“Anne” is a female given name in English,
+  but sometimes used as a male given name in the Netherlands or France,
+  and therefore classified as both female and unisex in Wikidata, depending on language.)
+\item A \QL{Q1243157}{compound given name},
+  such as \QL{Q16275947}{George Washington} in George Washington Adams, the first son of President John Quincy Adams.
+\item A \QL{Q1130279}{hypocorism} (a diminutive form of a name),
+  such as \QL{Q2165388}{Ron} in Ron Reagan, son of President Reagan.
+\item A \QL{Q108709}{diminutive},
+  such as \QL{Q4166211}{Jimmy} in President Jimmy Carter.
+  (Arguably, that item should be an instance of the aforementioned hypocorism class
+  instead of the more generic diminutive class, which also includes non-names like “auntie”.)
+\item \QL{Q19803443}{Initials instead of given names},
+  such as \QL{Q19803518}{S.} in President Harry S.~Truman (not an abbreviation).
+\item A \QL{Q101352}{family name},
+  such as \QL{Q2800825}{Simpson} as in President Ulysses S.~Grant
+  (the “S.” is sometimes believed to be short for “Simpson”, his mother’s maiden name).
+  This is clearly an error: even if the “S.” does stand for “Simpson”, which Grant denied,
+  the correct item to use would be the given name \Q{Q50876620}, not the family name \Q{Q2800825}.
+\end{itemize}
+
+If the problems pointed out above were to be fixed,
+all the remaining classes could be merged into the generic \QL{Q202444}{given name} class,
+as in the earlier schema.
+However, due to the presence of \QL{Q101352}{family name},
+the best common superclass is instead \QL{Q10856962}{anthroponym},
+the common superclass of given and last names,
+and the \QL{Q108709}{diminutive} class remains unmerged,
+as it is not a subclass of any kind of name.
+
+One can continue to pick apart the generated schemas in this manner for hours,
+and I have done so while working on this thesis
+in order to find problems and possible improvements in the inference process.
+Three insights emerge:
+
+\begin{enumerate}
+\item The simplification step is vital for readable schemas.
+  The schemas are no less correct without simplification as far as the input data set is concerned,
+  but if the numerous subclasses in Wikidata’s hierarchy are never merged,
+  the schemas become exceedingly tedious to read for humans,
+  and they will also often match other data sets less well
+  if the other data sets involve subclasses that were not encountered in the original input data.
+
+  This can be seen in some of the older jobs of the Wikidata Shape Expressions Tool:
+  if there is a \lstinline[language=java]{StackOverflowError} in the standard error of the inference process,
+  it means that RDF2Graph crashed during the simplification step
+  and the \gls{shex} export ran on the original, unsimplified graph.
+  (Later, the inference step was made more robust,
+  which is why newer jobs do not have this problem.)
+
+\item Sometimes, biases in the schema are visible, due to biases in the input data set.
+  (In one particularly egregious case,
+  a schema proclaimed that a given name must always be a \emph{male} given name,
+  since there had been no women with given names in the input data set.)
+  One can presume that at other times biases in the schema are not visible,
+  which does not mean that they are not present. % TODO abbreviate to “not visible, but still present”?
+  To arrive at useful schemas,
+  care must be taken when selecting the input data set,
+  and the results must be viewed critically. % TODO is “viewed” the best verb here?
+
+\item Sometimes, the schema reflects errors in the input data,
+  as in the case above where a family name item was used for a given name.
+  This can often be traced back to confusion between several items with similar labels.
+  Such errors are usually visible in the resulting schema if one takes the time to read it,
+  though they are not always obvious due to the simplification
+  (as when the classes for given and family names were merged into anthroponyms above).
+\end{enumerate}
+
+% TODO “testimonials” from others?
+
+% TODO next step, already hinted at above: cherry-picked schemas (probably a separate section)
 
 % TODO find a better title for this section
 \section{Duration of the inference process}
