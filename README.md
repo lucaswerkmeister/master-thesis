@@ -1,8 +1,8 @@
 # Master’s thesis
 
 This is where the text of my master’s thesis lives.
-It’s still being written, and nowhere near finished yet.
-If you want to give me feedback already,
+It’s not done yet, but I’m getting there (the deadline is October 15th).
+If you want to give me feedback,
 [a recent-ish PDF version][pdf] is available,
 though it may not always be completely up-to-date with the latest changes to the TeX source.
 
