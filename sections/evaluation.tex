@@ -185,7 +185,126 @@ Three insights emerge:
 
 % TODO “testimonials” from others?
 
-% TODO next step, already hinted at above: cherry-picked schemas (probably a separate section)
+% TODO find a better title for this section
+\section{Manual schema extraction}
+\label{sec:Evaluation:extraction}
+
+One way to make use of the inferred schemas
+even though they cannot be used for validation directly
+is to extract a smaller subset of the schema manually,
+then validating items against that.
+If desired, that schema can then be further altered and augmented as deemed necessary,
+making the original schema the basis of a manually curated one.
+
+Generally, to extract parts of the schema,
+one starts with a basic shape for the input entities
+(e.~g. \QL{Q5}{human} if the schema was inferred from a set of humans),
+copies it into the reduced schema,
+and repeats this procedure for all shapes (classes) mentioned by that shape which had not been copied yet.
+Predicates which link to shapes that should not be included can be dropped when copying a shape:
+for example, the \PL{P27}{country of citizenship} shape should be dropped
+if one is not interested in including shapes for countries, states etc. in the reduced schema.
+Some predicates may also need to be moved between shapes,
+or the target classes may need to be adjusted,
+if the results of the automatic simplification are not satisfactory,
+e.~g. if unrelated classes were merged into a very fundamental base class like \QL{Q937228}{property}
+despite the changes in \cref{subsec:RDF2Graph+Wikidata:Wikidata:simplification}.
+
+\begin{lstfloat}[ht]
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}[language=sparql,showlines=true]
+wd:Q12136 {
+  wdt:P1478 @wd:Q16521?;
+  wdt:P1748 xsd:string?;
+  wdt:P2572 xsd:string?;
+  wdt:P373 xsd:string?;
+  wdt:P667 xsd:string?;
+  wdt:P828 @wd:Q16521?
+}
+
+wd:Q16521 {
+  wdt:P1542 @wd:Q12136?;
+  wdt:P171 @wd:Q16521*;
+  wdt:P225 xsd:string?;
+  wdt:P373 xsd:string?;
+  wdt:P935 xsd:string?
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{lstlisting}
+\caption{Schema for diseases, based on \wdsiJob{37}.}
+\label{listing:zika}
+\end{sublstfloat}
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}[language=sparql]
+wd:Q11424 {
+  wdt:P1040 @wd:Q5*;
+  wdt:P1431 @wd:Q5*;
+  wdt:P154 .?;
+  wdt:P161 @wd:Q5*
+  wdt:P162 @wd:Q5*;
+  wdt:P175 @wd:Q5?;
+  wdt:P1809 @wd:Q5*;
+  wdt:P2130 xsd:decimal?;
+  wdt:P2142 xsd:decimal?;
+  wdt:P2515 @wd:Q5*;
+  wdt:P2554 @wd:Q5*;
+  wdt:P2769 xsd:decimal?;
+  wdt:P3092 @wd:Q5*;
+  wdt:P3174 @wd:Q5*;
+  wdt:P3300 @wd:Q5?;
+  wdt:P344 @wd:Q5*;
+  wdt:P373 xsd:string?;
+  wdt:P57 @wd:Q5*;
+  wdt:P58 @wd:Q5*;
+  wdt:P725 @wd:Q5*;
+  wdt:P86 @wd:Q5*;
+}
+
+wd:Q5 {
+  wdt:P22 @wd:Q5?;
+  wdt:P25 @wd:Q5?;
+  wdt:P26 @wd:Q5*;
+  wdt:P40 @wd:Q5*;
+  wdt:P569 xsd:dateTime?;
+  wdt:P570 xsd:dateTime?;
+}
+\end{lstlisting}
+\caption{Schema for films, based on \wdsiJob{36}.}
+\label{listing:films}
+\end{sublstfloat}
+\caption{Two schemas manually extracted from automatically inferred ones.}
+\label{listing:extracted}
+\end{lstfloat}
+
+\Cref{listing:extracted} shows two schemas that were manually extracted in this fashion
+from schemas inferred by the Wikidata Shape Expressions Inference Tool.
+\Cref{listing:zika} was extracted from a schema
+inferred from 100 scientific articles about the Zika virus,
+and contains shapes for the classes \QL{Q12136}{disease} and \QL{Q16521}{taxon}:
+diseases may be caused (indirectly or immediately) by taxa,
+and taxa may effect diseases and have any number of parent taxa.
+\Cref{listing:films} was extracted from a schema
+inferred from the set of films which one three or more Academy Awards (“Oscars”) % TODO glossary? ™?
+and contains shapes for the classes \QL{Q11424}{film} and \QL{Q5}{human}:
+films have human directors, editor, cast members, screenwriters, etc.,
+and humans may have parents, any number of spouses and children, and dates of birth and death.
+
+% TODO continue: what happens when you try to validate against those schemas? that should work
 
 % TODO find a better title for this section
 \section{Duration of the inference process}
