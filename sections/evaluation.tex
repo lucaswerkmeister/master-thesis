@@ -480,7 +480,24 @@ whereas the second conclusion requires no cherry-picking in the data
 but lacks an explanation for the nonlinear runtime.
 % TODO is this undecidedness between the conclusions acceptable?
 
-% TODO explain more clearly why it’s useful to relate runtime to triples
-% even though the triples are not direct user input
-% and possible improvements for the tool
-% (check git log for the deleted paragraphs on this)
+One might think that these relations are not very useful
+because they only predict the duration of the whole process partway through the process.
+However, all of the possible predictor variables – % TODO “predictor variables” feels weird – regressors? independent variables?
+number of entities, number of triples, number of \PName{wdt:P31} triples, number of distinct classes –
+can be determined after the data download step,
+which is both the very first step in the whole process
+and also does not take a long time:
+in the jobs listed in \cref{sec:jobs-over-various},
+the download never takes more than twenty seconds,
+and for most jobs it finishes within about five seconds.
+This means that it takes less than half a minute
+to be able to mostly predict the duration of the full job, which can be several hours.
+This suggests two possible future improvements
+for the Wikidata Shape Expressions Inference Tool:
+to report to the user how long a job is expected to take,
+as soon as the download step has finished;
+and to reject jobs which resulted in too much data,
+and are expected to take far too long to be tolerable.
+Currently, the tool merely suggests to its users
+that their queries should not select more than about fifty entities,
+but does not implement any kind of hard limit beyond that.
