@@ -13,20 +13,23 @@
 \chapter{Evaluation}
 \label{ch:Evaluation}
 
-% TODO write introductory paragraph, once the sections are laid out
+The evaluation of this work
+mainly focuses on the usefulness of the resulting schemas.
+Unfortunately, without being able to reliably validate datasets against schemas –
+for example, to verify whether an item for an author
+matches a schema inferred from fifty other authors –
+it is not possible to objectively assess the quality of the inferred schemas.
+However, the schemas can still be inspected manually for problems (\cref{sec:Evaluation:quality}),
+and it is also possible to extract smaller subsets from the full schemas,
+which can then be used for validation (\cref{sec:Evaluation:extraction}).
+In addition, the runtime of the inference process is examined in \cref{sec:Evaluation:duration}.
 
 % TODO find a better title for this section
 \section{Schema Quality}
 \label{sec:Evaluation:quality}
 
-Unfortunately, without being able to reliably validate datasets against schemas –
-for example, to verify whether an item for an author matches a schema inferred from fifty other authors –
-it is not possible to objectively assess the quality of the inferred schemas.
-However, there are still several options to evaluate the schema quality more subjectively.
-
-% TODO this starts with “the simplest option”, then rambles on,
-% and never directly comes back to other options. revisit!
-The simplest option is to look at the schemas and see if they “make sense” on their own.
+While the schema quality cannot be assessed objectively without verifying them,
+it is possible to simply look at the schemas and see if they “make sense” on their own.
 Generally, the inferred schemas are much too large to read the entire schema,
 but one can select the shapes for individual classes
 (randomly or by searching for the item IDs of specific classes)
