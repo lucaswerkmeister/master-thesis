@@ -35,7 +35,7 @@ and to target a more recent version of \gls{shex}.
 Many of these were rather minor in nature,
 but a few of the major ones are described in this section.
 
-The final step of the ShEx export was mostly rewritten from scratch.
+The final step of the \gls{shex} export was mostly rewritten from scratch.
 This is the step that translates a JSON-LD file describing the shapes of the schema
 into a ShExC file;
 the previous version did this using Jade,
@@ -85,7 +85,7 @@ and controlled by a Makefile in the RDF2Graph repository,
 so that after creating an \filename{\variable{example}.entities.sparql} file
 with a \gls{sparql} query selecting the exemplary items,
 it is sufficient to run \command{make \variable{example}.shex}
-to run the entire process and generate the ShEx file.
+to run the entire process and generate the \gls{shex} file.
 
 \begin{figure}
   \centering
@@ -114,7 +114,7 @@ to run the entire process and generate the ShEx file.
       \path (JSON.south) -- node {\command{jq}} (N-Triples.north);
       \path (N-Triples.south) -- node {Fuseki} (Fuseki.north);
       \path (Fuseki.south) -- node {RDF2Graph} (RDF2Graph.north);
-      \path (RDF2Graph.south) -- node {ShEx exporter} (ShEx);
+      \path (RDF2Graph.south) -- node {\gls{shex} exporter} (ShEx);
       \path (ShEx.south) -- node {\command{pygmentize}} (HTML);
     \end{scope}
   \end{tikzpicture}
@@ -142,10 +142,10 @@ including RDF2Graph’s simplification step.
 Once RDF2Graph terminates, the Fuseki server is stopped.
 
 Afterwards, the results from RDF2Graph are available as a graph of classes with associated information,
-and the RDF2Graph ShEx exporter is run to produce a ShEx file.
+and the RDF2Graph \gls{shex} exporter is run to produce a \gls{shex} file.
 If desired (\command{make \variable{example}.html}),
 that file can also be turned into an HTML file using the Pygments syntax highlighter,
-which makes the ShEx code more readable.
+which makes the \gls{shex} code more readable.
 
 % TODO look over the subsections again.
 % in general, each should first introduce a problem and then state my solution.
@@ -177,7 +177,7 @@ instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
 
 During the data download step, some data is dropped from the items.
 For one, the labels, descriptions and aliases of an item can make up a large portion of its data,
-but are generally not interesting for ShEx schemas,
+but are generally not interesting for \gls{shex} schemas,
 since there is rarely more to say about them than
 “an item has one or more labels, zero or more descriptions, and zero or more aliases”. % TODO express as ShExC?
 % TODO in theory it’s possible for items to have zero labels…
@@ -387,7 +387,7 @@ using \cref{alg:GetAllChildren}.
 An unexpected problem emerged once the schema inference itself was in place: % TODO phrasing: “in place”?
 it proved to be almost impossible to validate items against the inferred schemas
 for all but the most simple data sets.
-Two ShEx implementations were evaluated:
+Two \gls{shex} implementations were evaluated:
 shex.js, % TODO link? cite?
 a JavaScript implementation running in Node.js,
 and shex-java,
@@ -403,11 +403,11 @@ from the data set that the inference would be run against
 (see \cref{subsec:RDF2Graph+Wikidata:Wikidata:reduction});
 however, reducing the input data set is not the only way to reduce the resulting schema:
 it is also possible to further trim the schema after the inference process has finished.
-This was implemented in the final step of the ShEx exporter, % TODO mention shexbuilder.js file name?
+This was implemented in the final step of the \gls{shex} exporter, % TODO mention shexbuilder.js file name?
 which had already been mostly rewritten for different reasons
 (see \cref{sec:RDF2Graph+Wikidata:updates}).
 RDF2Graph tracks the number of instances of each class it encounters,
-and this information is still available to the ShEx exporter,
+and this information is still available to the \gls{shex} exporter,
 which makes it possible to decide which elements of a schema to keep and which to drop
 based on how often those elements were used in the original data. % TODO add example?
 
@@ -520,7 +520,7 @@ and its source code may be found at \url{https://phabricator.wikimedia.org/sourc
 \label{sec:wdsi:abstract}
 
 The goal of the tool is to make the schema inference process available to other Wikidata editors,
-which is necessary because RDF2Graph, its ShEx exporter, and the Makefile-based process around them
+which is necessary because RDF2Graph, its \gls{shex} exporter, and the Makefile-based process around them
 require several different programs and programming runtimes to be available,
 which it would be unreasonable to expect every interested user to install
 (not to mention that the Makefile assumes a Unix-like environment,
@@ -533,7 +533,7 @@ is a common approach in the Wikimedia universe.
 In this Wikimedia-hosted tool,
 users would enter a \gls{sparql} query selecting the set of exemplary items from which to infer a schema,
 and the tool would download the associated data,
-run RDF2Graph and the ShEx exporter,
+run RDF2Graph and the \gls{shex} exporter,
 and make the ShExC output available to the user.
 The simplest process for that would be
 to directly return the ShExC code in the server’s response to the user’s HTTP request,
@@ -599,9 +599,9 @@ Instead, they are stored directly on the file system.
 \section{Utilities}
 \label{sec:wdsi:utilities}
 
-To make the ShEx output more readable,
+To make the \gls{shex} output more readable,
 support for the ShExC syntax was added to the popular Pygments syntax highlighter. % TODO link to pull request?
-If the ShEx code for a job % TODO is “a job” okay?
+If the \gls{shex} code for a job % TODO is “a job” okay?
 is requested by a browser
 or some other kind of client which declares that it can accept HTML
 (using HTTP content negotiation),
