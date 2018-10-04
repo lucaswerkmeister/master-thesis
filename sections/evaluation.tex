@@ -304,7 +304,54 @@ and contains shapes for the classes \QL{Q11424}{film} and \QL{Q5}{human}:
 films have human directors, editor, cast members, screenwriters, etc.,
 and humans may have parents, any number of spouses and children, and dates of birth and death.
 
-% TODO continue: what happens when you try to validate against those schemas? that should work
+These schemas are simple enough that they can be validated using the “Simple Online Validator”
+at \url{https://rawgit.com/shexSpec/shex.js/wikidata/doc/shex-simple.html},
+which automatically downloads all the required data from Wikidata.
+Validating 100 arbitrary diseases
+against the shape for \QL{Q12136}{disease} from \cref{listing:zika} mostly yields positive results,
+with only four violations:
+the items \QL{Q366964}{X-linked adrenoleukodystrophy},
+\QL{Q580285}{Morquio Syndrome} and \QL{Q2200359}{Sanfilippo syndrome}
+have more than one \PL{P1748}{NCI Thesaurus ID} statement, while the schema says a disease may only have zero or one such IDs,
+and the item \QL{Q895930}{nodding disease} fails validation because it has two \PL{P828}{has cause} statements,
+\QL{Q8084905}{autoimmune disease} and \QL{Q1601794}{parasitic infectious diseases},
+whereas the schema says a disease may only have zero or one causes.
+(The schema also says that those causes should be taxa, not other diseases,
+but the shape for taxa is sufficiently lax that these diseases match it.)
+Validating 100 arbitrary films
+against the shape for \QL{Q11424}{film} from \cref{listing:films} also yields positive results with only a single violation –
+\QL{Q185143}{Detective Conan} has two \PL{P154}{logo image} statements (French and Japanese)
+whereas the schema says it should only have one.
+
+A second look at the schemas makes it clear why there are so few violations:
+the cardinalities for all predicates, without exception,
+are either \lstinline{?} (“zero or one”) or \lstinline{*} (“any number”).
+A completely empty item with no statements at all
+will match all four shapes in \cref{listing:extracted}.
+This is likely an artifact of the schema extraction procedure,
+which in this case was extremely selective of shapes
+to ensure that the schema would fit on one page of this document,
+and therefore only included very few shapes,
+each of which had had a high number of examples in the input data set:
+enough that, for any property,
+there was an example item missing statements for that property,
+forcing the lower boundary of the cardinality to be zero.
+Overall, the sample schemas investigated in \cref{sec:jobs-over-various}
+have \SIrange{17}{34}{\percent} of non-optional predicates,
+so if one includes some more shapes during the extraction process,
+they are bound to include some required predicates soon.
+(Alternatively, the cardinality of some predicates could be manually raised during the extraction.)
+
+Generally, these extracted schemas appear to be useful to find some mistakes,
+though their usefulness % TODO duplicate word, we already used “useful” just above
+can be increased by extracting larger parts of the schemas
+and by further refining them according to one’s personal experience with the data model.
+A useful side effect is that the kind of careful inspection of the schema
+which is necessary to extract useful parts of it
+will also likely find some problems in the schema where they exist,
+pointing at problems % TODO another duplicate word
+in the original input data set,
+as demonstrated in \cref{sec:Evaluation:quality}.
 
 % TODO find a better title for this section
 \section{Duration of the inference process}
