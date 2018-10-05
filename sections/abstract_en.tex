@@ -12,9 +12,13 @@
 
 \Abstract
 % TODO should be longer (1-2 paragraphs, not more than half a page), including a few sentences about Wikidata and its importance, the problem, and my contribution
-To provide an additional quality control mechanism for Wikidata,
-a tool to automatically infer data schemas from a set of exemplary Wikidata items
-was developed and evaluated.
+\acrlong{shex} are a promising additional quality control mechanism for Wikidata,
+the free knowledge base in the Wikimedia movement,
+but larger schemas can be tedious to write,
+making automatic inference of schemas from a set of exemplary items an attractive prospect. % TODO is “prospect” a good word here?
+This thesis investigates % TODO investigated? which tense?
+this option by updating and adapting the RDF2Graph program to infer schemas from a set of Wikidata items,
+and provides a web-based tool which makes this process available to the Wikidata community.
 Though the resulting schemas are usually not fit for direct validation,
 they can still be useful as a form of describing the layout of an area of Wikidata’s data model,
 a way to see potential issues in the source data, % TODO “see” sounds weak, but “highlight” is too strong a word IMHO given that you have to comb through the schema to find issues
