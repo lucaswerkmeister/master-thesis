@@ -25,4 +25,23 @@ making it easier to use and more robust on any graph.
 All these changes are available under the same free software license as the original RDF2Graph,
 and I hope that some of them will be included in the original source code repository in the future.
 
-% TODO continue conclusion
+When attempting to validate other items against the inferred schemas,
+an unexpected problem arose:
+none of the existing \gls{shex} validators were able to reliably perform the validation without crashing.
+Several strategies were attempted to remediate this,
+both in the schema extraction and in the validators,
+but this was ultimately unsuccessful.
+
+However, this does not mean the schemas are not useful.
+Sometimes, problems in the input data can manifest themselves
+in the form of unusual predicates or target classes in a schema,
+which an attentive reader can notice and trace back to the problematic items in the input.
+And the full, automatically inferred schemas
+can also form the basis for shorter schemas manually extracted from the longer ones,
+which can either be validated directly
+(now without problems from the validators)
+or be further refined by data model experts, % TODO “data model experts” sounds weird
+making the automatically inferred schemas a useful basis for manually curated schemas.
+
+% TODO finish off conclusion?
+% TODO conclusion should probably be longer
