@@ -395,8 +395,12 @@ The most obvious possible relation is
 to directly compare the runtime to the number of \glspl{item} selected by the user’s query,
 as shown in \cref{fig:jobs-over-entities}.
 However, it is clear from the graphs that there is no direct relation
-between the number of \glspl{item} and the runtime,
-which is not surprising because the amount of work that \gls{RDF2Graph} has to do
+between the number of \glspl{item} and the runtime:
+in fact, four of the six resulting functions suggest that
+execution time shall become negative if one only supplies enough \glspl{item},
+which is clearly nonsensical.
+This is not surprising,
+because the amount of work that \gls{RDF2Graph} has to do
 highly depends on the size of the \glspl{item},
 as well as the number of \glspl{item} indirectly selected as the values of \glspl{statement} on the original \glspl{item} (and their size).
 
