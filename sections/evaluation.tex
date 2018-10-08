@@ -203,7 +203,7 @@ If desired, that \gls{schema} can then be further altered and augmented as deeme
 making the original \gls{schema} the basis of a manually curated one.
 
 Generally, to extract parts of the \gls{schema},
-one starts with a basic \gls{shape} for the input entities
+one starts with a basic \gls{shape} for the input \glspl{item}
 (e.~g. \QL{Q5}{human} if the \gls{schema} was inferred from a set of humans),
 copies it into the reduced \gls{schema},
 and repeats this procedure for all \glspl{shape} (classes) mentioned by that \gls{shape} which had not been copied yet.
@@ -394,13 +394,13 @@ one for the full data and one with two outlier records removed –
 see the text in the appendix for details.
 
 The most obvious possible relation is
-to directly compare the runtime to the number of entities selected by the user’s query,
+to directly compare the runtime to the number of \glspl{item} selected by the user’s query,
 as shown in \cref{fig:jobs-over-entities}.
 However, it is clear from the graphs that there is no direct relation
-between the number of entities and the runtime,
+between the number of \glspl{item} and the runtime,
 which is not surprising because the amount of work that \gls{RDF2Graph} has to do
-highly depends on the size of the entities,
-as well as the number of entities indirectly selected as the values of \glspl{statement} on the original entities (and their size).
+highly depends on the size of the \glspl{item},
+as well as the number of \glspl{item} indirectly selected as the values of \glspl{statement} on the original \glspl{item} (and their size).
 
 Instead, a much more sensible relation is the total amount of input data:
 the number of \glspl{triple} which Fuseki serves to \gls{RDF2Graph}
@@ -483,7 +483,7 @@ but lacks an explanation for the nonlinear runtime.
 One might think that these relations are not very useful
 because they only predict the duration of the whole process partway through the process.
 However, all of the possible predictor variables – % TODO “predictor variables” feels weird – regressors? independent variables?
-number of entities, number of \glspl{triple}, number of \PName{wdt:P31} \glspl{triple}, number of distinct classes –
+number of \glspl{item}, number of \glspl{triple}, number of \PName{wdt:P31} \glspl{triple}, number of distinct classes –
 can be determined after the data download step,
 which is both the very first step in the whole process
 and also does not take a long time:
@@ -499,5 +499,5 @@ as soon as the download step has finished;
 and to reject jobs which resulted in too much data,
 and are expected to take far too long to be tolerable.
 Currently, the tool merely suggests to its users
-that their queries should not select more than about fifty entities,
+that their queries should not select more than about fifty \glspl{item},
 but does not implement any kind of hard limit beyond that.

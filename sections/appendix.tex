@@ -170,7 +170,7 @@ for various input queries collected from the \gls{wdsi}:
 
 \begin{itemize}
 \item Members of the 30th Riigikogu (the Estonian parliament),
-  limited to 50 entities.
+  limited to 50 \glspl{item}.
   Originally \wdsiJob{30}.
 \item The Federal Chancellors of Germany,
   originally \wdsiJob{1}.
@@ -179,32 +179,32 @@ for various input queries collected from the \gls{wdsi}:
   (Some earlier jobs used a similar query with a limit of ten or five Oscars.)
 \item The human \glspl{item} with most \glspl{sitelink} to other \gls{Wikimedia} projects
   (including but not limited to \gls{Wikipedia} articles in different language editions),
-  limited to 50 entities.
+  limited to 50 \glspl{item}.
   Originally \wdsiJob{24}, later repeated as \wdsiJob{26}, \wdsiJob{27}.
 
   This is one of the two outliers removed for the first version of each chart,
   since it has an unusually high execution time compared to the amount of input data.
-  My best explanation for that is that this is a less “coherent” set of entities:
+  My best explanation for that is that this is a less “coherent” set of \glspl{item}:
   since the selection criterion (the number of sitelinks) is not directly related to the data,
   this includes politicians, authors, religious figures, scientists, philosophers, celebrities, composers, and other kinds of people
   (though none of these are \emph{classes} in the sense relevant to \gls{RDF2Graph}).
 \item The largest cities in the world by population,
-  limited to 25 entities.
+  limited to 25 \glspl{item}.
   Originally \wdsiJob{3}.
 \item Mammal taxa (including species but also genera, families etc.).
-  Limited to \num{20000} entities,
+  Limited to \num{20000} \glspl{item},
   a limit that was experimentally determined to produce a high but not exorbitant number of triples.
   Originally \wdsiJob{33}.
 
   This is the second of the two outliers removed for the first version of each chart,
-  due to the absurd number of input entities:
+  due to the absurd number of input \glspl{item}:
   compare especially the $X$-axes of
   \cref{fig:jobs-over-entities-with-outliers,fig:jobs-over-entities-without-outliers}.
 \item Programming languages with the highest number of \glspl{statement},
-  limited to 50 entities.
+  limited to 50 \glspl{item}.
   Originally \wdsiJob{17}, later repeated as \wdsiJob{18}.
 \item Recently edited \glspl{item} for \glspl{rfc},
-  limited to 500 entities.
+  limited to 500 \glspl{item}.
   Originally \wdsiJob{21}, based on the earlier \wdsiJob{20} (equivalent but with a lower limit),
   which in turn was inspired by \wdsiJob{8}.
 \item The member states of the United Nations, % TODO acronym?
@@ -243,16 +243,16 @@ anyways.
   \begin{subfigure}{\textwidth}
     \centering
     \input{graphs/jobs-over-entities}
-    \caption{Job execution time over number of entities, with outliers.}
+    \caption{Job execution time over number of \glspl{item}, with outliers.}
     \label{fig:jobs-over-entities-with-outliers}
   \end{subfigure}
   \begin{subfigure}{\textwidth}
     \centering
     \input{graphs/jobs-without-outliers-over-entities}
-    \caption{Job execution time over number of entities, without outliers.}
+    \caption{Job execution time over number of \glspl{item}, without outliers.}
     \label{fig:jobs-over-entities-without-outliers}
   \end{subfigure}
-  \caption{Job execution time over number of entities selected by the query.}
+  \caption{Job execution time over number of \glspl{item} selected by the query.}
   \label{fig:jobs-over-entities}
 \end{figure}
 
