@@ -130,14 +130,14 @@ to run the entire process and generate the \gls{shex} file.
     \end{scope}
 
     \begin{scope}[every path/.style=arrow, midway]
-      \path (entities.south) -- node {\command{sed}} (data.north);
-      \path (data.south) -- node {\gls{wdqs}} (JSON.north);
-      \path (JSON.south) -- node {\command{jq}} (N-Triples.north);
-      \path (N-Triples.south) -- node {Fuseki} (Fuseki.north);
-      \path (Fuseki.south) -- node {RDF2Graph} (RDF2Graph.north);
+      \path (entities) -- node {\command{sed}} (data);
+      \path (data) -- node {\gls{wdqs}} (JSON);
+      \path (JSON) -- node {\command{jq}} (N-Triples);
+      \path (N-Triples) -- node {Fuseki} (Fuseki);
+      \path (Fuseki) -- node {RDF2Graph} (RDF2Graph);
       \path [dashed] (RDF2Graph.north east) to [out=30,in=330,looseness=5] node {RDF2Graph, simplify} (RDF2Graph.south east);
-      \path (RDF2Graph.south) -- node {\gls{shex} exporter} (ShEx);
-      \path (ShEx.south) -- node {\command{pygmentize}} (HTML);
+      \path (RDF2Graph) -- node {\gls{shex} exporter} (ShEx);
+      \path (ShEx) -- node {\command{pygmentize}} (HTML);
     \end{scope}
   \end{tikzpicture}
   \caption{An overview of the overall process.}
