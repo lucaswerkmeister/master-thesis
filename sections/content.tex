@@ -118,8 +118,6 @@ to run the entire process and generate the \gls{shex} file.
     \tikzstyle{directory} = [rectangle, draw, text centered]
     \tikzstyle{arrow} = [draw, -latex', right]
 
-    % TODO more details for RDF2Graph (first “normal stuff”, then simplification)
-
     \begin{scope}[node distance=2cm]
       \node[file] (entities) {\filename{\variable{example}.entities.sparql}};
       \node[file, below of=entities] (data) {\filename{\variable{example}.data.sparql}};
@@ -137,6 +135,7 @@ to run the entire process and generate the \gls{shex} file.
       \path (JSON.south) -- node {\command{jq}} (N-Triples.north);
       \path (N-Triples.south) -- node {Fuseki} (Fuseki.north);
       \path (Fuseki.south) -- node {RDF2Graph} (RDF2Graph.north);
+      \path [dashed] (RDF2Graph.north east) to [out=30,in=330,looseness=5] node {RDF2Graph, simplify} (RDF2Graph.south east);
       \path (RDF2Graph.south) -- node {\gls{shex} exporter} (ShEx);
       \path (ShEx.south) -- node {\command{pygmentize}} (HTML);
     \end{scope}
