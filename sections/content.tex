@@ -32,12 +32,14 @@ some of them may also be merged into the upstream \gls{RDF2Graph} and \gls{RDFSi
 
 The \branchname{master} branch of the \gls{RDF2Graph} source code repository
 has not seen any updates since 2015 (when \cite{vanDam2015} was published), % TODO is in-sentence \cite{} like that okay?
-% TODO a) check phrasing – it’s not my intention to “call out” the RDF2Graph authors or anything :)
-% TODO b) the dev branch did see some updates, I just wasn’t aware of that when I started working :/
 so some updates were needed to make the program run on newer software versions
 and to target a more recent version of \gls{shex}.
 Many of these were rather minor in nature,
 but a few of the major ones are described in this section.
+(I later noticed that the \gls{RDF2Graph} source code repository
+also has a \branchname{dev} branch,
+which has some more recent changes including a few fixes,
+but most of them are not relevant to the issues discussed here.)
 
 The final step of the \gls{shex} export was mostly rewritten from scratch.
 This is the step that translates a JSON-LD file describing the shapes of the schema
