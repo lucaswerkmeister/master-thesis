@@ -14,52 +14,52 @@
 \label{ch:Evaluation}
 
 The evaluation of this work
-mainly focuses on the quality and usefulness of the resulting schemas.
-Unfortunately, without being able to reliably validate datasets against schemas –
-for example, to verify whether an item for an author
-matches a schema inferred from fifty other authors –
-it is not possible to objectively assess the quality of the inferred schemas.
-However, inspecting the schemas manually
+mainly focuses on the quality and usefulness of the resulting \glspl{schema}.
+Unfortunately, without being able to reliably validate datasets against \glspl{schema} –
+for example, to verify whether an \gls{item} for an author
+matches a \gls{schema} inferred from fifty other authors –
+it is not possible to objectively assess the quality of the inferred \glspl{schema}.
+However, inspecting the \glspl{schema} manually
 can still give insights on their quality (\cref{sec:Evaluation:quality}),
 as well as the quality of the underlying data,
-and it is also possible to extract smaller subsets from the full schemas,
+and it is also possible to extract smaller subsets from the full \glspl{schema},
 which can then be used for validation (\cref{sec:Evaluation:extraction}).
-In these ways, the schemas can still be useful even though they can’t be used for validation directly.
+In these ways, the \glspl{schema} can still be useful even though they can’t be used for validation directly.
 Additionally, the runtime of the inference process is examined in \cref{sec:Evaluation:duration}.
 
 % TODO find a better title for this section
 \section{Schema Quality}
 \label{sec:Evaluation:quality}
 
-While the schema quality cannot be assessed objectively without verifying them,
-it is possible to simply look at the schemas and see if they “make sense” on their own.
-Generally, the inferred schemas are much too large to read the entire schema,
-but one can select the shapes for individual classes
-(randomly or by searching for the item IDs of specific classes)
+While the \gls{schema} quality cannot be assessed objectively without verifying them,
+it is possible to simply look at the \glspl{schema} and see if they “make sense” on their own.
+Generally, the inferred \glspl{schema} are much too large to read the entire \gls{schema},
+but one can select the \glspl{shape} for individual classes
+(randomly or by searching for the \glspl{item ID} of specific classes)
 and check their type links.
-For example, \cref{listing:13th-riigikogu-Q5} shows the shape for the class \QL{Q5}{human}
-from the schema inferred from 50 members of the 13th Riigikogu (the Estonian parliament).
-In textual form, it means that a human should have the following statements:
+For example, \cref{listing:13th-riigikogu-Q5} shows the \gls{shape} for the class \QL{Q5}{human}
+from the \gls{schema} inferred from 50 members of the 13th Riigikogu (the Estonian parliament).
+In textual form, it means that a human should have the following \glspl{statement}:
 \begin{itemize}
 \item Member of any number of political parties, where the values are political parties.
 \item Any number of occupations, where the values are positions.
   This likely reflects the fact that the input data only contained politicians –
-  other schemas often include other possible classes for this property,
+  other \glspl{schema} often include other possible classes for this property,
   such as “occupation” or “profession”.
 \item Any number of spoken, written or signed languages, where the values are languages.
 \item Optionally, a name in the subject’s native language.
 \item Any number of awards received, where the values are classes of awards.
-  The target class, “class of award”, is an artifact of the not completely consistent modeling of awards in Wikidata:
+  The target class, “class of award”, is an artifact of the not completely consistent modeling of awards in \gls{Wikidata}:
   there is sometimes confusion about the relationship between different “levels” of awards,
   such as “award”, “peace prize”, “Nobel Prize”, “Nobel Peace Prize”, “2018 Nobel Peace Prize”,
   and whether they should be instances or subclasses of each other.
 \item Optionally, a place of birth, where the value is a human settlement.
 \item Optionally, a sex or gender, where the value is a sex of humans or a gender.
-  The two target classes are the result of the two most common gender items in Wikidata,
+  The two target classes are the result of the two most common gender \glspl{item} in \gls{Wikidata},
   \QL{Q6581097}{male} and \QL{Q6581072}{female},
   each having several \PL{P31}{instance of} statements.
 \item Optionally, a country of citizenship, where the value is a political territorial entity.
-\item Optionally, a Wikimedia Commons category.
+\item Optionally, a \gls{Wikimedia Commons} category.
 \item Any number of positions held by the subject, where the values are positions.
 \item Optionally, a date of birth.
 \item Any number of places where the subject was educated, where the values are educational institutions.
@@ -91,25 +91,25 @@ wd:Q5 { # & wd:Q215627
   wdt:P937 @wd:Q486972*
 }
 \end{lstlisting}
-\caption{Excerpt of a schema inferred from 50 members of the 13th Riigikogu.}
+\caption{Excerpt of a \gls{schema} inferred from 50 members of the 13th Riigikogu.}
 \label{listing:13th-riigikogu-Q5}
 \end{lstfloat}
 
 Aside from some quirks of the input data, all of these seem reasonable to me.
-The most obvious missing predicates are date and place of death,
+The most obvious missing \glspl{predicate} are date and place of death,
 which is again due to the input data set:
 all the members of the current Estonian parliament are alive,
-and while one might expect to see dates of death on some items they link to,
-the fact that currently only 33 parents of members of the 13th Riigikogu are known to Wikidata
+and while one might expect to see dates of death on some \glspl{item} they link to,
+the fact that currently only 33 parents of members of the 13th Riigikogu are known to \gls{Wikidata}
 makes it seem plausible enough that there simply happened to be no dead humans in the full input data.
 
 As the input data sets get larger,
-the schemas also tend to grow:
-in the number of shapes (classes),
-the number of predicates in each shape,
+the \glspl{schema} also tend to grow:
+in the number of \glspl{shape} (classes),
+the number of \glspl{predicate} in each \gls{shape},
 and also in the number of possible classes for a predicate.
 For example, before simplification,
-the \QL{Q5}{human} shape from the schema inferred from the set of US presidents
+the \QL{Q5}{human} \gls{shape} from the \gls{schema} inferred from the set of US presidents
 lists \emph{nine} possible classes for someone’s \PL{P735}{given name}:
 \begin{itemize}
 \item A generic \QL{Q202444}{given name},
@@ -124,14 +124,14 @@ lists \emph{nine} possible classes for someone’s \PL{P735}{given name}:
   such as \QL{Q564684}{Anne} in Nancy Reagan (born Anne Frances Robbins), wife of President Reagan.
   (“Anne” is a female given name in English,
   but sometimes used as a male given name in the Netherlands or France,
-  and therefore classified as both female and unisex in Wikidata, depending on language.)
+  and therefore classified as both female and unisex in \gls{Wikidata}, depending on language.)
 \item A \QL{Q1243157}{compound given name},
   such as \QL{Q16275947}{George Washington} in George Washington Adams, the first son of President John Quincy Adams.
 \item A \QL{Q1130279}{hypocorism} (a diminutive form of a name),
   such as \QL{Q2165388}{Ron} in Ron Reagan, son of President Reagan.
 \item A \QL{Q108709}{diminutive},
   such as \QL{Q4166211}{Jimmy} in President Jimmy Carter.
-  Arguably, that item should be an instance of the aforementioned hypocorism class
+  Arguably, that \gls{item} should be an instance of the aforementioned hypocorism class
   instead of the more generic diminutive class, which also includes non-names like “auntie”.
 \item \QL{Q19803443}{Initials instead of given names},
   such as \QL{Q19803518}{S.} in President Harry S.~Truman (not an abbreviation).
@@ -139,52 +139,52 @@ lists \emph{nine} possible classes for someone’s \PL{P735}{given name}:
   such as \QL{Q2800825}{Simpson} in President Ulysses S.~Grant
   (the “S.” is sometimes believed to be short for “Simpson”, his mother’s maiden name).
   This is clearly an error: even if the “S.” does stand for “Simpson”, which Grant denied,
-  the correct item to use would be the given name \Q{Q50876620}, not the family name \Q{Q2800825}.
+  the correct \gls{item} to use would be the given name \Q{Q50876620}, not the family name \Q{Q2800825}.
 \end{itemize}
 
 If the problems pointed out above were to be fixed,
 all the remaining classes could be merged into the generic \QL{Q202444}{given name} class,
-as in the earlier schema.
+as in the earlier \gls{schema}.
 However, due to the presence of \QL{Q101352}{family name},
 the best common superclass is instead \QL{Q10856962}{anthroponym},
 the common superclass of given and last names,
 and the \QL{Q108709}{diminutive} class remains unmerged,
 as it is not a subclass of any kind of name.
 
-One can continue to pick apart the generated schemas in this manner for hours,
+One can continue to pick apart the generated \glspl{schema} in this manner for hours,
 and I have done so while working on this thesis
 in order to find problems and possible improvements in the inference process.
 Three insights emerge:
 
 \begin{enumerate}
-\item The simplification step is vital for readable schemas.
-  The schemas are no less correct without simplification as far as the input data set is concerned,
-  but if the numerous subclasses in Wikidata’s hierarchy are never merged,
-  the schemas become exceedingly tedious to read for humans,
+\item The simplification step is vital for readable \glspl{schema}.
+  The \glspl{schema} are no less correct without simplification as far as the input data set is concerned,
+  but if the numerous subclasses in \gls{Wikidata}’s hierarchy are never merged,
+  the \glspl{schema} become exceedingly tedious to read for humans,
   and they will also often match other data sets less well
   if the other data sets involve subclasses that were not encountered in the original input data.
 
-  This can be seen in some of the older jobs of the Wikidata Shape Expressions Tool:
+  This can be seen in some of the older jobs of the \gls{wdsi}:
   if there is a \lstinline[language=java]{StackOverflowError} in the standard error of the inference process,
-  it means that RDF2Graph crashed during the simplification step
+  it means that \gls{RDF2Graph} crashed during the simplification step
   and the \gls{shex} export ran on the original, unsimplified graph.
   (Later, the inference step was made more robust,
   which is why newer jobs do not have this problem.)
 
-\item Sometimes, biases in the schema are visible, due to biases in the input data set.
+\item Sometimes, biases in the \gls{schema} are visible, due to biases in the input data set.
   (In one particularly egregious case,
-  a schema proclaimed that a given name must always be a \emph{male} given name,
+  a \gls{schema} proclaimed that a given name must always be a \emph{male} given name,
   since there had been no women with given names in the input data set.)
-  One can presume that at other times biases in the schema are not visible,
+  One can presume that at other times biases in the \gls{schema} are not visible,
   which does not mean that they are not present. % TODO abbreviate to “not visible, but still present”?
-  To arrive at useful schemas,
+  To arrive at useful \glspl{schema},
   care must be taken when selecting the input data set,
   and the results must be viewed critically. % TODO is “viewed” the best verb here?
 
-\item Sometimes, the schema reflects errors in the input data,
-  as in the case above where a family name item was used for a given name.
-  This can often be traced back to confusion between several items with similar labels.
-  Such errors are usually visible in the resulting schema if one takes the time to read it,
+\item Sometimes, the \gls{schema} reflects errors in the input data,
+  as in the case above where a family name \gls{item} was used for a given name.
+  This can often be traced back to confusion between several \glspl{item} with similar labels.
+  Such errors are usually visible in the resulting \gls{schema} if one takes the time to read it,
   though they are not always obvious due to the simplification
   (as when the classes for given and family names were merged into anthroponyms above).
 \end{enumerate}
@@ -195,22 +195,22 @@ Three insights emerge:
 \section{Manual schema extraction}
 \label{sec:Evaluation:extraction}
 
-One way to make use of the inferred schemas
+One way to make use of the inferred \glspl{schema}
 even though they cannot be used for validation directly
-is to extract a smaller subset of the schema manually,
-then validating items against that.
-If desired, that schema can then be further altered and augmented as deemed necessary,
-making the original schema the basis of a manually curated one.
+is to extract a smaller subset of the \gls{schema} manually,
+then validating \glspl{item} against that.
+If desired, that \gls{schema} can then be further altered and augmented as deemed necessary,
+making the original \gls{schema} the basis of a manually curated one.
 
-Generally, to extract parts of the schema,
-one starts with a basic shape for the input entities
-(e.~g. \QL{Q5}{human} if the schema was inferred from a set of humans),
-copies it into the reduced schema,
-and repeats this procedure for all shapes (classes) mentioned by that shape which had not been copied yet.
-Predicates which link to shapes that should not be included can be dropped when copying a shape:
-for example, the \PL{P27}{country of citizenship} shape should be dropped
-if one is not interested in including shapes for countries, states etc. in the reduced schema.
-Some predicates may also need to be moved between shapes,
+Generally, to extract parts of the \gls{schema},
+one starts with a basic \gls{shape} for the input entities
+(e.~g. \QL{Q5}{human} if the \gls{schema} was inferred from a set of humans),
+copies it into the reduced \gls{schema},
+and repeats this procedure for all \glspl{shape} (classes) mentioned by that \gls{shape} which had not been copied yet.
+\Glspl{predicate} which link to \glspl{shape} that should not be included can be dropped when copying a \gls{shape}:
+for example, the \PL{P27}{country of citizenship} \gls{shape} should be dropped
+if one is not interested in including \glspl{shape} for countries, states etc. in the reduced \gls{schema}.
+Some \glspl{predicate} may also need to be moved between \glspl{shape},
 or the target classes may need to be adjusted,
 if the results of the automatic simplification are not satisfactory,
 e.~g. if unrelated classes were merged into a very fundamental base class like \QL{Q937228}{property}
@@ -293,68 +293,68 @@ wd:Q5 {
 \caption{Schema for films, based on \wdsiJob{36}.}
 \label{listing:films}
 \end{sublstfloat}
-\caption{Two schemas manually extracted from automatically inferred ones.}
+\caption{Two \glspl{schema} manually extracted from automatically inferred ones.}
 \label{listing:extracted}
 \end{lstfloat}
 
-\Cref{listing:extracted} shows two schemas that were manually extracted in this fashion
-from schemas inferred by the Wikidata Shape Expressions Inference Tool.
-\Cref{listing:zika} was extracted from a schema
+\Cref{listing:extracted} shows two \glspl{schema} that were manually extracted in this fashion
+from \glspl{schema} inferred by the \gls{wdsi}.
+\Cref{listing:zika} was extracted from a \gls{schema}
 inferred from 100 scientific articles about the Zika virus,
-and contains shapes for the classes \QL{Q12136}{disease} and \QL{Q16521}{taxon}:
+and contains \glspl{shape} for the classes \QL{Q12136}{disease} and \QL{Q16521}{taxon}:
 diseases may be caused (indirectly or immediately) by taxa,
 and taxa may effect diseases and have any number of parent taxa.
-\Cref{listing:films} was extracted from a schema
+\Cref{listing:films} was extracted from a \gls{schema}
 inferred from the set of films which won three or more Academy Awards (“Oscars”) % TODO glossary? ™?
-and contains shapes for the classes \QL{Q11424}{film} and \QL{Q5}{human}:
+and contains \glspl{shape} for the classes \QL{Q11424}{film} and \QL{Q5}{human}:
 films have human directors, editor, cast members, screenwriters, etc.,
 and humans may have parents, any number of spouses and children, and dates of birth and death.
 
-These schemas are simple enough that they can be validated using the “Simple Online Validator”
+These \glspl{schema} are simple enough that they can be validated using the “Simple Online Validator”
 at \url{https://rawgit.com/shexSpec/shex.js/wikidata/doc/shex-simple.html},
-which automatically downloads all the required data from Wikidata.
+which automatically downloads all the required data from \gls{Wikidata}.
 Validating 100 arbitrary diseases
-against the shape for \QL{Q12136}{disease} from \cref{listing:zika} mostly yields positive results,
+against the \gls{shape} for \QL{Q12136}{disease} from \cref{listing:zika} mostly yields positive results,
 with only four violations:
-the items \QL{Q366964}{X-linked adrenoleukodystrophy},
+the \glspl{item} \QL{Q366964}{X-linked adrenoleukodystrophy},
 \QL{Q580285}{Morquio Syndrome} and \QL{Q2200359}{Sanfilippo syndrome}
-have more than one \PL{P1748}{NCI Thesaurus ID} statement, while the schema says a disease may only have zero or one such IDs,
-and the item \QL{Q895930}{nodding disease} fails validation because it has two \PL{P828}{has cause} statements,
+have more than one \PL{P1748}{NCI Thesaurus ID} \gls{statement}, while the \gls{schema} says a disease may only have zero or one such IDs,
+and the \gls{item} \QL{Q895930}{nodding disease} fails validation because it has two \PL{P828}{has cause} \glspl{statement},
 \QL{Q8084905}{autoimmune disease} and \QL{Q1601794}{parasitic infectious diseases},
-whereas the schema says a disease may only have zero or one causes.
-(The schema also says that those causes should be taxa, not other diseases,
-but the shape for taxa is sufficiently lax that these diseases match it.)
+whereas the \gls{schema} says a disease may only have zero or one causes.
+(The \gls{schema} also says that those causes should be taxa, not other diseases,
+but the \gls{shape} for taxa is sufficiently lax that these diseases match it.)
 Validating 100 arbitrary films
-against the shape for \QL{Q11424}{film} from \cref{listing:films} also yields positive results with only a single violation –
-\QL{Q185143}{Detective Conan} has two \PL{P154}{logo image} statements (French and Japanese)
-whereas the schema says it should only have one.
+against the \gls{shape} for \QL{Q11424}{film} from \cref{listing:films} also yields positive results with only a single violation –
+\QL{Q185143}{Detective Conan} has two \PL{P154}{logo image} \glspl{statement} (French and Japanese)
+whereas the \gls{schema} says it should only have one.
 
-A second look at the schemas makes it clear why there are so few violations:
-the cardinalities for all predicates, without exception,
+A second look at the \glspl{schema} makes it clear why there are so few violations:
+the cardinalities for all \glspl{predicate}, without exception,
 are either \lstinline{?} (“zero or one”) or \lstinline{*} (“any number”).
-A completely empty item with no statements at all
-will match all four shapes in \cref{listing:extracted}.
-This is likely an artifact of the schema extraction procedure,
-which in this case was extremely selective of shapes
-to ensure that the schema would fit on one page of this document,
-and therefore only included very few shapes,
+A completely empty \gls{item} with no \glspl{statement} at all
+will match all four \glspl{shape} in \cref{listing:extracted}.
+This is likely an artifact of the \gls{schema} extraction procedure,
+which in this case was extremely selective of \glspl{shape}
+to ensure that the \gls{schema} would fit on one page of this document,
+and therefore only included very few \glspl{shape},
 each of which had had a high number of examples in the input data set:
-enough that, for any property,
-there was an example item missing statements for that property,
+enough that, for any \gls{property},
+there was an example \gls{item} missing \glspl{statement} for that \gls{property},
 forcing the lower boundary of the cardinality to be zero.
-Overall, the sample schemas investigated in \cref{sec:jobs-over-various}
-have \SIrange{17}{34}{\percent} of non-optional predicates,
-so if one includes some more shapes during the extraction process,
-they are bound to include some required predicates soon.
-(Alternatively, the cardinality of some predicates could be manually raised during the extraction.)
+Overall, the sample \glspl{schema} investigated in \cref{sec:jobs-over-various}
+have \SIrange{17}{34}{\percent} of non-optional \glspl{predicate},
+so if one includes some more \glspl{shape} during the extraction process,
+they are bound to include some required \glspl{predicate} soon.
+(Alternatively, the cardinality of some \glspl{predicate} could be manually raised during the extraction.)
 
-Generally, these extracted schemas appear to be useful to find some mistakes,
+Generally, these extracted \glspl{schema} appear to be useful to find some mistakes,
 though their usefulness % TODO duplicate word, we already used “useful” just above
-can be increased by extracting larger parts of the schemas
+can be increased by extracting larger parts of the \glspl{schema}
 and by further refining them according to one’s personal experience with the data model.
-A useful side effect is that the kind of careful inspection of the schema
+A useful side effect is that the kind of careful inspection of the \gls{schema}
 which is necessary to extract useful parts of it
-will also likely find some problems in the schema where they exist,
+will also likely find some problems in the \gls{schema} where they exist,
 pointing at problems % TODO another duplicate word
 in the original input data set,
 as demonstrated in \cref{sec:Evaluation:quality}.
@@ -363,16 +363,16 @@ as demonstrated in \cref{sec:Evaluation:quality}.
 \section{Duration of the inference process}
 \label{sec:Evaluation:duration}
 
-While attempts to validate data against the inferred schema
-suffer due to the size of the input data and the schemas,
+While attempts to validate data against the inferred \gls{schema}
+suffer due to the size of the input data and the \glspl{schema},
 no such problems appear to plague the inference process,
 which, while slow, has a more reliable runtime.
 To some degree, this was already apparent in the execution times
-of the various jobs that were run on the Wikidata Shape Expressions Inference Tool:
+of the various jobs that were run on the \gls{wdsi}:
 ranging from five or ten minutes to several hours,
 they roughly follow the size of the input data linearly.
 
-However, the data from the Wikidata Shape Expressions Inference tool
+However, the data from the \gls{wdsi}
 is not without its problems:
 as the tool was tested with different jobs,
 various problems were discovered and subsequently fixed
@@ -398,12 +398,12 @@ to directly compare the runtime to the number of entities selected by the user�
 as shown in \cref{fig:jobs-over-entities}.
 However, it is clear from the graphs that there is no direct relation
 between the number of entities and the runtime,
-which is not surprising because the amount of work that RDF2Graph has to do
+which is not surprising because the amount of work that \gls{RDF2Graph} has to do
 highly depends on the size of the entities,
-as well as the number of entities indirectly selected as the values of statements on the original entities (and their size).
+as well as the number of entities indirectly selected as the values of \glspl{statement} on the original entities (and their size).
 
 Instead, a much more sensible relation is the total amount of input data:
-the number of triples which Fuseki serves to RDF2Graph
+the number of \glspl{triple} which Fuseki serves to \gls{RDF2Graph}
 (that is, the number of lines in the N-Triples file). % TODO \cref background?
 As can be seen in \cref{fig:jobs-over-triples},
 this results in a fairly linear relation,
@@ -450,19 +450,19 @@ ENDFILE {
 \label{listing:classes}
 \end{lstfloat}
 
-Since RDF2Graph heavily relies on type information,
+Since \gls{RDF2Graph} heavily relies on type information,
 another possible factor for execution time
-is just the number of \PName{wdt:P31} triples in the input,
-rather than the overall number of triples.
-(Recall that \PL{P31}{instance of} is the Wikidata property linking an item to its class.)
+is just the number of \PName{wdt:P31} \glspl{triple} in the input,
+rather than the overall number of \glspl{triple}.
+(Recall that \PL{P31}{instance of} is the \gls{Wikidata} property linking an \gls{item} to its class.)
 % TODO a) is that “recall” appropriate? b) was that even clearly explained yet?
-The number of \PName{wdt:P31} triples was counted
+The number of \PName{wdt:P31} \glspl{triple} was counted
 using the GNU AWK snippet found in \cref{listing:P31},
 and the result is shown in \cref{fig:jobs-over-P31s}:
 the functions are more linear and fit the data better, both with and without outliers.
 However, with outliers included the fit is still not completely satisfactory.
 
-Alternatively, instead of counting \PName{wdt:P31} triples
+Alternatively, instead of counting \PName{wdt:P31} \glspl{triple}
 it is also possible to count the distinct number of classes in the input data.
 Classes were counted using the GNU AWK snippet found in \cref{listing:classes},
 and the result is shown in \cref{fig:jobs-over-classes}:
@@ -472,7 +472,7 @@ but they finally fit the data well without excluding the outliers:
 in fact, the graph with outliers has slightly better fits than the one without outliers.
 
 Two conclusions are possible from this:
-the execution time could derive linearly from the number of input triples or \PName{wdt:P31} triples,
+the execution time could derive linearly from the number of input \gls{triple} or \PName{wdt:P31} \gls{triple},
 or it could derive nonlinearly from the number of input classes.
 The first conclusion has no satisfactory explanation for the outliers
 which need to be excluded to get good function fits,
@@ -483,7 +483,7 @@ but lacks an explanation for the nonlinear runtime.
 One might think that these relations are not very useful
 because they only predict the duration of the whole process partway through the process.
 However, all of the possible predictor variables – % TODO “predictor variables” feels weird – regressors? independent variables?
-number of entities, number of triples, number of \PName{wdt:P31} triples, number of distinct classes –
+number of entities, number of \glspl{triple}, number of \PName{wdt:P31} \glspl{triple}, number of distinct classes –
 can be determined after the data download step,
 which is both the very first step in the whole process
 and also does not take a long time:
@@ -493,7 +493,7 @@ and for most jobs it finishes within about five seconds.
 This means that it takes less than half a minute
 to be able to mostly predict the duration of the full job, which can be several hours.
 This suggests two possible future improvements
-for the Wikidata Shape Expressions Inference Tool:
+for the \gls{wdsi}:
 to report to the user how long a job is expected to take,
 as soon as the download step has finished;
 and to reject jobs which resulted in too much data,

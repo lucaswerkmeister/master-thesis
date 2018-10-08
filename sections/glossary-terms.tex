@@ -9,3 +9,122 @@
 \newacronym[first={the Virtual International Authority File},long={the Virtual International Authority File}]{viaf}{VIAF}{Virtual International Authority File}
 \newacronym{w3c}{W3C}{World Wide Web Consortium}
 \newacronym[first={the Wikidata Query Service},long={the Wikidata Query Service}]{wdqs}{WDQS}{Wikidata Query Service}
+\newacronym[description={Internationalized Resource Identifier, Unicode-aware generalization of \glspl{uri}}]{iri}{IRI}{Internationalized Resource Identifier}
+\newacronym[description={Uniform Resource Identifier, usually a \gls{url}}]{uri}{URI}{Uniform Resource Identifier}
+\newacronym{url}{URL}{Uniform Resource Locator}
+\newacronym{html}{HTML}{Hypertext Markup Language}
+\newacronym{css}{CSS}{Cascading Style Sheets}
+\newacronym{http}{HTTP}{Hypertext Transfer Protocol}
+
+% never use the long form of these acronyms unless explicitly requested
+\glsunset{url}
+\glsunset{html}
+\glsunset{css}
+\glsunset{http}
+
+\newglossaryentry{Wikimedia}{
+  name=Wikimedia,
+  description={free knowledge movement and community},
+}
+\newglossaryentry{Wikidata}{
+  name=Wikidata,
+  description={free knowledge base in the \gls{Wikimedia} movement},
+}
+\newglossaryentry{Wikipedia}{
+  name=Wikipedia,
+  description={free encyclopedia in the \gls{Wikimedia} movement},
+}
+\newglossaryentry{Wikimedia Commons}{
+  name={Wikimedia Commons},
+  description={free media repository in the \gls{Wikimedia} movement},
+}
+\newglossaryentry{Wikiquote}{
+  name=Wikiquote,
+  description={free quotation collection in the \gls{Wikimedia} movement},
+}
+\newglossaryentry{item}{
+  name=item,
+  description={representation of a thing or concept in \gls{Wikidata}},
+}
+\newglossaryentry{item ID}{
+  name={item ID},
+  description={unique, language-agnostic identifier of an \gls{item}, a consecutive number prefixed with the letter “Q”},
+}
+\newglossaryentry{property}{
+  name=property,
+  plural=properties,
+  description={a possible feature, characteristic or quality of an \gls{item}},
+}
+\newglossaryentry{property ID}{
+  name={property ID},
+  description={unique, language-agnostic identifier of a \gls{property}, a consecutive number prefixed with the letter “P”},
+}
+\newglossaryentry{label}{
+  name=label,
+  description={the primary term for an \gls{item} or \gls{property} in a language},
+}
+\newglossaryentry{description}{
+  name=description,
+  description={a short clarifying or disambiguating text for an \gls{item} or \gls{property}},
+}
+\newglossaryentry{alias}{
+  name=alias,
+  plural=aliases,
+  description={additional terms by which an \gls{item} or \gls{property} should be found},
+}
+\newglossaryentry{sitelink}{
+  name=sitelink,
+  description={a link from an \gls{item} to a page in a \gls{Wikimedia} project about the thing or concept the \gls{item} represents},
+}
+\newglossaryentry{statement}{
+  name=statement,
+  description={a unit of information in \gls{Wikidata}, consisting of a subject \gls{item}, a predicate \gls{property}, and a value (\gls{item ID}, quantity, point in time, etc.)},
+}
+\newglossaryentry{qualifier}{
+  name=qualifier,
+  description={an additional \gls{property}-value pair further refining a \gls{statement}},
+}
+\newglossaryentry{reference}{
+  name=reference,
+  description={a collection of \gls{property}-value pairs recording a source for a \gls{statement}},
+}
+\newglossaryentry{wdsi}{
+  name={Wikidata Shape Expressions Inference tool},
+  description={web-based tool to make the inference process available to the \gls{Wikidata} community},
+}
+\newglossaryentry{triple}{
+  name=triple,
+  description={a unit of information in \gls{rdf}, consisting of a \gls{subject} \gls{resource}, a \gls{predicate} \gls{resource}, and an \gls{object} value (\gls{resource} or literal)},
+}
+\newglossaryentry{subject}{
+  name=subject,
+  description={the first element of an \gls{rdf} \gls{triple}, the “<Alan Turing>” in “<Alan Turing> <is a> <human>”}
+}
+\newglossaryentry{predicate}{
+  name=predicate,
+  description={the second element of an \gls{rdf} \gls{triple}, the “<is a>” in “<Alan Turing> <is a> <human>”}
+}
+\newglossaryentry{object}{
+  name=object,
+  description={the third element of an \gls{rdf} \gls{triple}, the “<human>” in “<Alan Turing> <is a> <human>”}
+}
+\newglossaryentry{resource}{
+  name=resource,
+  description={representation of a thing or concept in \gls{rdf}, identified by an \gls{iri}},
+}
+\newglossaryentry{schema}{
+  name=schema,
+  description={formal description of the structure of a linked data set; in \gls{shex}, a collection of \glspl{shape}},
+}
+\newglossaryentry{shape}{
+  name=shape,
+  description={element of a \gls{shex} \gls{schema}, describing the structure of one node category},
+}
+\newglossaryentry{RDF2Graph}{
+  name=RDF2Graph,
+  description={tool to automatically determine a \gls{schema} from an \gls{rdf} graph},
+}
+\newglossaryentry{RDFSimpleCon}{
+  name=RDFSimpleCon,
+  description={library used by \gls{RDF2Graph}},
+}

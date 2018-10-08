@@ -13,46 +13,46 @@
 \chapter{Introduction}
 \label{ch:Introduction}
 
-As Wikidata,
-the free knowledge base in the Wikimedia movement,
+As \gls{Wikidata},
+the free knowledge base in the \gls{Wikimedia} movement,
 continues to grow in volume and scope and is used by more and more other parties, % TODO “other parties” is weird; TODO citation for growth?
 its data quality has been identified as one of the most important areas of development in the future \cite{wdcon2017-sotp}: % TODO \cite before colon looks ugly
-in order for Wikidata to be useful,
+in order for \gls{Wikidata} to be useful,
 its data must be trustworthy and available in a consistent format.
 Unchecked vandalism discourages data reuse,
 while inconsistent data models make it significantly more difficult or even impossible.
 
 To combat these problems,
-several quality control mechanisms are used on Wikidata.
+several quality control mechanisms are used on \gls{Wikidata}.
 Recently, editors have begun exploring the use of \acrlong{shex}
 as another quality control mechanism to use.
-Compared to the more established, Wikidata-specific quality constraints system,
+Compared to the more established, \gls{Wikidata}-specific quality constraints system,
 \acrlong{shex} are more powerful and expressive,
-and are also not specific to Wikidata alone.
-However, schemas for \acrlong{shex} are tedious to write by hand.
+and are also not specific to \gls{Wikidata} alone.
+However, \glspl{schema} for \acrlong{shex} are tedious to write by hand.
 
-Automatically inferring schemas from Wikidata items
-promises to simplify the schema authoring process:
-instead of manually putting together the schema,
-describing shapes for different classes of items,
-one simply selects a set of items,
-and a schema is automatically generated based on the data about these items.
-If the selected items have been carefully edited
-to conform to a pre-existing schema,
+Automatically inferring \glspl{schema} from \gls{Wikidata} \glspl{item}
+promises to simplify the \gls{schema} authoring process:
+instead of manually putting together the \gls{schema},
+describing shapes for different classes of \glspl{item},
+one simply selects a set of \glspl{item},
+and a \gls{schema} is automatically generated based on the data about these \glspl{item}.
+If the selected \glspl{item} have been carefully edited
+to conform to a pre-existing \gls{schema},
 perhaps described informally or only present in the minds of the editors,
-then the result may be a formalization of that schema;
-alternatively, applying the same process to a less curated set of input items
-may result in a concise summary of the current schema of those items % TODO “concise” is not really the right word…
+then the result may be a formalization of that \gls{schema};
+alternatively, applying the same process to a less curated set of input \glspl{item}
+may result in a concise summary of the current \gls{schema} of those \glspl{item} % TODO “concise” is not really the right word…
 and possibly even demonstrate problems in the input data.
 
 % TODO probably mention WikiProject ShEx?
 
 This thesis investigates the usefulness and applicability
-of automatically inferring schemas for Wikidata from sets of exemplary items.
+of automatically inferring \glspl{schema} for \gls{Wikidata} from sets of exemplary \glspl{item}.
 It builds on the existing RDF2Graph \cite{vanDam2015} program,
-updating and adapting it to support Wikidata
+updating and adapting it to support \gls{Wikidata}
 and automating the whole inference process.
-This was then made available to the whole Wikidata community % TODO kinda mixing tenses here
+This was then made available to the whole \gls{Wikidata} community % TODO kinda mixing tenses here
 by incorporating it into a web-based tool.
 
 The rest of the thesis % TODO a) “the rest” or just “this thesis”? b) “this thesis”? “this work”?
@@ -60,8 +60,8 @@ is organized as follows.
 \Cref{ch:Background} explains concepts that are required
 to understand the rest of the work. % TODO the rest of the thesis?
 \Cref{ch:RDF2Graph+Wikidata} describes general updates for RDF2Graph
-as well as changes that were made to add Wikidata support to it.
-\Cref{ch:wdsi} introduces the Wikidata Shape Expressions Inference Tool
+as well as changes that were made to add \gls{Wikidata} support to it.
+\Cref{ch:wdsi} introduces the \gls{wdsi}
 and describes its design and implementation.
-\Cref{ch:Evaluation} then evaluates the usefulness of the tool and the resulting schemas.
+\Cref{ch:Evaluation} then evaluates the usefulness of the tool and the resulting \glspl{schema}.
 Finally, \cref{ch:Conclusion} summarizes the results and concludes the thesis.

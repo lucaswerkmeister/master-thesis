@@ -13,63 +13,63 @@
 \chapter{Conclusion}
 \label{ch:Conclusion}
 
-The goal of this thesis was to investigate how \gls{shex} schemas can be automatically inferred for Wikidata,
-and how useful the resulting schemas are.
-This was done using an updated and adapted version of the RDF2Graph software,
-which was made available to the Wikidata community
+The goal of this thesis was to investigate how \gls{shex} \glspl{schema} can be automatically inferred for \gls{Wikidata},
+and how useful the resulting \glspl{schema} are.
+This was done using an updated and adapted version of the \gls{RDF2Graph} software,
+which was made available to the \gls{Wikidata} community
 through a new web-based tool.
 
-In addition to the changes specific to Wikidata,
-many general improvements to RDF2Graph were made over the course of this thesis,
+In addition to the changes specific to \gls{Wikidata},
+many general improvements to \gls{RDF2Graph} were made over the course of this thesis,
 making it easier to use and more robust on any graph.
-All these changes are available under the same free software license as the original RDF2Graph,
+All these changes are available under the same free software license as the original \gls{RDF2Graph},
 and I hope that some of them will be included in the original source code repository in the future.
 
-When attempting to validate other items against the inferred schemas,
+When attempting to validate other \glspl{item} against the inferred \glspl{schema},
 an unexpected problem arose:
 none of the existing \gls{shex} validators were able to reliably perform the validation without crashing.
 Several strategies were attempted to remediate this,
-both in the schema extraction and in the validators,
+both in the \gls{schema} extraction and in the validators,
 but this was ultimately unsuccessful.
 
-However, this does not mean the schemas are not useful.
+However, this does not mean the \glspl{schema} are not useful.
 Sometimes, problems in the input data can manifest themselves
-in the form of unusual predicates or target classes in a schema,
-which an attentive reader can notice and trace back to the problematic items in the input.
-And the full, automatically inferred schemas
-can also form the basis for shorter schemas manually extracted from the longer ones,
+in the form of unusual \glspl{predicate} or target classes in a \gls{schema},
+which an attentive reader can notice and trace back to the problematic \glspl{item} in the input.
+And the full, automatically inferred \glspl{schema}
+can also form the basis for shorter \glspl{schema} manually extracted from the longer ones,
 which can either be validated directly
 (now without problems from the validators)
 or be further refined by data model experts, % TODO “data model experts” sounds weird
-making the automatically inferred schemas a useful basis for manually curated schemas.
+making the automatically inferred \glspl{schema} a useful basis for manually curated \glspl{schema}.
 
 There are plenty of options of further improvements on this work.
-\Cref{sec:Evaluation:duration} already mentioned how the Wikidata Shape Expressions Inference Tool could be improved
+\Cref{sec:Evaluation:duration} already mentioned how the \gls{wdsi} could be improved
 to notify the user of the estimated total runtime of a job once the data download step is complete
 and to reject jobs which are expected to take too long.
 Many other improvements could be made to the user interface as well,
 such as exposing some more configuration options to users of the tool,
-e.~g. the thresholds for schema reduction mentioned in \cref{sec:RDF2Graph+Wikidata:schema-reduction}.
+e.~g. the thresholds for \gls{schema} reduction mentioned in \cref{sec:RDF2Graph+Wikidata:schema-reduction}.
 
 A significant improvement over the current state
-would be to make RDF2Graph work on full statement nodes instead of just the “truthy” statements.
-A full explanation of full statement nodes is beyond the scope of this thesis,
-but in brief, they offer much more information about Wikidata statements
+would be to make \gls{RDF2Graph} work on full \gls{statement} nodes instead of just the “truthy” \glspl{statement}.
+A full explanation of full \gls{statement} nodes is beyond the scope of this thesis,
+but in brief, they offer much more information about \gls{Wikidata} \glspl{statement}
 in exchange for a slightly more complicated data format.
-Using full statement nodes would allow RDF2Graph to take not just the statement’s values
-but also their qualifiers and references into account.
-However, this would require major changes to the way RDF2Graph looks at the input graph,
-because the subject and object of a statement are no longer linked via a single triple
-in the full statement nodes.
+Using full \gls{statement} nodes would allow \gls{RDF2Graph} to take not just the \gls{statement}’s values
+but also their \glspl{qualifier} and \glspl{reference} into account.
+However, this would require major changes to the way \gls{RDF2Graph} looks at the input graph,
+because the \gls{subject} and \gls{object} of a \gls{statement} are no longer linked via a single \gls{triple}
+in the full \gls{statement} nodes.
 
 Clearly, it is not a satisfactory final state
-that the inferred schemas cannot be directly used for validation.
+that the inferred \glspl{schema} cannot be directly used for validation.
 It may be possible to find optimizations in the validators
-and/or useful criteria for reducing the inferred schemas
-which would enable direct validation against the schemas
+and/or useful criteria for reducing the inferred \glspl{schema}
+which would enable direct validation against the \glspl{schema}
 without human intervention to manually extract their most useful parts.
 There is also some room for improvement in the simplification step
-regardless of the ability to validate against the inferred schemas:
+regardless of the ability to validate against the inferred \glspl{schema}:
 sometimes, despite the changes in \cref{subsec:RDF2Graph+Wikidata:Wikidata:simplification},
 it still merges mostly-unrelated classes into very abstract base classes,
 so the criteria on when to merge or not merge classes could use some improvements.

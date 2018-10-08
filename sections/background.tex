@@ -25,140 +25,140 @@ More information can be found in the bibliography. % TODO this sentence feels we
 \section{Wikidata}
 \label{sec:Background:Wikidata}
 
-Wikidata \cite{Vrandecic:2014:WFC:2661061.2629489} % TODO is that the best place for this \cite{}?
+\gls{Wikidata} \cite{Vrandecic:2014:WFC:2661061.2629489} % TODO is that the best place for this \cite{}?
 is a free knowledge base
-and part of the Wikimedia family of sister projects,
-the most famous of which is Wikipedia, the free encyclopedia.
-Its contents are created, maintained and managed by the Wikidata community,
+and part of the \gls{Wikimedia} family of sister projects,
+the most famous of which is \gls{Wikipedia}, the free encyclopedia.
+Its contents are created, maintained and managed by the \gls{Wikidata} community,
 most of whose members are volunteers,
-as well as the members of Wikidata’s sister projects, e.~g. Wikipedia.
-Anyone can contribute to Wikidata,
+as well as the members of \gls{Wikidata}’s sister projects, e.~g. \gls{Wikipedia}.
+Anyone can contribute to \gls{Wikidata},
 but the community ensures the quality of the contents with various quality control mechanisms.
 Providing another such mechanism is part of the motivation for this thesis. % TODO for this work?
 
-Information on Wikidata is collected in items,
+Information on \gls{Wikidata} is collected in \glspl{item},
 which represent things or concepts:
-there are items for individual persons,
+there are \glspl{item} for individual persons,
 for cities, states, geographical features,
 for organizations and corporations,
-items for books, films, newspapers, journals, scientific articles,
+\glspl{item} for books, films, newspapers, journals, scientific articles,
 for abstract concepts, phenomena, emotions, philosophical movements, political orientations,
-items for conceptual hierarchies, parent classes, biological taxa,
-and even items for fictional characters, places, or other entities.
+\glspl{item} for conceptual hierarchies, parent classes, biological taxa,
+and even \glspl{item} for fictional characters, places, or other entities.
 
-All of these items follow the same structure.
-They are identified by their item ID,
+All of these \glspl{item} follow the same structure.
+They are identified by their \gls{item ID},
 a consecutive number prefixed with the letter “Q”
 (e.~g. \Q{Q188709} for Beethoven’s Symphony No. 5).
-They can have a label, description, and search aliases in various languages:
+They can have a \gls{label}, \gls{description}, and search \glspl{alias} in various languages:
 for example, \Q{Q7251} is labeled “Alan Turing” in English
 but «\foreignlanguage{russian}{Алан Тьюринг}» in Russian;
 is described as a “British mathematician, logician, cryptanalyst, and computer scientist” in English;
 and may also be found under search aliases like “Alan M. Turing”, “Alan Mathison Turing” or simply “Turing”.
-They also have a set of sitelinks
-(links to pages about the same concept in various other Wikimedia projects –
-Wikipedia articles, Wikiquote pages, Wikimedia Commons galleries, etc.),
-and most importantly, a set of statements.
+They also have a set of \glspl{sitelink}
+(links to pages about the same concept in various other \gls{Wikimedia} projects –
+\gls{Wikipedia} articles, \gls{Wikiquote} pages, \gls{Wikimedia Commons} galleries, etc.),
+and most importantly, a set of \glspl{statement}.
 
-The statements are where most of the information in Wikidata is stored.
-They consist of a property, such as “place of birth” or “author” or “population”,
-and a value, which can be a reference to another item, a quantity, a point in time, a piece of text,
+The \glspl{statement} are where most of the information in \gls{Wikidata} is stored.
+They consist of a \gls{property}, such as “place of birth” or “author” or “population”,
+and a value, which can be a reference to another \gls{item}, a quantity, a point in time, a piece of text,
 or a few other possible types.
-A statement can also have qualifiers
+A \gls{statement} can also have \glspl{qualifier}
 (further property-value pairs, e.~g. clarifying when or where the statement is valid)
-and references (sets of property-value pairs, listing sources for the statement),
+and \glspl{reference} (sets of property-value pairs, listing sources for the \gls{statement}),
 but those are mostly ignored in the context of this thesis.
-Properties are also identified by an ID
-(prefixed with the letter “P” instead of “Q”)
-and can also have labels, descriptions and aliases in different languages:
+\Glspl{property} are also identified by an ID, their \gls{property ID}
+(prefixed with the letter “P” instead of “Q”),
+and can also have \glspl{label}, \glspl{description} and \glspl{alias} in different languages:
 for example, \P{P31} is labeled “instance of” in English
 and „\foreignlanguage{ngerman}{ist ein(e)}“ in German.
-The labels and descriptions are necessary to understand the meaning of statements,
-but they are not themselves part of the statements:
-statements only list references to property and item IDs,
-making most of the information in Wikidata language-agnostic \cite{Kaffee:2017:GBA:3125433.3125465}.
+The \glspl{label} and \glspl{description} are necessary to understand the meaning of \glspl{statement},
+but they are not themselves part of the \glspl{statement}:
+\glspl{statement} only list references to \gls{property} and \glspl{item ID},
+making most of the information in \gls{Wikidata} language-agnostic \cite{Kaffee:2017:GBA:3125433.3125465}.
 
 % TODO split the following paragraph into multiple, under a dedicated subsection?
-\Cref{fig:montblanc} shows two screenshots of the same Wikidata item,
+\Cref{fig:montblanc} shows two screenshots of the same \gls{Wikidata} \gls{item},
 \QL{Q761735}{Montblanc}, viewed in different languages.
 % TODO mention the revision ID? 704641959
 The page structure is the same regardless of language:
-first, there is a heading, showing the label in the current language and the item ID;
+first, there is a heading, showing the \gls{label} in the current language and the \gls{item ID};
 below it on the left side is the “term box”,
-listing labels, descriptions and aliases in several languages relevant to the user;
-below that is the list of statements;
-to the right are lists of sitelinks for different Wikimedia projects.
+listing \glspl{label}, \glspl{description} and \glspl{alias} in several languages relevant to the user;
+below that is the list of \glspl{statement};
+to the right are lists of \glspl{sitelink} for different \gls{Wikimedia} projects.
 The screenshots are truncated
 (the page has also been lightly edited for the screenshots
 to remove some spacing and a few less relevant page elements)
-and do not show the full list of statements,
-but the statements pictured are:
+and do not show the full list of \glspl{statement},
+but the \glspl{statement} pictured are:
 \begin{itemize}
-\item A statement for the property \P{P31},
-  where the value is an item, \Q{Q33146843}.
-\item A statement for the property \P{P18},
-  where the value is a media file on Wikimedia Commons.
+\item A \gls{statement} for the \gls{property} \P{P31},
+  where the value is an \gls{item}, \Q{Q33146843}.
+\item A \gls{statement} for the \gls{property} \P{P18},
+  where the value is a media file on \gls{Wikimedia Commons}.
   Image credit:
   \href{https://commons.wikimedia.org/wiki/User:Mariarosafg}{Mariarosafg}
   (\url{https://commons.wikimedia.org/wiki/File:Ciutat_de_Montblanc.jpg}),
   “Ciutat de Montblanc”,
   \url{https://creativecommons.org/licenses/by-sa/3.0/legalcode}
-\item Two statements for the property \P{P1448},
+\item Two \glspl{statement} for the \gls{property} \P{P1448},
   where the values are monolingual text strings.
-  Both statements also have qualifiers and references.
+  Both \glspl{statement} also have \glspl{qualifier} and \glspl{reference}.
 \end{itemize}
 In \cref{fig:montblanc-en},
-the item is viewed as an anonymous user in the default English language
+the \gls{item} is viewed as an anonymous user in the default English language
 (German is shown as a second language in the term box
 because the request was made from a German IP address;
 logged in users can configure which languages they want to be shown here).
 In \cref{fig:montblanc-ca},
-the item is viewed as an anonymous user, explicitly requested in the Catalan language:
-notice that all property and item labels are now different.
+the \gls{item} is viewed as an anonymous user, explicitly requested in the Catalan language:
+notice that all \gls{property} and \gls{item} \glspl{label} are now different.
 
 \begin{figure}
-  \caption{Two screenshots of the same item viewed in different languages.}
+  \caption{Two screenshots of the same \gls{item} viewed in different languages.}
   \label{fig:montblanc}
   \begin{subfigure}{\textwidth}
-    \caption{The item viewed as an anonymous user in the default English language.}
+    \caption{The \gls{item} viewed as an anonymous user in the default English language.}
     \label{fig:montblanc-en}
     \includegraphics[width=\textwidth]{screenshots/montblanc-en}
   \end{subfigure}
 \end{figure}
 \begin{figure}\ContinuedFloat
   \begin{subfigure}{\textwidth}
-    \caption{The item viewed as an anonymous user, explicitly requested in the Catalan language.}
+    \caption{The \gls{item} viewed as an anonymous user, explicitly requested in the Catalan language.}
     \label{fig:montblanc-ca}
     \includegraphics[width=\textwidth]{screenshots/montblanc-ca}
   \end{subfigure}
 \end{figure}
 
-It is vital to observe that there is no kind of schema inherent to the Wikidata data model.
-Any property can be used on any item:
+It is vital to observe that there is no kind of \gls{schema} inherent to the \gls{Wikidata} data model.
+Any \gls{property} can be used on any \gls{item}:
 nothing in the software stops one from adding, say,
-a “date of birth” statement to an item for a lake,
-or a “parent taxon” statement to an item for a movie teaser poster.
-The community has several ways to describe schemas to varying degrees of formality
-(such as property lists on WikiProject pages or the property constraints system),
+a “date of birth” \gls{statement} to an \gls{item} for a lake,
+or a “parent taxon” \gls{statement} to an \gls{item} for a movie teaser poster.
+The community has several ways to describe \glspl{schema} to varying degrees of formality
+(such as \gls{property} lists on WikiProject pages or the property constraints system),
 but they are all realized by community consensus,
-not enforced by the Wikidata software.
+not enforced by the \gls{Wikidata} software.
 The great flexibility which this lends to the community
-is considered to be one of Wikidata’s greatest strengths \cite{vrandecic-restricting-the-world},
+is considered to be one of \gls{Wikidata}’s greatest strengths \cite{vrandecic-restricting-the-world},
 and though the use of \gls{shex}
-on Wikidata will provide another,
-highly formal way to describe schemas,
-it is not intended to change this fundamental operating principle of Wikidata. % TODO awkward passive voice
+on \gls{Wikidata} will provide another,
+highly formal way to describe \glspl{schema},
+it is not intended to change this fundamental operating principle of \gls{Wikidata}. % TODO awkward passive voice
 
-Wikidata’s data model, as described above,
+\gls{Wikidata}’s data model, as described above,
 is not directly related to \gls{rdf}.
 However, to enable usage of \gls{rdf} technologies and interoperation with \gls{rdf}-based datasets,
-Wikidata’s data is exported to \gls{rdf}:
+\gls{Wikidata}’s data is exported to \gls{rdf}:
 % TODO link to Help:Data access and query.wikidata.org? if yes, \href or \url?
-the data about any item can be downloaded in various \gls{rdf} formats through a linked data interface, % TODO *the* linked data interface?
-and a full, up-to-date \gls{rdf} export of Wikidata is available in \gls{wdqs},
+the data about any \gls{item} can be downloaded in various \gls{rdf} formats through a linked data interface, % TODO *the* linked data interface?
+and a full, up-to-date \gls{rdf} export of \gls{Wikidata} is available in \gls{wdqs},
 a \acrshort{sparql} endpoint to which anyone may submit queries.
 However, this interface is export-only:
-it is not possible to edit Wikidata via \gls{rdf}.
+it is not possible to edit \gls{Wikidata} via \gls{rdf}.
 
 % TODO explain some fundamental properties? P31, P279?
 % TODO mention “entity” as collective term for items and properties
@@ -169,33 +169,33 @@ it is not possible to edit Wikidata via \gls{rdf}.
 \acrfull{rdf}
 \cite{Lanthaler:14:RCA}
 is a framework for describing and working with linked data.
-In \gls{rdf}, information is arranged in subject-predicate-object triples,
+In \gls{rdf}, information is arranged in \gls{subject}-\gls{predicate}-\gls{object} \glspl{triple},
 such as “<Alan Turing> <is a> <human>”
 or “<Lima> <was founded in> <18 January 1535>”.
-All three elements of a triple are typically \emph{resources},
-identified by a URI like \url{http://example.com/Alan_Turing} or \url{http://www.wikidata.org/entity/Q5}, % TODO acronym? URLs vs URIs vs IRIs?
-but the object of a triple can also be some other kind of value,
+All three elements of a \gls{triple} are typically \glspl{resource},
+identified by an \gls{iri} like \url{http://example.com/Alan_Turing} or \url{http://www.wikidata.org/entity/Q5},
+but the \gls{object} of a \gls{triple} can also be some other kind of value,
 such as a textual, numerical or other literal
 (e.~g. the date literal “18 January 1535” above). % TODO blank nodes are elided for brevity, but perhaps rephrase this to make sure the text isn’t factually wrong
-A collection of such triples forms a directed, labeled graph,
-where the triples describe individual edges
-and the nodes are the subjects and objects of the triples:
-triples with the same subject constitute different outgoing arcs from the same node.
+A collection of such \glspl{triple} forms a directed, labeled graph,
+where the \glspl{triple} describe individual edges
+and the nodes are the \glspl{subject} and \glspl{object} of the \glspl{triple}:
+\glspl{triple} with the same \gls{subject} constitute different outgoing arcs from the same node.
 This graph can then be queried using the \acrlong{sparql} \cite{9569543}. % TODO is SPARQL really important enough to be mentioned here, and nothing else?
 For a more detailed introduction,
 see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
 % TODO the previous sentence should probably be at the end of the section, not of the paragraph
 
-To improve readability, the URIs identifying a resource are usually abbreviated using \emph{prefixes}:
+To improve readability, the \glspl{iri} identifying a \gls{resource} are usually abbreviated using \emph{prefixes}:
 for example, once the prefix \prefix{wd:} has been defined to mean \url{http://www.wikidata.org/entity/},
-the URIs \url{http://www.wikidata.org/entity/Q7251} and \url{http://www.wikidata.org/entity/Q5}
+the \glspl{iri} \url{http://www.wikidata.org/entity/Q7251} and \url{http://www.wikidata.org/entity/Q5}
 can be abbreviated as \PName{wd:Q7251} and \PName{wd:Q5}.
 The rest of the thesis will use the following prefixes,
 also given in \cref{listing:prefixes}:
 
 \begin{description}
-\item[\PName{wd:}] A Wikidata entity (usually an item, like \PName{wd:Q7251}).
-\item[\PName{wdt:}] Predicate for a triple representing a Wikidata statement, e.~g. \PName{wdt:P31}.
+\item[\PName{wd:}] A \gls{Wikidata} entity (usually an \gls{item}, like \PName{wd:Q7251}).
+\item[\PName{wdt:}] Predicate for a triple representing a \gls{Wikidata} \gls{statement}, e.~g. \PName{wdt:P31}.
 \item[\PName{rdf:}] Part of the RDF Schema vocabulary (see below).
 \item[\PName{rdfs:}] Part of the RDF Schema vocabulary.
   (The distinction between \PName{rdf:} and \PName{rdfs:} is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
@@ -218,13 +218,13 @@ PREFIX ex: <http://shex.example/>
 \label{listing:prefixes}
 \end{lstfloat}
 
-While RDF can be used with any resource URIs,
+While \gls{rdf} can be used with any \gls{resource} \glspl{iri},
 one of its strengths is the ability to reuse the same \emph{vocabularies}
-(effectively, sets of resources)
+(effectively, sets of \glspl{resource})
 in many different graphs.
-For example, many graphs use the same predicate, \PName{rdfs:label},
-to link a resource to a human-readable version of its name (its label);
-a tool based on RDF can thus offer human-readable names for resources from all these graphs
+For example, many graphs use the same \gls{predicate}, \PName{rdfs:label},
+to link a \gls{resource} to a human-readable version of its name (its label);
+a tool based on \gls{rdf} can thus offer human-readable names for \glspl{resource} from all these graphs
 without requiring any specific knowledge about them,
 and the graphs are more useful when used in combination.
 One common vocabulary is RDF Schema \cite{Guha:14:RS}, % acronym for RDFS?
@@ -247,21 +247,21 @@ and \PName{rdfs:subClassOf} connects a class to its parent class.
 \acrfull{shex} \cite{shex}
 is a standard for describing data shapes within an \gls{rdf} graph,
 developed by the \gls{shex} Community Group under the umbrella of the \gls{w3c}.
-A \gls{shex} schema consists of a number of shapes,
+A \gls{shex} \gls{schema} consists of a number of \glspl{shape},
 each of which describes a focus node,
 expressing restrictions on its node kind, value, and/or incoming and outgoing links.
 
-For example, the schema in \cref{listing:shex-example} defines two shapes,
+For example, the schema in \cref{listing:shex-example} defines two \glspl{shape},
 one for humans and one for locations,
 in a fictional example vocabulary.
-The shape for humans describes that a human has one or more parents,
+The \gls{shape} for humans describes that a human has one or more parents,
 any number of children,
 a date of birth,
 and a place of birth;
 the parents and children should also be humans,
 the date of birth should be a date literal,
 and the place of birth should be a location.
-The shape for locations describes that a location may optionally be contained within another location.
+The \gls{shape} for locations describes that a location may optionally be contained within another location.
 
 \begin{lstfloat}
 \begin{lstlisting}[language=sparql]
@@ -276,7 +276,7 @@ ex:Location {
   ex:containedWithin @ex:Location?;
 }
 \end{lstlisting}
-\caption{A simple example schema.}
+\caption{A simple example \gls{schema}.}
 \label{listing:shex-example}
 % TODO this schema is impossible to satisfy without a circular parent relationship – not a great example :/
 \end{lstfloat}
@@ -290,42 +290,41 @@ ex:Location {
 
 % TODO review the layout of the figures here
 
-RDF2Graph % TODO glossary
-\cite{vanDam2015}
+\gls{RDF2Graph} \cite{vanDam2015}
 is a tool to automatically determine the structure of an \gls{rdf} graph
-and export it as a \gls{shex} schema
+and export it as a \gls{shex} \gls{schema}
 (other output formats are also supported).
 It relies heavily on the type information of each node and the class hierarchy in the graph,
-determining the valid predicates and their value types and cardinalities for each type in the graph.
-There is also an optional step to simplify the resulting schema.
+determining the valid \glspl{predicate} and their value types and cardinalities for each type in the graph.
+There is also an optional step to simplify the resulting \gls{schema}.
 
 To discover the structure of an \gls{rdf} graph,
-RDF2Graph runs a set of queries against a \gls{sparql} endpoint serving that graph.
+\gls{RDF2Graph} runs a set of queries against a \gls{sparql} endpoint serving that graph.
 (This can be a local server, perhaps simply based on a single file containing the graph,
 or a remote server.)
 It enumerates all the classes that occur in the graph
-and then collects all the predicates that are used on instances of each class.
-For each predicate of each class,
-it then gets the types referenced in the values for those predicates
+and then collects all the \glspl{predicate} that are used on instances of each class.
+For each \gls{predicate} of each class,
+it then gets the types referenced in the values for those \glspl{predicate}
 (usually the classes of the referenced nodes,
 but values can also be literals or external references),
 as well as forward and reverse multiplicity for each such type link.
-All this information is stored in a separate \gls{rdf} graph private to RDF2Graph.
+All this information is stored in a separate \gls{rdf} graph private to \gls{RDF2Graph}.
 
 If the simplification step is enabled,
-RDF2Graph will afterwards apply some transformations to the structure
+\gls{RDF2Graph} will afterwards apply some transformations to the structure
 based on the hierarchy of the classes involved,
 which happens in several steps.
 The following description uses the same step numbers as \cite{vanDam2015},
 but elides several steps which are mostly implementation details,
 which is why the step numbers are not contiguous.
-See \cite{vanDam2015} and the RDF2Graph source code for the full description.
+See \cite{vanDam2015} and the \gls{RDF2Graph} source code for the full description.
 (In the source code, the steps are counted as sub-steps of the general step 7.4 “simplification”:
 for example, step 2 is implemented under a code comment for “7.4.2”.)
 
 % TODO justify somewhere (not sure if in Background) why we are using simplification
 
-In step 2, all predicates from child classes are copied to parent classes,
+In step 2, all \glspl{predicate} from child classes are copied to parent classes,
 as outlined in \cref{fig:simplify-7.4.2}.
 
 \begin{figure}[ht]
@@ -371,12 +370,12 @@ X {
   \label{fig:simplify-7.4.2}
 \end{figure}
 
-Step 3  removes predicates which are only found in a single subclass
+Step 3  removes \glspl{predicate} which are only found in a single subclass
 from the parent class again.
 In the example from \cref{fig:simplify-7.4.2},
-the predicate \lstinline{a} will be kept in \lstinline{X}
+the \gls{predicate} \lstinline{a} will be kept in \lstinline{X}
 because it occurs in both \lstinline{A1} and \lstinline{A2},
-but the predicate \lstinline{b} will be dropped
+but the \gls{predicate} \lstinline{b} will be dropped
 because it only occurs in the single subclass \lstinline{B} –
 see \cref{fig:simplify-7.4.3}.
 
@@ -539,7 +538,7 @@ X {
 % TODO I haven’t looked too closely into any of these steps except the very last one,
 % which I practically rewrote from scratch.
 % Does that show in the text? Do I need to investigate the rest of the ShEx exporter further?
-At this point, the information which RDF2Graph extracted is available in a private \gls{rdf} graph.
+At this point, the information which \gls{RDF2Graph} extracted is available in a private \gls{rdf} graph.
 From there, it can be exported into various formats by different exporters.
 The \gls{shex} exporter loads parts of these results into a temporary \gls{rdf} database of its own,
 applies some transformations to them via \gls{sparql},
@@ -553,13 +552,13 @@ and finally exports the result into ShExC text via the Jade template engine.
 % TODO I’m not yet sure if this section is necessary
 
 Wikimedia Toolforge is a hosting environment provided by the Wikimedia Foundation
-where trusted members of the Wikimedia community may host and develop their “tools” or other work.
+where trusted members of the \gls{Wikimedia} community may host and develop their “tools” or other work.
 Most tools are web-based and reachable under the \href{https://tools.wmflabs.org/}{tools.wmflabs.org} domain,
 but it is also possible to run bots or analysis jobs on Toolforge.
 Tools can be written in a variety of languages
 (e.~g. PHP, Python, Java, JavaScript)
-and have access to live replicas of the Wikimedia production databases,
-data dumps of Wikimedia projects,
+and have access to live replicas of the \gls{Wikimedia} production databases,
+data dumps of \gls{Wikimedia} projects,
 custom tool-specific databases,
 and a Sun Grid Engine job execution system for long-running or resource-intensive tasks.
 

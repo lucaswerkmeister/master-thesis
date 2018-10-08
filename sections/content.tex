@@ -15,22 +15,22 @@
 \label{ch:RDF2Graph+Wikidata}
 
 % TODO longer introductory paragraph?
-This chapter describes the changes that were made to RDF2Graph and related software in the course of this thesis.
-Some of them are general improvements unrelated to Wikidata (\cref{sec:RDF2Graph+Wikidata:updates}),
-some are motivated by the Wikidata use case but still generally useful (\cref{sec:RDF2Graph+Wikidata:cyclic-graphs,sec:RDF2Graph+Wikidata:schema-reduction,sec:RDF2Graph+Wikidata:depth-limit}),
-and some are specific to Wikidata and result in a version of RDF2Graph
+This chapter describes the changes that were made to \gls{RDF2Graph} and related software in the course of this thesis.
+Some of them are general improvements unrelated to \gls{Wikidata} (\cref{sec:RDF2Graph+Wikidata:updates}),
+some are motivated by the \gls{Wikidata} use case but still generally useful (\cref{sec:RDF2Graph+Wikidata:cyclic-graphs,sec:RDF2Graph+Wikidata:schema-reduction,sec:RDF2Graph+Wikidata:depth-limit}),
+and some are specific to \gls{Wikidata} and result in a version of \gls{RDF2Graph}
 that cannot be used for other RDF graphs (\cref{sec:RDF2Graph+Wikidata:Wikidata}).
 All the changes are available in the source code repositories at
 \url{https://github.com/lucaswerkmeister/RDF2Graph} and
 \url{https://github.com/lucaswerkmeister/RDFSimpleCon},
 in the \branchname{master} and \branchname{wikidata} branches;
-some of them may also be merged into the upstream RDF2Graph and RDFSimpleCon repositories in the future.
+some of them may also be merged into the upstream \gls{RDF2Graph} and \gls{RDFSimpleCon} repositories in the future.
 
 % TODO find a better title for this section
 \section{General RDF2Graph Updates}
 \label{sec:RDF2Graph+Wikidata:updates}
 
-The \branchname{master} branch of the RDF2Graph source code repository
+The \branchname{master} branch of the \gls{RDF2Graph} source code repository
 has not seen any updates since 2015 (when \cite{vanDam2015} was published), % TODO is in-sentence \cite{} like that okay?
 % TODO a) check phrasing – it’s not my intention to “call out” the RDF2Graph authors or anything :)
 % TODO b) the dev branch did see some updates, I just wasn’t aware of that when I started working :/
@@ -43,14 +43,14 @@ The final step of the \gls{shex} export was mostly rewritten from scratch.
 This is the step that translates a JSON-LD file describing the shapes of the schema
 into a ShExC file;
 the previous version did this using Jade,
-a templating engine for HTML documents (renamed to Pug in 2016),
-constructing an HTML document containing a single plain-text \lstinline[language=html]{<pre>} element,
-then extracting this text from the document using an HTML-to-text converter.
+a templating engine for \gls{html} documents (renamed to Pug in 2016),
+constructing an \gls{html} document containing a single plain-text \lstinline[language=html]{<pre>} element,
+then extracting this text from the document using an \gls{html}-to-text converter.
 The new version directly produces the text from JavaScript
 and includes several improvements:
 datatypes are now properly supported,
-whereas the previous version only supported a handful of hard-coded URIs as datatypes
-and exported all other datatypes as if they were actually shapes;
+whereas the previous version only supported a handful of hard-coded \glspl{iri} as datatypes
+and exported all other datatypes as if they were actually \glspl{shape};
 prefixes are used everywhere in the output, highly improving readability;
 and the output is sorted, making the whole generation process more deterministic
 and thus making it easier to compare the results of multiple inference processes.
@@ -64,28 +64,28 @@ and thus making it easier to compare the results of multiple inference processes
 \section{Wikidata Support}
 \label{sec:RDF2Graph+Wikidata:Wikidata}
 
-This section outlines the general process that is used when running RDF2Graph against data from Wikidata
-and then describes several changes to RDF2Graph that were necessary to support this.
+This section outlines the general process that is used when running \gls{RDF2Graph} against data from \gls{Wikidata}
+and then describes several changes to \gls{RDF2Graph} that were necessary to support this.
 (The subsequent subsections correspond to those changes, not to the individual steps of the process.)
 
 \subsection{Overall process, data download}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:download}
 
-Usually, RDF2Graph is run against a \gls{sparql} endpoint
-which serves the RDF graph for which one wants to infer the structure.
-However, simply running RDF2Graph against \acrfull{wdqs}, the public \gls{sparql} endpoint for Wikidata,
-would mean attempting to infer a schema from all of Wikidata,
+Usually, \gls{RDF2Graph} is run against a \gls{sparql} endpoint
+which serves the \gls{rdf} graph for which one wants to infer the structure.
+However, simply running \gls{RDF2Graph} against \acrfull{wdqs}, the public \gls{sparql} endpoint for \gls{Wikidata},
+would mean attempting to infer a \gls{schema} from all of \gls{Wikidata},
 which is neither the goal of this thesis
-(that is to infer schemas from a small set of exemplary items)
-nor even remotely feasible given the amount of data in Wikidata
-(for example, the 2018-08-20 full Wikidata dump is \SI{42.7}{\giga\byte} large after gzip compression % TODO >300GB uncompressed (309657344438 bytes), which is probably more impressive
+(that is to infer \glspl{schema} from a small set of exemplary \glspl{item})
+nor even remotely feasible given the amount of data in \gls{Wikidata}
+(for example, the 2018-08-20 full \gls{Wikidata} dump is \SI{42.7}{\giga\byte} large after gzip compression % TODO >300GB uncompressed (309657344438 bytes), which is probably more impressive
 and \num{8316156305} lines long uncompressed).
 
 Instead, a process was set up which,
-given a query which selects the exemplary items,
-downloads the related data for them and runs RDF2Graph against it.
+given a query which selects the exemplary \glspl{item},
+downloads the related data for them and runs \gls{RDF2Graph} against it.
 The process is outlined in \cref{fig:process}
-and controlled by a Makefile in the RDF2Graph repository,
+and controlled by a Makefile in the \gls{RDF2Graph} repository,
 so that after creating an \filename{\variable{example}.entities.sparql} file
 with a \gls{sparql} query selecting the exemplary items,
 it is sufficient to run \command{make \variable{example}.shex}
@@ -126,12 +126,12 @@ to run the entire process and generate the \gls{shex} file.
   \label{fig:process}
 \end{figure}
 
-First, the query selecting the exemplary items is transformed
+First, the query selecting the exemplary \glspl{item} is transformed
 into a query selecting all the required data,
 using the Unix \command{sed} command.
-The generated query selects all statements of the exemplary items (“direct statements”),
-all statements of items which occur as values of the direct statements (“indirect statements”),
-and all \PL{P31}{instance of} statements of items which occur as values of the indirect statements.
+The generated query selects all \glspl{statement} of the exemplary \glspl{item} (“direct \glspl{statement}”),
+all \glspl{statement} of \glspl{item} which occur as values of the direct \glspl{statement} (“indirect \glspl{statement}”),
+and all \PL{P31}{instance of} \glspl{statement} of \glspl{item} which occur as values of the indirect \glspl{statement}.
 This query is run against \gls{wdqs},
 which returns the results in JSON format; % TODO glossary for JSON?
 they are then piped into a script for the \command{jq} tool (“JSON query”),
@@ -141,14 +141,14 @@ and stored in an N-Triples file.
 Next, the Apache Jena Fuseki \gls{sparql} server is run locally,
 serving the data from this N-Triples file,
 and as soon as it has finished loading the data file,
-RDF2Graph is run against this local \gls{sparql} endpoint for the main inference process,
-including RDF2Graph’s simplification step.
-Once RDF2Graph terminates, the Fuseki server is stopped.
+\gls{RDF2Graph} is run against this local \gls{sparql} endpoint for the main inference process,
+including \gls{RDF2Graph}’s simplification step.
+Once \gls{RDF2Graph} terminates, the Fuseki server is stopped.
 
-Afterwards, the results from RDF2Graph are available as a graph of classes with associated information,
-and the RDF2Graph \gls{shex} exporter is run to produce a \gls{shex} file.
+Afterwards, the results from \gls{RDF2Graph} are available as a graph of classes with associated information,
+and the \gls{RDF2Graph} \gls{shex} exporter is run to produce a \gls{shex} file.
 If desired (\command{make \variable{example}.html}),
-that file can also be turned into an HTML file using the Pygments syntax highlighter,
+that file can also be turned into an \gls{html} file using the Pygments syntax highlighter,
 which makes the \gls{shex} code more readable.
 
 % TODO look over the subsections again.
@@ -158,83 +158,83 @@ which makes the \gls{shex} code more readable.
 \subsection{Type predicates}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:predicates}
 
-The most fundamental change to make RDF2Graph support Wikidata
+The most fundamental change to make \gls{RDF2Graph} support \gls{Wikidata}
 was % TODO is?
 to change the type predicates used.
-RDF2Graph heavily relies on the type information of the RDF graph it inspects,
+\gls{RDF2Graph} heavily relies on the type information of the RDF graph it inspects,
 assuming a one-to-one mapping between classes and shapes,
-and it uses the standard predicates \PName{rdf:type} and \PName{rdfs:subClassOf}
+and it uses the standard \glspl{predicate} \PName{rdf:type} and \PName{rdfs:subClassOf}
 to determine the class of a subject and the superclasses of a class, respectively.
-However, Wikidata does not use these standard predicates:
+However, \gls{Wikidata} does not use these standard \glspl{predicate}:
 the class(es) and superclass(es) of an item
-are regular statements like any other Wikidata statement,
-using the properties \PL{P31}{instance of} and \PL{P279}{subclass of}.
+are regular \glspl{statement} like any other \gls{Wikidata} \gls{statement},
+using the \glspl{property} \PL{P31}{instance of} and \PL{P279}{subclass of}.
 In the \gls{rdf} export, \PName{rdf:type} and \PName{rdfs:subClassOf} are only used
 as part of the meta-model, % TODO meta-model? hm
 assigning each item the class \PName{wikibase:Item}, a subclass of \PName{wikibase:Entity}.
 To use the type information within the data instead of this meta-model,
-RDF2Graph was changed to use the predicates \PName{wdt:P31} and \PName{wdt:P279}
+\gls{RDF2Graph} was changed to use the \glspl{predicate} \PName{wdt:P31} and \PName{wdt:P279}
 instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
 
 \subsection{Data reduction}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:reduction}
 
-During the data download step, some data is dropped from the items.
-For one, the labels, descriptions and aliases of an item can make up a large portion of its data,
+During the data download step, some data is dropped from the \glspl{item}.
+For one, the \glspl{label}, \glspl{description} and \glspl{alias} of an \gls{item} can make up a large portion of its data,
 but are generally not interesting for \gls{shex} schemas,
 since there is rarely more to say about them than
-“an item has one or more labels, zero or more descriptions, and zero or more aliases”. % TODO express as ShExC?
+“an \gls{item} has one or more \glspl{label}, zero or more \glspl{description}, and zero or more \glspl{alias}”. % TODO express as ShExC?
 % TODO in theory it’s possible for items to have zero labels…
-(A manually curated schema might go beyond this –
-perhaps requiring, for example, that items about Spanish municipalities have a label in Spanish –
-but such details are beyond the ability of RDF2Graph to infer.)
-Additionally, Wikidata items often have a number of statements listing external identifiers for the item
-(that is, identifiers in other databases for the same concept described by this item):
-for example, Wikidata’s \Q{Q80} corresponds to \loc{no99010609} in the \gls{loc},
+(A manually curated \gls{schema} might go beyond this –
+perhaps requiring, for example, that \glspl{item} about Spanish municipalities have a label in Spanish –
+but such details are beyond the ability of \gls{RDF2Graph} to infer.)
+Additionally, \gls{Wikidata} \glspl{item} often have a number of \glspl{statement} listing external identifiers for the \gls{item}
+(that is, identifiers in other databases for the same concept described by this \gls{item}):
+for example, \gls{Wikidata}’s \Q{Q80} corresponds to \loc{no99010609} in the \gls{loc},
 \viaf{85312226} in \gls{viaf},
 \imdbName{nm3805083} in the \gls{imdb},
 \TwitterAccount{timberners\_lee} on Twitter,
 and dozens of other external identifiers. % TODO is a vague “dozens” okay?
-All these external identifiers are technically just ordinary statements,
-but since they carry a rather different kind of information than other statements,
-they are sorted into a separate section when viewing the item on the Wikidata website.
-To reduce the runtime of the RDF2Graph inference process,
-and to reduce clutter in the inferred schemas,
-the labels, descriptions, aliases, and external identifiers of an item
-are therefore excluded when downloading the data for a set of exemplary items.
+All these external identifiers are technically just ordinary \glspl{statement},
+but since they carry a rather different kind of information than other \glspl{statement},
+they are sorted into a separate section when viewing the \gls{item} on the \gls{Wikidata} website.
+To reduce the runtime of the \gls{RDF2Graph} inference process,
+and to reduce clutter in the inferred \glspl{schema},
+the \glspl{label}, \glspl{description}, \glspl{alias}, and external identifiers of an \gls{item}
+are therefore excluded when downloading the data for a set of exemplary \glspl{item}.
 
 \subsection{Full type hierarchy}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:hierarchy}
 
-However, one unfortunate consequence of running RDF2Graph against a reduced data set
-is that RDF2Graph cannot see the full type hierarchy of the classes involved:
+However, one unfortunate consequence of running \gls{RDF2Graph} against a reduced data set
+is that \gls{RDF2Graph} cannot see the full type hierarchy of the classes involved:
 for example, depending on how much data was downloaded,
 it may or may not be aware that the classes \QL{Q112099}{island nation} and \QL{Q3624078}{sovereign state}
 have a common superclass, \QL{Q7275}{state},
 which reduces the available options during the simplification step. % TODO not happy with this phrasing
-To mitigate this, RDF2Graph was patched % TODO awkward passive voice
+To mitigate this, \gls{RDF2Graph} was patched % TODO awkward passive voice
 to allow specifying an alternative \gls{sparql} endpoint for all queries that require a full view of the data,
 and uses this alternative endpoint for the query to get all parent and child classes of a class.
 The Makefile-controlled process mentioned above % TODO awkward phrasing
 specifies the \gls{wdqs} \gls{sparql} endpoint for this option,
-so that RDF2Graph can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
-even when running against a subset of Wikidata. % TODO “subset of Wikidata”? not quite happy with that phrasing
+so that \gls{RDF2Graph} can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
+even when running against a subset of \gls{Wikidata}. % TODO “subset of Wikidata”? not quite happy with that phrasing
 
 \subsection{Simplification}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:simplification}
 
-The simplification process also required some changes to support Wikidata.
-Originally, RDF2Graph would merge all classes into their superclass,
+The simplification process also required some changes to support \gls{Wikidata}.
+Originally, \gls{RDF2Graph} would merge all classes into their superclass,
 almost completely unconditionally,
 stopping only at the root class \PName{owl:Thing}.
-This was much too aggressive for Wikidata:
-not only does Wikidata have a different root class (\QL{Q35120}{entity}),
+This was much too aggressive for \gls{Wikidata}:
+not only does \gls{Wikidata} have a different root class (\QL{Q35120}{entity}),
 but it also has a complex hierarchy of abstract classes below that root class,
 and merging other classes into those abstract classes
 (like \QL{Q151885}{concept}, \QL{Q7184903}{abstract object} or \QL{Q830077}{subject})
 would not result in useful schemas.
 Therefore, step 2 in the simplification process was adapted % TODO awkward passive voice
-to add a number of Wikidata items to the set of classes which other classes should not be merged into
+to add a number of \gls{Wikidata} \glspl{item} to the set of classes which other classes should not be merged into
 (originally only containing \PName{owl:Thing}),
 and to stop looking for common superclasses of two classes after checking five levels in the class hierarchy.
 (The limit of five levels is an arbitrary choice
@@ -248,8 +248,8 @@ and could also be made configurable if deemed necessary in the future.) % TODO l
 % TODO this whole section mixes parent/child and parent class / subclass terminology :/
 
 As outlined in \cref{sec:Background:RDF2Graph}, % TODO style?
-RDF2Graph has an optional simplification feature
-where the schema will be simplified in several steps,
+\gls{RDF2Graph} has an optional simplification feature
+where the \gls{schema} will be simplified in several steps,
 based on the type hierarchy of the classes involved.
 For this, the type hierarchy is loaded into an in-memory data structure,
 which in the code is referred to as a \emph{tree}. % TODO is the emphasis here appropriate? feels odd
@@ -266,12 +266,12 @@ if there is a cycle in the subclass relations between a list of classes,
 that effectively renders all these classes equivalent,
 since any instance of any one of these classes is then also an (indirect) instance of all other classes.
 However, experience shows % TODO “experience shows” sounds extremely dodgy
-that occasional emergence of subclass cycles is almost unavoidable on Wikidata:
-any one of the subclass links may appear reasonable for just the two items it connects,
-and an editor looking at these items will not necessarily notice that a cycle has been formed,
-since the other statements forming the cycle are not visible when looking at these two items.
+that occasional emergence of subclass cycles is almost unavoidable on \gls{Wikidata}:
+any one of the subclass links may appear reasonable for just the two \glspl{item} it connects,
+and an editor looking at these \glspl{item} will not necessarily notice that a cycle has been formed,
+since the other statements forming the cycle are not visible when looking at these two \glspl{item}.
 These cycles are eventually found and fixed by the community,
-but in the meantime, it’s possible that RDF2Graph will run on a subclass graph containing cycles.
+but in the meantime, it’s possible that \gls{RDF2Graph} will run on a subclass graph containing cycles.
 % TODO example? https://www.wikidata.org/wiki/Special:Diff/735108434
 Therefore, to make the process more robust, % TODO “the process” is probably a weasel word here
 several algorithms in the simplification step were adjusted to be able to cope with cyclic graphs.
@@ -358,7 +358,7 @@ running the first part the first time and the second part the second time.
 \subsection{Node distances}
 \label{subsec:RDF2Graph+Wikidata:cyclic-graph:distance}
 
-RDF2Graph also has a method to determine the distance of all indirect parents from a certain node,
+\gls{RDF2Graph} also has a method to determine the distance of all indirect parents from a certain node,
 which is used when searching for common superclasses of a class.
 Like the other methods, this was implemented recursively,
 setting the distance of a parent node to the current value of a counter
@@ -388,8 +388,8 @@ using \cref{alg:GetAllChildren}.
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
 
-An unexpected problem emerged once the schema inference itself was in place: % TODO phrasing: “in place”?
-it proved to be almost impossible to validate items against the inferred schemas
+An unexpected problem emerged once the \gls{schema} inference itself was in place: % TODO phrasing: “in place”?
+it proved to be almost impossible to validate \glspl{item} against the inferred schemas
 for all but the most simple data sets.
 Two \gls{shex} implementations were evaluated:
 shex.js, % TODO link? cite?
@@ -400,43 +400,43 @@ shex.js would usually crash with an out-of-memory error from Node.js within a fe
 whereas shex-java would run for hours on end without any output or apparent progress
 (with either algorithm).
 
-One attempted strategy to be able to validate the inferred schemas % TODO “attempted strategy”? feels awkward
-was to reduce the size of the schemas by dropping some less-relevant elements.
-This was part of the motivation for dropping labels, descriptions, aliases, and external identifiers of an item
+One attempted strategy to be able to validate the inferred \glspl{schema} % TODO “attempted strategy”? feels awkward
+was to reduce the size of the \glspl{schema} by dropping some less-relevant elements.
+This was part of the motivation for dropping \glspl{label}, \glspl{description}, \glspl{alias}, and external identifiers of an \gls{item}
 from the data set that the inference would be run against
 (see \cref{subsec:RDF2Graph+Wikidata:Wikidata:reduction});
-however, reducing the input data set is not the only way to reduce the resulting schema:
-it is also possible to further trim the schema after the inference process has finished.
+however, reducing the input data set is not the only way to reduce the resulting \gls{schema}:
+it is also possible to further trim the \gls{schema} after the inference process has finished.
 This was implemented in the final step of the \gls{shex} exporter, % TODO mention shexbuilder.js file name?
 which had already been mostly rewritten for different reasons
 (see \cref{sec:RDF2Graph+Wikidata:updates}).
-RDF2Graph tracks the number of instances of each class it encounters,
+\gls{RDF2Graph} tracks the number of instances of each class it encounters,
 and this information is still available to the \gls{shex} exporter,
-which makes it possible to decide which elements of a schema to keep and which to drop
+which makes it possible to decide which elements of a \gls{schema} to keep and which to drop
 based on how often those elements were used in the original data. % TODO add example?
 
 % TODO somewhere around here we need to explain why it’s okay to drop elements.
 % type links → our schemas aren’t perfect anyways; predicates → shapes are not closed; shapes → unused
 % (does “open world” vs. “closed world” factor into this?)
 
-Elements can be removed from a schema on three different levels:
-an individual type link can be removed from a predicate, % TODO probably needs explanation
-a predicate can be removed from a shape,
-or an entire shape can be removed from the schema.
+Elements can be removed from a \gls{schema} on three different levels:
+an individual type link can be removed from a \gls{predicate}, % TODO probably needs explanation
+a \gls{predicate} can be removed from a \gls{shape},
+or an entire \gls{shape} can be removed from the \gls{schema}.
 Removal on the first two levels can be decided for each element independently,
-but whether a shape can be removed from the schema depends not only on how many instances of that shape exist,
-but also whether the shape is referred to by any type links that were not dropped from this schema.
-To avoid dropping shapes which are needed by other parts of the schema,
-while still dropping shapes that are otherwise unused,
-the exporter maintains two sets of shapes:
-one for shapes which are referenced from type links,
-and one for shapes which may be dropped.
-When printing the final schema, only shapes found in the latter set but not in the former are skipped.
+but whether a \gls{shape} can be removed from the \gls{schema} depends not only on how many instances of that \gls{shape} exist,
+but also whether the \gls{shape} is referred to by any type links that were not dropped from this \gls{schema}.
+To avoid dropping \glspl{shape} which are needed by other parts of the \gls{schema},
+while still dropping \glspl{shape} that are otherwise unused,
+the exporter maintains two sets of \glspl{shape}:
+one for \glspl{shape} which are referenced from type links,
+and one for \glspl{shape} which may be dropped.
+When printing the final \gls{schema}, only \glspl{shape} found in the latter set but not in the former are skipped.
 
 The decision whether to drop an element or not
 was implemented as a simple numeric threshold on all three levels:
 if a type link is used less than $m$ times, % TODO verify this: is the “count” of a typelink really the number of times it occurs?
-a predicate is used less than $n$ times (sum of all type link uses),
+a \gls{predicate} is used less than $n$ times (sum of all type link uses),
 or a class has less than $o$ instances,
 the element is dropped.
 The three limits are independent,
@@ -447,38 +447,38 @@ to turn those fixed thresholds into ratios,
 so that the same parameters can be used for vastly different data sets
 with varying numbers of class instances overall.
 
-Unfortunately, this strategy was not very successful in enabling validation of the schemas.
+Unfortunately, this strategy was not very successful in enabling validation of the \glspl{schema}.
 Only at almost draconian thresholds for dropping elements,
-where only a few shapes and predicates would remain in the schema,
+where only a few \glspl{shape} and \glspl{predicate} would remain in the \gls{schema},
 would validation succeed;
-manual bisecting of the schemas which failed to validate
-would often turn up a fairly small problematic part of a schema
+manual bisecting of the \glspl{schema} which failed to validate
+would often turn up a fairly small problematic part of a \gls{schema}
 which a simple count-based threshold was ill-suited to detect automatically.
 
 % TODO find a better title for this section
 \section{Depth Limits in Validation}
 \label{sec:RDF2Graph+Wikidata:depth-limit}
 
-Another attempt to make validation of the inferred schemas more feasible
+Another attempt to make validation of the inferred \glspl{schema} more feasible
 was to limit the maximum depth during the validation process. % TODO better word than “process”?
-Consider, for example, a simple shape for humans, % TODO only prose or also ShExC?
+Consider, for example, a simple \gls{shape} for humans, % TODO only prose or also ShExC?
 which describes a human as having any number of human parents and a date of birth.
 To validate whether any given node is actually a human,
 all its direct and indirect parents must also be validated,
 potentially thousands of ancestors, no matter how remote.
-If the shape is more complicated,
-with more predicates potentially linking to other shapes as well,
+If the \gls{shape} is more complicated,
+with more predicates potentially linking to other \glspl{shape} as well,
 this can get very expensive rather quickly.
 On the other hand, it is not clear that the more remote validations here are useful,
-at least in the context of validating Wikidata items
-(where different areas of items may be edited by very different sets of editors)
-against automatically inferred schemas
+at least in the context of validating \gls{Wikidata} \glspl{item}
+(where different areas of \glspl{item} may be edited by very different sets of editors)
+against automatically inferred \glspl{schema}
 (which are likely to have inherited some imperfections from the input data): % TODO there should be a longer paragraph on this somewhere else, perhaps add a \cref once it exists
 experience shows that % TODO is “experience shows” acceptable?
-most inferred schemas tend to include shapes for certain core classes,
+most inferred \glspl{schema} tend to include \glspl{shape} for certain core classes,
 e.~g. \QL{Q5}{human} or \QL{Q3624078}{sovereign state},
-but someone attempting to validate an item for a mammalian protein
-is unlikely to care that the item for the protein’s discoverer’s husband’s country of citizenship % TODO too many ’s?
+but someone attempting to validate an \gls{item} for a mammalian protein
+is unlikely to care that the \gls{item} for the protein’s discoverer’s husband’s country of citizenship % TODO too many ’s?
 happens to be missing an \PL{P1279}{inflation rate} statement.
 
 Therefore, % TODO is it okay to start a paragraph with “therefore”?
@@ -486,10 +486,10 @@ in an attempt to reduce the amount of irrelevant violations
 and to make the validation terminate without crashing,
 a patch to add an optional depth limit to the shex.js implementation was developed.
 With this change, if the depth limit was reached,
-the validator would skip recursing into another shape
+the validator would skip recursing into another \gls{shape}
 and instead only record the fact that the limit was reached before continuing.
 Unfortunately, however, this proved unsuccessful.
-When testing some items against several inferred schemas,
+When testing some \glspl{item} against several inferred schemas,
 low limits (2–4) would yield unpredictable results
 (sometimes validate successfully, sometimes report problems, sometimes crash),
 whereas higher limits (up to 10) would typically have the same result as validation without any depth limit
@@ -510,9 +510,9 @@ which may previously not have been necessary if the pruned part would otherwise 
 \label{ch:wdsi}
 
 This chapter describes the major user-facing result of this thesis:
-the Wikidata Shape Expressions Inference Tool,
-which makes the Wikidata-aware % “Wikidata-aware”?
-version of RDF2Graph easily available to Wikidata editors.
+the \gls{wdsi},
+which makes the \gls{Wikidata}-aware % “Wikidata-aware”?
+version of \gls{RDF2Graph} easily available to \gls{Wikidata} editors.
 This includes the general design and implementation of the tool (\cref{sec:wdsi:abstract}),
 some specifics to make it run on the Wikimedia Toolforge platform (\cref{sec:wdsi:Toolforge}),
 and a few utilities to make it more pleasant to use (\cref{sec:wdsi:utilities}).
@@ -523,8 +523,8 @@ and its source code may be found at \url{https://phabricator.wikimedia.org/sourc
 \section{General design and implementation}
 \label{sec:wdsi:abstract}
 
-The goal of the tool is to make the schema inference process available to other Wikidata editors,
-which is necessary because RDF2Graph, its \gls{shex} exporter, and the Makefile-based process around them
+The goal of the tool is to make the \gls{schema} inference process available to other \gls{Wikidata} editors,
+which is necessary because \gls{RDF2Graph}, its \gls{shex} exporter, and the Makefile-based process around them
 require several different programs and programming runtimes to be available,
 which it would be unreasonable to expect every interested user to install
 (not to mention that the Makefile assumes a Unix-like environment,
@@ -535,17 +535,17 @@ is a common approach in the Wikimedia universe.
 
 % TODO what tense / mood to use in this section? not sure if subjunctive mood makes sense
 In this Wikimedia-hosted tool,
-users would enter a \gls{sparql} query selecting the set of exemplary items from which to infer a schema,
+users would enter a \gls{sparql} query selecting the set of exemplary \glspl{item} from which to infer a \gls{schema},
 and the tool would download the associated data,
-run RDF2Graph and the \gls{shex} exporter,
+run \gls{RDF2Graph} and the \gls{shex} exporter,
 and make the ShExC output available to the user.
 The simplest process for that would be
-to directly return the ShExC code in the server’s response to the user’s HTTP request,
+to directly return the ShExC code in the server’s response to the user’s \gls{http} request,
 but that is not possible:
 even simple inference jobs % TODO “jobs” okay?
-from a single item take at least several minutes,
+from a single \gls{item} take at least several minutes,
 and more complicated jobs % TODO “jobs” again
-over several dozens of items can take multiple hours –
+over several dozens of \glspl{item} can take multiple hours –
 the connection to the user would time out long before that,
 and the user might also become impatient and simply close their browser window or tab.
 
@@ -565,14 +565,14 @@ available to the user.
 Since this already more or less requires storing inputs and outputs persistently,
 a natural extension of this scheme is to make this job page available to others,
 so that not only the original submitter but also other users can inspect a running or completed job.
-(The input data is entirely public data from Wikidata,
+(The input data is entirely public data from \gls{Wikidata},
 so there is no reason to restrict the visibility of the outputs.)
-This facilitates easy collaboration on schemas between multiple users
+This facilitates easy collaboration on \glspl{schema} between multiple users
 and allows even casual visitors to see how the tool operates,
 and what kinds of results it produces,
 without having to start their own inference process.
 To make each result easier to comprehend for others,
-users can also submit a title, description, and/or URL for additional information
+users can also submit a title, description, and/or \gls{url} for additional information
 along with their \gls{sparql} query. % TODO strictly speaking, the title isn’t optional. does that matter?
 
 As the inference process consumes a lot of resources,
@@ -583,10 +583,10 @@ To ensure that the system’s resources are not exhausted by this one tool,
 the tool only allows at most two jobs to run in parallel,
 and prevents users from submitting any more jobs if too many jobs are currently running,
 instead asking them to try again later.
-Job submission is also restricted to users with a valid Wikidata account,
+Job submission is also restricted to users with a valid \gls{Wikidata} account,
 authenticated via OAuth.
 The identity of the submitting user is another attribute of a job,
-along with its title, description, URL, and \gls{sparql} query,
+along with its title, description, \gls{url}, and \gls{sparql} query,
 and can be seen by other users who look at the pending or finished jobs of the tool.
 
 % TODO is this paragraph relevant?
@@ -608,22 +608,22 @@ support for the ShExC syntax was added to the popular Pygments syntax highlighte
 If the \gls{shex} code for a job % TODO is “a job” okay?
 is requested by a browser
 or some other kind of client which declares that it can accept HTML
-(using HTTP content negotiation),
+(using \gls{http} content negotiation),
 the tool applies the Pygments syntax highlighter to the code on-the-fly
-and sends a complete HTML document containing the prettified code and associated CSS rules.
-Clients which do not accept HTML documents receive the plain ShExC code instead.
+and sends a complete \gls{html} document containing the prettified code and associated \gls{css} rules.
+Clients which do not accept \gls{html} documents receive the plain ShExC code instead.
 
-The HTML document that is sent to browsers
+The \gls{html} document that is sent to browsers
 also includes a client-side script,
-which searches for Wikidata item IDs in the ShExC code,
-fetches the labels of all mentioned item IDs from Wikidata,
+which searches for \gls{Wikidata} \glspl{item ID} in the ShExC code,
+fetches the \glspl{label} of all mentioned \glspl{item ID} from \gls{Wikidata},
 and adds them to the document in \lstinline[language=html]{<abbr>} abbreviation elements.
-It also hyperlinks each reference of a shape to its definition,
-and the definition to the corresponding entity on Wikidata.
-This makes it much more convenient to read the schema in the browser:
-the user merely has to hover their mouse over a class to see its label instead of the item ID;
-clicking on it brings the user to the shape for that class;
-and clicking on the ID there brings the user to the Wikidata page for the class,
+It also hyperlinks each reference of a \gls{shape} to its definition,
+and the definition to the corresponding \gls{item} on \gls{Wikidata}.
+This makes it much more convenient to read the \gls{schema} in the browser:
+the user merely has to hover their mouse over a class to see its \gls{label} instead of the \gls{item ID};
+clicking on it brings the user to the \gls{shape} for that class;
+and clicking on the ID there brings the user to the \gls{Wikidata} page for the class,
 where they can further explore the related data.
 
 A comparison of the effects of these two features
@@ -645,7 +645,7 @@ can be seen in \cref{fig:shexc-syntax-highlighting}.
     \includegraphics[trim={0 2.5cm 0 0},clip]{screenshots/shexc-with-syntax-highlighting}
     \caption[The same schema with syntax highlighting and the script applied.]{
       The same schema with syntax highlighting and the script applied.
-      The cursor is over the \lstinline{P277} property ID.
+      The cursor is over the \lstinline{P277} \gls{property ID}.
     }
     \label{fig:shexc-syntax-highlighting-with}
   \end{subfigure}
@@ -661,18 +661,18 @@ can be seen in \cref{fig:shexc-syntax-highlighting}.
 
 Since Wikimedia Toolforge runs on a rather old Linux distribution
 (Ubuntu 14.04 “Trusty Tahr”, originally released April 2014),
-the versions of various software used by RDF2Graph and the rest of the inference process
+the versions of various software used by \gls{RDF2Graph} and the rest of the inference process
 were too outdated to use out-of-the-box.
 The response to this was twofold:
 to cope with older software versions where feasible,
 and to install newer software versions where not.
 
-RDF2Graph required Java 8,
+\gls{RDF2Graph} required Java 8,
 but only Java 7 is installed on Toolforge.
-Fortunately, RDF2Graph only used Java 8 for syntactic constructs (“lambda” syntax)
+Fortunately, \gls{RDF2Graph} only used Java 8 for syntactic constructs (“lambda” syntax)
 and those only sparingly, so it was not too much work to make it compatible with Java 7 again.
 Similarly, Apache Jena and Fuseki have required Java 8 for some time already,
-but fortunately RDF2Graph is compatible with their older versions which support Java 7,
+but fortunately \gls{RDF2Graph} is compatible with their older versions which support Java 7,
 and which could therefore be installed.
 
 On the other hand, there is no obvious way to make the \command{jq}-based part of the data download step

@@ -19,7 +19,7 @@
 \label{sec:appendix:depth-limit}
 
 The following tables show the results
-when attempting various validations against inferred schemas
+when attempting various validations against inferred \glspl{schema}
 with different depth limits.
 The meaning of the result column is as follows:
 
@@ -49,9 +49,9 @@ The meaning of the result column is as follows:
     10 & \minsec{2}{48} & \minsec{8}{53} & core
   \end{tabular}
   \caption{
-    Results when validating the item \QL{Q44578}{Titanic}
-    against the shape for the class \QL{Q11424}{film}
-    from a schema inferred from the set of films that won ten or more Oscars
+    Results when validating the \gls{item} \QL{Q44578}{Titanic}
+    against the \gls{shape} for the class \QL{Q11424}{film}
+    from a \gls{schema} inferred from the set of films that won ten or more Oscars
     (\wdsiJob{29}).
   }
   \label{tab:appendix:depth-limit:1}
@@ -74,9 +74,9 @@ The meaning of the result column is as follows:
     10 & \minsec{0}{1} & \minsec{0}{3} & fail
   \end{tabular}
   \caption{
-    Results when validating the item \QL{Q42}{Douglas Adams}
-    against the shape for the class \QL{Q5}{human}
-    from a schema inferred from the set of films that won ten or more Oscars
+    Results when validating the \gls{item} \QL{Q42}{Douglas Adams}
+    against the \gls{shape} for the class \QL{Q5}{human}
+    from a \gls{schema} inferred from the set of films that won ten or more Oscars
     (\wdsiJob{29}).
   }
   \label{tab:appendix:depth-limit:2}
@@ -100,9 +100,9 @@ The meaning of the result column is as follows:
     10 & \minsec{0}{18} & \minsec{0}{7} & fail
   \end{tabular}
   \caption{
-    Results when validating the item \QL{Q42}{Douglas Adams}
-    against the shape for the class \QL{Q5}{human}
-    from a schema inferred from the members of the 13th Riigikogu
+    Results when validating the \gls{item} \QL{Q42}{Douglas Adams}
+    against the \gls{shape} for the class \QL{Q5}{human}
+    from a \gls{schema} inferred from the members of the 13th Riigikogu
     (the Estonian parliament; \wdsiJob{30}).
   }
   \label{tab:appendix:depth-limit:3}
@@ -126,9 +126,9 @@ The meaning of the result column is as follows:
     10 & \minsec{2}{48} & \minsec{8}{53} & core
   \end{tabular}
   \caption{
-    Results when validating the item \QL{Q449851}{Mailis Reps}
-    against the shape for the class \QL{Q5}{human}
-    from a schema inferred from the members of the 13th Riigikogu
+    Results when validating the \gls{item} \QL{Q449851}{Mailis Reps}
+    against the \gls{shape} for the class \QL{Q5}{human}
+    from a \gls{schema} inferred from the members of the 13th Riigikogu
     (\wdsiJob{30}).
   }
   \label{tab:appendix:depth-limit:4}
@@ -152,9 +152,9 @@ The meaning of the result column is as follows:
     10 & 8\minsec{6}{39} & 15\minsec{3}{35} & abort
   \end{tabular}
   \caption{
-    Results when validating the item \QL{Q30}{United States of America}
-    against the shape for the class \QL{Q3624078}{sovereign state}
-    from a schema inferred from a set of items for bus stops
+    Results when validating the \gls{item} \QL{Q30}{United States of America}
+    against the \gls{shape} for the class \QL{Q3624078}{sovereign state}
+    from a \gls{schema} inferred from a set of \glspl{item} for bus stops
     (\wdsiJob{15}).
   }
   \label{tab:appendix:depth-limit:5}
@@ -166,7 +166,7 @@ The meaning of the result column is as follows:
 % by some of the tables above
 
 The following charts show the total execution time of the inference process
-for various input queries collected from the Wikidata Shape Expressions Inference tool:
+for various input queries collected from the \gls{wdsi}:
 
 \begin{itemize}
 \item Members of the 30th Riigikogu (the Estonian parliament),
@@ -177,8 +177,8 @@ for various input queries collected from the Wikidata Shape Expressions Inferenc
 \item Films that won three or more Academy Awards (“Oscars”). % glossary? ™?
   Originally \wdsiJob{32}, later repeated as \wdsiJob{34}, \wdsiJob{35}, \wdsiJob{36}.
   (Some earlier jobs used a similar query with a limit of ten or five Oscars.)
-\item The human items with most sitelinks to other Wikimedia projects
-  (including but not limited to Wikipedia articles in different language editions),
+\item The human \glspl{item} with most \glspl{sitelink} to other \gls{Wikimedia} projects
+  (including but not limited to \gls{Wikipedia} articles in different language editions),
   limited to 50 entities.
   Originally \wdsiJob{24}, later repeated as \wdsiJob{26}, \wdsiJob{27}.
 
@@ -187,7 +187,7 @@ for various input queries collected from the Wikidata Shape Expressions Inferenc
   My best explanation for that is that this is a less “coherent” set of entities:
   since the selection criterion (the number of sitelinks) is not directly related to the data,
   this includes politicians, authors, religious figures, scientists, philosophers, celebrities, composers, and other kinds of people
-  (though none of these are \emph{classes} in the sense relevant to RDF2Graph).
+  (though none of these are \emph{classes} in the sense relevant to \gls{RDF2Graph}).
 \item The largest cities in the world by population,
   limited to 25 entities.
   Originally \wdsiJob{3}.
@@ -200,10 +200,10 @@ for various input queries collected from the Wikidata Shape Expressions Inferenc
   due to the absurd number of input entities:
   compare especially the $X$-axes of
   \cref{fig:jobs-over-entities-with-outliers,fig:jobs-over-entities-without-outliers}.
-\item Programming languages with the highest number of statements,
+\item Programming languages with the highest number of \glspl{statement},
   limited to 50 entities.
   Originally \wdsiJob{17}, later repeated as \wdsiJob{18}.
-\item Recently edited items for \glspl{rfc},
+\item Recently edited \glspl{item} for \glspl{rfc},
   limited to 500 entities.
   Originally \wdsiJob{21}, based on the earlier \wdsiJob{20} (equivalent but with a lower limit),
   which in turn was inspired by \wdsiJob{8}.
@@ -211,13 +211,13 @@ for various input queries collected from the Wikidata Shape Expressions Inferenc
   originally \wdsiJob{23}.
 \item The presidents of the United States of America,
   originally \wdsiJob{2}.
-\item The chapter organizations of the Wikimedia Foundation,
+\item The chapter organizations of the \gls{Wikimedia} Foundation, % TODO separate entry for WMF?
   originally \wdsiJob{5}.
 \end{itemize}
 
 For each input query,
 the different steps of the inference process
-(data download, initial RDF2Graph run, RDF2Graph simplification, \gls{shex} export)
+(data download, initial \gls{RDF2Graph} run, \gls{RDF2Graph} simplification, \gls{shex} export)
 were timed individually,
 recording the real (“wall-clock”) time, user CPU time and system CPU time separately.
 Only the sum of the real time was used for the charts below,
@@ -236,7 +236,7 @@ never takes more than a minute,
 which means that while the changes in \cref{sec:RDF2Graph+Wikidata:cyclic-graphs} potentially slowed this step down to some degree,
 it doesn’t make a big difference for the total execution time,
 which is mostly dominated by other steps
-(RDF2Graph without simplification and \gls{shex} export)
+(\gls{RDF2Graph} without simplification and \gls{shex} export)
 anyways.
 
 \begin{figure}[ht]
@@ -260,16 +260,16 @@ anyways.
   \begin{subfigure}{\textwidth}
     \centering
     \input{graphs/jobs-over-triples}
-    \caption{Job execution time over number of triples, with outliers.}
+    \caption{Job execution time over number of \glspl{triple}, with outliers.}
     \label{fig:jobs-over-triples-with-outliers}
   \end{subfigure}
   \begin{subfigure}{\textwidth}
     \centering
     \input{graphs/jobs-without-outliers-over-triples}
-    \caption{Job execution time over number of triples, without outliers.}
+    \caption{Job execution time over number of \glspl{triple}, without outliers.}
     \label{fig:jobs-over-triples-without-outliers}
   \end{subfigure}
-  \caption{Job execution time over number of triples in the input data set.}
+  \caption{Job execution time over number of \glspl{triple} in the input data set.}
   \label{fig:jobs-over-triples}
 \end{figure}
 
@@ -277,16 +277,16 @@ anyways.
   \begin{subfigure}{\textwidth}
     \centering
     \input{graphs/jobs-over-P31s}
-    \caption{Job execution time over number of \PName{wdt:P31} triples, with outliers.}
+    \caption{Job execution time over number of \PName{wdt:P31} \glspl{triple}, with outliers.}
     \label{fig:jobs-over-P31s-with-outliers}
   \end{subfigure}
   \begin{subfigure}{\textwidth}
     \centering
     \input{graphs/jobs-without-outliers-over-P31s}
-    \caption{Job execution time over number of \PName{wdt:P31} triples, without outliers.}
+    \caption{Job execution time over number of \PName{wdt:P31} \glspl{triple}, without outliers.}
     \label{fig:jobs-over-P31s-without-outliers}
   \end{subfigure}
-  \caption{Job execution time over number of \PName{wdt:P31} triples in the input data set.}
+  \caption{Job execution time over number of \PName{wdt:P31} \glspl{triple} in the input data set.}
   \label{fig:jobs-over-P31s}
 \end{figure}
 
