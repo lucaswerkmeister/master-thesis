@@ -43,14 +43,47 @@ which can either be validated directly
 or be further refined by data model experts, % TODO “data model experts” sounds weird
 making the automatically inferred schemas a useful basis for manually curated schemas.
 
-% TODO next steps / future work
-% * operate on full statements
-% * some next steps for tool, see tool chapter
-% * rewrite rest of ShEx export – we spend half of our wall-clock time (and even more of our CPU time?) there, doing what feels like not very much to the JSON
-% * find other ways to make validation work
-% * further improve simplification
-%   * when to merge classes
-%   * throw away rarely used classes?
+There are plenty of options of further improvements on this work.
+\Cref{sec:Evaluation:duration} already mentioned how the Wikidata Shape Expressions Inference Tool could be improved
+to notify the user of the estimated total runtime of a job once the data download step is complete
+and to reject jobs which are expected to take too long.
+Many other improvements could be made to the user interface as well,
+such as exposing some more configuration options to users of the tool,
+e.~g. the thresholds for schema reduction mentioned in \cref{sec:RDF2Graph+Wikidata:schema-reduction}.
+
+A significant improvement over the current state
+would be to make RDF2Graph work on full statement nodes instead of just the “truthy” statements.
+A full explanation of full statement nodes is beyond the scope of this thesis,
+but in brief, they offer much more information about Wikidata statements
+in exchange for a slightly more complicated data format.
+Using full statement nodes would allow RDF2Graph to take not just the statement’s values
+but also their qualifiers and references into account.
+However, this would require major changes to the way RDF2Graph looks at the input graph,
+because the subject and object of a statement are no longer linked via a single triple
+in the full statement nodes.
+
+Clearly, it is not a satisfactory final state
+that the inferred schemas cannot be directly used for validation.
+It may be possible to find optimizations in the validators
+and/or useful criteria for reducing the inferred schemas
+which would enable direct validation against the schemas
+without human intervention to manually extract their most useful parts.
+There is also some room for improvement in the simplification step
+regardless of the ability to validate against the inferred schemas:
+sometimes, despite the changes in \cref{subsec:RDF2Graph+Wikidata:Wikidata:simplification},
+it still merges mostly-unrelated classes into very abstract base classes,
+so the criteria on when to merge or not merge classes could use some improvements.
+Additionally, it may be useful to discard rarely used classes for common type links altogether,
+to cut down on the amount of “noise” in the schema.
+
+The detailed timings for the jobs listed in \cref{sec:jobs-over-various}
+show that the \gls{shex} export step usually takes up about half of the total wall-clock time,
+and often significantly more than half of the CPU time.
+% TODO I’m not including the details of this analysis anywhere, is that okay?
+I have not investigated this step more closely except for its very last part
+(see \cref{sec:RDF2Graph+Wikidata:updates}),
+but it seems unlikely that this is necessary:
+it may be possible to change or rewrite the rest of the \gls{shex} exporter to be much more efficient.
 
 % TODO finish off conclusion?
 % TODO conclusion should probably be longer
