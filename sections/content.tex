@@ -134,8 +134,8 @@ to run the entire process and generate the \gls{shex} file.
       \path (data) -- node {\gls{wdqs}} (JSON);
       \path (JSON) -- node {\command{jq}} (N-Triples);
       \path (N-Triples) -- node {Fuseki} (Fuseki);
-      \path (Fuseki) -- node {RDF2Graph} (RDF2Graph);
-      \path [dashed] (RDF2Graph.north east) to [out=30,in=330,looseness=5] node {RDF2Graph, simplify} (RDF2Graph.south east);
+      \path (Fuseki) -- node {\gls{RDF2Graph}} (RDF2Graph);
+      \path [dashed] (RDF2Graph.north east) to [out=30,in=330,looseness=5] node {\gls{RDF2Graph}, simplify} (RDF2Graph.south east);
       \path (RDF2Graph) -- node {\gls{shex} exporter} (ShEx);
       \path (ShEx) -- node {\command{pygmentize}} (HTML);
     \end{scope}
