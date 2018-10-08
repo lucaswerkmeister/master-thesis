@@ -35,7 +35,7 @@ has not seen any updates since 2015 (when \cite{vanDam2015} was published), % TO
 so some updates were needed to make the program run on newer software versions
 and to target a more recent version of \gls{shex}.
 Many of these were rather minor in nature,
-but a few of the major ones are described in this section.
+but a few of the major ones concerning the \gls{shex} exporter are described in this section.
 (I later noticed that the \gls{RDF2Graph} source code repository
 also has a \branchname{dev} branch,
 which has some more recent changes including a few fixes,
@@ -57,10 +57,27 @@ prefixes are used everywhere in the output, highly improving readability;
 and the output is sorted, making the whole generation process more deterministic
 and thus making it easier to compare the results of multiple inference processes.
 
-% TODO updates to ShEx v2 syntax – worth mentioning?
-% TODO if the ShEx exporter rewrite is the only thing worth mentioning,
-% the first paragraph needs to be rephrased a little,
-% and perhaps the final sentence of the second paragraph can also be split up into multiple sentences
+The syntax of the generated ShExC \glspl{schema} % TODO glossary for ShExC?
+also required some changes.
+First, \gls{RDF2Graph} originally targeted \gls{shex} version 1.0
+whereas the current release is version 2.0,
+which introduced some syntactic changes
+(e.~g. replacing some commas with semicolons).
+Second, \gls{RDF2Graph} emitted syntax for an experimental, in-progress version of \gls{shex}
+with support for inheritance between \glspl{shape}:
+if, for example, the inferred \gls{schema} contained classes for both “human” and “person”,
+and “human” was a subclass of “person” in the input data set,
+then \gls{RDF2Graph} would declare that the “human” \gls{shape} extended the “person” \gls{shape}
+and omit \glspl{predicate} from the “person” \gls{shape} in the “human” \gls{shape},
+since those would be redundant with the \glspl{predicate} inherited from the “person” \gls{shape}.
+This feature has not made it into any released version of \gls{shex} yet
+(it can still be found in \branchname{on-shape-expression} branches of related repositories,
+though the syntax has slightly changed:
+it now uses the keyword \lstinline{EXTENDS} whereas \gls{RDF2Graph} used the symbol \lstinline{&}),
+so the \gls{shex} exporter was changed to only mention the parent classes for a \gls{shape} in a comment,
+and simplification step 4 (see \cref{sec:Background:RDF2Graph}) was disabled
+so that the redundant \glspl{predicate} are included after all,
+since they are no longer automatically inherited.
 
 % TODO find a better title for this section
 \section{Wikidata Support}
@@ -241,9 +258,6 @@ to add a number of \gls{Wikidata} \glspl{item} to the set of classes which other
 and to stop looking for common superclasses of two classes after checking five levels in the class hierarchy.
 (The limit of five levels is an arbitrary choice
 and could also be made configurable if deemed necessary in the future.) % TODO look a bit more into this?
-% TODO also disabled step 7.4.4 (dropping predicates that were found in superclasses)
-% because the superclass support in the ShEx export changed,
-% but that requires explanation of how the ShEx export changed
 
 \section{Support for cyclic type hierarchies}
 \label{sec:RDF2Graph+Wikidata:cyclic-graphs}
