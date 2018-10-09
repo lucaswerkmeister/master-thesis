@@ -329,8 +329,6 @@ will never cause a previously matching \gls{focus node} to no longer match the \
 \section{\gls{RDF2Graph}}
 \label{sec:Background:RDF2Graph}
 
-% TODO review the layout of the figures here
-
 \gls{RDF2Graph} \cite{vanDam2015}
 is a tool to automatically determine the structure of an \gls{rdf} graph
 and export it as a \gls{shex} \gls{schema}
@@ -365,22 +363,60 @@ for example, step 2 is implemented under a code comment for “7.4.2”.)
 
 % TODO justify somewhere (not sure if in Background) why we are using simplification
 
-In step 2, all \glspl{predicate} from child classes are copied to parent classes,
-as outlined in \cref{fig:simplify-7.4.2}.
+% TODO review the layout of the figures here
+% TODO figures or listings?
+% TODO some of the figures are too high for their page. perhaps remove blank lines between shapes
+% TODO simplification is concerned with *type links*, but some of the examples here use *datatypes*
+
+In step 2, all \glspl{predicate} from child classes are copied to parent classes.
+For example, in \cref{fig:simplify-7.4.2},
+the \PName{ex:WebResource} and \PName{ex:CreativeWork} classes are initially empty
+but then inherit several \glspl{predicate} from their child classes.
+(The \lstinline{.} in the \PName{ex:url} \gls{value constraint} means “any value”.)
 
 \begin{figure}[ht]
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}[showlines=true]
-A1 extends X {
-  a A;
+ex:CreativeWork {}
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {
+  ex:title rdf:langString;
+  ex:author @ex:Person+;
+  ex:cites @ex:CreativeWork+;
 }
-A2 extends X {
-  a A;
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {}
+
+ex:BlogPost
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
 }
-B extends X {
-  b B;
+
+ex:DocumentationPage
+    EXTENDS ex:BlogPost {
+  ex:url .;
+  ex:title rdf:langString;
+  ex:author @ex:Organization;
 }
-X {}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -390,51 +426,114 @@ X {}
   \end{subfigure}
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}
-A1 extends X {
-  a A;
+ex:CreativeWork {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person+ |
+    ex:author @ex:Organization
+  );
+  ex:cites @ex:CreativeWork+;
 }
-A2 extends X {
-  a A;
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {
+  ex:title rdf:langString;
+  ex:author @ex:Person+;
+  ex:cites @ex:CreativeWork+;
 }
-B extends X {
-  b B;
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
 }
-X {
-  a A;
-  b B;
+
+ex:BlogPost
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
+}
+
+ex:DocumentationPage
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  ex:author @ex:Organization;
 }
     \end{lstlisting}
     \caption{After step 2.}
     \label{fig:simplify-7.4.2-after}
   \end{subfigure}
-  \caption[Simplification step 2.]{Simplification step 2 (in pseudo-syntax).}
+  \caption[Simplification step 2.]{Simplification step 2 (in \gls{shexc}-like pseudo-syntax).}
   \label{fig:simplify-7.4.2}
 \end{figure}
 
-Step 3  removes \glspl{predicate} which are only found in a single subclass
+Step 3 removes \glspl{predicate} which are only found in a single subclass
 from the parent class again.
 In the example from \cref{fig:simplify-7.4.2},
-the \gls{predicate} \lstinline{a} will be kept in \lstinline{X}
-because it occurs in both \lstinline{A1} and \lstinline{A2},
-but the \gls{predicate} \lstinline{b} will be dropped
-because it only occurs in the single subclass \lstinline{B} –
-see \cref{fig:simplify-7.4.3}.
+the \PName{ex:cites}  and \PName{ex:url} \glspl{predicate} will be removed from the \PName{ex:CreativeWork} \gls{shape}
+because they are only found in one subclass
+(\PName{ex:ScholarlyArticle} and \PName{ex:WebResource}, respectively),
+while the other \glspl{predicate} will be kept.
+In the \PName{ex:WebResource} \gls{shape} itself,
+all \glspl{predicate} will be kept because they occur in both subclasses,
+\PName{ex:BlogPost} and \PName{ex:DocumentationPage}.
+See \cref{fig:simplify-7.4.3} for the result.
 
 \begin{figure}[ht]
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}
-A1 extends X {
-  a A;
+ex:CreativeWork {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person+ |
+    ex:author @ex:Organization
+  );
+  ex:cites @ex:CreativeWork+;
 }
-A2 extends X {
-  a A;
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {
+  ex:title rdf:langString;
+  ex:author @ex:Person+;
+  ex:cites @ex:CreativeWork+;
 }
-B extends X {
-  b B;
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
 }
-X {
-  a A;
-  b B;
+
+ex:BlogPost
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
+}
+
+ex:DocumentationPage
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  ex:author @ex:Organization;
 }
     \end{lstlisting}
     \caption{Before step 3.}
@@ -442,47 +541,107 @@ X {
   \end{subfigure}
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}[showlines=true]
-A1 extends X {
-  a A;
+ex:CreativeWork {
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person+ |
+    ex:author @ex:Organization
+  );
 }
-A2 extends X {
-  a A;
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {
+  ex:title rdf:langString;
+  ex:author @ex:Person+;
+  ex:cites @ex:CreativeWork+;
 }
-B extends X {
-  b B;
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
 }
-X {
-  a A;
+
+ex:BlogPost
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
 }
+
+ex:DocumentationPage
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  ex:author @ex:Organization;
+}
+
 
     \end{lstlisting}
     \caption{After step 3.}
     \label{fig:simplify-7.4.3-after}
   \end{subfigure}
-  \caption[Simplification step 3.]{Simplification step 3 (in pseudo-syntax).}
+  \caption[Simplification step 3.]{Simplification step 3 (in \gls{shexc}-like pseudo-syntax).}
   \label{fig:simplify-7.4.3}
 \end{figure}
 
 After that, in step 4 all references which are still found in a parent class
 are removed from the child classes, where they are now redundant.
-See \cref{fig:simplify-7.4.4} for applying this to the same example.
+In \cref{fig:simplify-7.4.4}, this mostly clears the \gls{schema}:
+most \glspl{predicate} are found in \PName{ex:CreativeWork},
+and only \PName{ex:WebResource} retains another \gls{predicate}, \PName{ex:url}.
 Note that this step was later disabled, see \cref{sec:RDF2Graph+Wikidata:updates}.
 
 \begin{figure}[ht]
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}
-A1 extends X {
-  a A;
+ex:CreativeWork {
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person+ |
+    ex:author @ex:Organization
+  );
 }
-A2 extends X {
-  a A;
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {
+  ex:title rdf:langString;
+  ex:author @ex:Person+;
+  ex:cites @ex:CreativeWork+;
 }
-B extends X {
-  b B;
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
 }
-X {
-  a A;
-  b B;
+
+ex:BlogPost
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person |
+    ex:author @ex:Organization
+  );
+}
+
+ex:DocumentationPage
+    EXTENDS ex:WebResource {
+  ex:url .;
+  ex:title rdf:langString;
+  ex:author @ex:Organization;
 }
     \end{lstlisting}
     \caption{Before step 4.}
@@ -490,14 +649,42 @@ X {
   \end{subfigure}
   \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}[showlines=true]
-A1 extends X {}
-A2 extends X {}
-B extends X {
-  b B;
+ex:CreativeWork {
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person+ |
+    ex:author @ex:Organization
+  );
 }
-X {
-  a A;
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {}
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {
+  ex:url .;
 }
+
+ex:BlogPost
+    EXTENDS ex:WebResource {}
+
+ex:DocumentationPage
+    EXTENDS ex:WebResource {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -507,74 +694,61 @@ X {
     \caption{After step 4.}
     \label{fig:simplify-7.4.4-after}
   \end{subfigure}
-  \caption[Simplification step 4.]{Simplification step 4 (in pseudo-syntax).}
+  \caption[Simplification step 4.]{Simplification step 4 (in \gls{shexc}-like pseudo-syntax).}
   \label{fig:simplify-7.4.4}
 \end{figure}
 
 Step 2 also merges references to parent classes,
-as outlined in \cref{fig:simplify-7.4.2-classes}.
-The other steps take this into account by respecting subclass relations as well.
+and the other steps take this into account by respecting subclass relations as well.
+For example, consider the initial \gls{schema} in \cref{fig:simplify-classes}.
+Initially, it states that scholarly articles only cite other scholarly articles,
+and web resources only cite other web resources;
+after simplification, it states that creative works cite other creative works of any kind:
+the references to \PName{ex:ScholarlyArticle} and \PName{ex:WebResource}
+were merged while copying the \PName{ex:cites} predicate into the \PName{ex:CreativeWork} parent class,
+and afterwards the individual \glspl{predicate} were removed from the child classes
+because they are covered by the merged reference in the parent class.
 
 \begin{figure}[ht]
-  \begin{subfigure}[t]{0.3\textwidth}
-    \begin{lstlisting}[showlines=true]
-A1 extends A {}
-A2 extends A {}
-A extends B {}
-
-
-
-
-
-
-
-
-
-    \end{lstlisting}
-    \caption{The class hierarchy for this example.}
-    \label{fig:simplify-7.4.2-classes-hierarchy}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.3\textwidth}
-    \begin{lstlisting}[showlines=true]
-M extends X {
-  r A1
-}
-N extends X {
-  r A2
-}
-O extends X {
-  r B
-}
-X {}
-
-
-    \end{lstlisting}
-    \caption{Before step 2.}
-    \label{fig:simplify-7.4.2-classes-before}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.3\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
     \begin{lstlisting}
-M extends X {
-  r A1
+ex:CreativeWork {}
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {
+  ex:cites @ex:ScholarlyArticle+
 }
-N extends X {
-  r A2
-}
-O extends X {
-  r B
-}
-X {
-  r B;
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {
+  ex:cites @ex:WebResource*
 }
     \end{lstlisting}
-    \caption{After step 2.}
-    \label{fig:simplify-7.4.2-classes-after}
+    \caption{Before simplification.}
+    \label{fig:simplify-classes-before}
   \end{subfigure}
-  \caption[Simplification step 2, with class relations.]{
-    Simplification step 2 (in pseudo-syntax), with class relations.
+  \begin{subfigure}[t]{0.45\textwidth}
+    \begin{lstlisting}[showlines=true]
+ex:CreativeWork {
+  ex:cites @ex:CreativeWork*
+}
+
+ex:ScholarlyArticle
+    EXTENDS ex:CreativeWork {}
+
+ex:WebResource
+    EXTENDS ex:CreativeWork {}
+
+
+    \end{lstlisting}
+    \caption{After simplification.}
+    \label{fig:simplify-classes-after}
+  \end{subfigure}
+  \caption[Simplification, with class relations.]{
+    Simplification (in \gls{shexc}-like pseudo-syntax), with class relations.
     (This example is independent from the previous example.)
   }
-  \label{fig:simplify-7.4.2-classes}
+  \label{fig:simplify-classes}
 \end{figure}
 
 % TODO I haven’t looked too closely into any of these steps except the very last one,
