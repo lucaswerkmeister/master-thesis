@@ -43,7 +43,7 @@ but most of them are not relevant to the issues discussed here.)
 
 The final step of the \gls{shex} export was mostly rewritten from scratch.
 This is the step that translates a JSON-LD file describing the shapes of the schema
-into a ShExC file;
+into a \gls{shexc} file;
 the previous version did this using Jade,
 a templating engine for \gls{html} documents (renamed to Pug in 2016),
 constructing an \gls{html} document containing a single plain-text \lstinline[language=html]{<pre>} element,
@@ -57,7 +57,7 @@ prefixes are used everywhere in the output, highly improving readability;
 and the output is sorted, making the whole generation process more deterministic
 and thus making it easier to compare the results of multiple inference processes.
 
-The syntax of the generated ShExC \glspl{schema} % TODO glossary for ShExC?
+The syntax of the generated \gls{shexc} \glspl{schema}
 also required some changes.
 First, \gls{RDF2Graph} originally targeted \gls{shex} version 1.0
 whereas the current release is version 2.0,
@@ -553,9 +553,9 @@ In this Wikimedia-hosted tool,
 users would enter a \gls{sparql} query selecting the set of exemplary \glspl{item} from which to infer a \gls{schema},
 and the tool would download the associated data,
 run \gls{RDF2Graph} and the \gls{shex} exporter,
-and make the ShExC output available to the user.
+and make the \gls{shexc} output available to the user.
 The simplest process for that would be
-to directly return the ShExC code in the server’s response to the user’s \gls{http} request,
+to directly return the \gls{shexc} code in the server’s response to the user’s \gls{http} request,
 but that is not possible:
 even simple inference jobs % TODO “jobs” okay?
 from a single \gls{item} take at least several minutes,
@@ -574,7 +574,7 @@ If the background process has finished in the meantime,
 the tool collects the output,
 cleans up the temporary files left behind by the process,
 and finally makes the output
-(primarily the ShExC code, but also debugging outputs)
+(primarily the \gls{shexc} code, but also debugging outputs)
 available to the user.
 
 Since this already more or less requires storing inputs and outputs persistently,
@@ -609,7 +609,7 @@ Details of each job,
 such as its title, submitting user, and submission time,
 are stored in a tool-specific SQL database on the Toolforge database servers.
 However, the outputs of a job
-(ShExC file, standard output of the process, standard error of the process),
+(\gls{shexc} file, standard output of the process, standard error of the process),
 as well as to a lesser degree the \gls{sparql} query forming its input,
 are too large to store in a database.
 Instead, they are stored directly on the file system.
@@ -619,18 +619,18 @@ Instead, they are stored directly on the file system.
 \label{sec:wdsi:utilities}
 
 To make the \gls{shex} output more readable,
-support for the ShExC syntax was added to the popular Pygments syntax highlighter. % TODO link to pull request?
+support for the \gls{shexc} syntax was added to the popular Pygments syntax highlighter. % TODO link to pull request?
 If the \gls{shex} code for a job % TODO is “a job” okay?
 is requested by a browser
 or some other kind of client which declares that it can accept HTML
 (using \gls{http} content negotiation),
 the tool applies the Pygments syntax highlighter to the code on-the-fly
 and sends a complete \gls{html} document containing the prettified code and associated \gls{css} rules.
-Clients which do not accept \gls{html} documents receive the plain ShExC code instead.
+Clients which do not accept \gls{html} documents receive the plain \gls{shexc} code instead.
 
 The \gls{html} document that is sent to browsers
 also includes a client-side script,
-which searches for \gls{Wikidata} \glspl{item ID} in the ShExC code,
+which searches for \gls{Wikidata} \glspl{item ID} in the \gls{shexc} code,
 fetches the \glspl{label} of all mentioned \glspl{item ID} from \gls{Wikidata},
 and adds them to the document in \lstinline[language=html]{<abbr>} abbreviation elements.
 It also hyperlinks each reference of a \gls{shape} to its definition,
@@ -695,6 +695,6 @@ work with \command{jq} version 1.4, which has no general string replacement capa
 Therefore, \command{jq} version 1.5 was installed locally into the tool’s home directory –
 as was the latest version of Node.js, which was similarly outdated.
 (The Pygments syntax highlighter mentioned in \cref{sec:wdsi:utilities} was also installed locally,
-since ShExC syntax support is not yet available in any released version.)
+since \gls{shexc} syntax support is not yet available in any released version.)
 
 Full installation instructions may be found in the \filename{README} file of the source code repository.

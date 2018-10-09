@@ -238,8 +238,6 @@ and \PName{rdfs:subClassOf} connects a class to its parent class.
 \section{Shape Expressions}
 \label{sec:Background:ShEx}
 
-% TODO actually describe the relevant elements of ShExC syntax
-% TODO mention closed schemas and that we do not use them
 % TODO somewhere, there needs to be a clear explanation why it’s so okay for us to constantly discard type links. here? not sure
 % TODO example for validation
 
@@ -247,42 +245,86 @@ and \PName{rdfs:subClassOf} connects a class to its parent class.
 is a standard for describing data shapes within an \gls{rdf} graph,
 developed by the \gls{shex} Community Group under the umbrella of the \gls{w3c}.
 A \gls{shex} \gls{schema} consists of a number of \glspl{shape},
-each of which describes a focus node,
-expressing restrictions on its node kind, value, and/or incoming and outgoing links.
+each of which describes the layout of an \gls{rdf} \gls{resource},
+called the \gls{focus node}.
+The most common notation for \gls{shex} \glspl{schema} is \gls{shexc}, % TODO most common? most convenient? most something else?
+and while a full introduction to \gls{shex} and \gls{shexc} is beyond the scope of this thesis,
+the relevant elements are described below.
 
-For example, the schema in \cref{listing:shex-example} defines two \glspl{shape},
-one for humans and one for locations,
-in a fictional example vocabulary.
-The \gls{shape} for humans describes that a human has one or more parents,
-any number of children,
-a date of birth,
-and a place of birth;
-the parents and children should also be humans,
-the date of birth should be a date literal,
-and the place of birth should be a location.
-The \gls{shape} for locations describes that a location may optionally be contained within another location.
+In \gls{shexc}, a \gls{shape} definition begins with the \gls{shape}’s name (an \gls{iri})
+and is followed by a block of \glspl{triple constraint} enclosed in curly braces (\lstinline!{}!).
+The \glspl{triple constraint} are separated by semicolons (\lstinline{;})
+and place restrictions on \glspl{triple} with the \gls{focus node} as the \gls{subject} and a certain \gls{predicate}:
+a \gls{triple constraint} consists of the \gls{iri} for the \gls{predicate} and then a constraint on the \gls{object} (the value).
+The value constraint can require the value to be a literal with a certain datatype,
+expressed directly via the datatype’s \gls{iri},
+or it can require the value to be a \gls{resource} matching another \gls{shape},
+indicated by that \gls{shape}’s name (an \gls{iri}) following an \lstinline{@} symbol.
+The value constraint may be followed by a cardinality for the \gls{triple constraint}:
+instead of the default cardinality “must occur exactly once”,
+the symbol \lstinline{?} may be appended to signify “zero or one times”
+(an optional \gls{triple constraint}),
+\lstinline{*} means “zero or more”
+(any number of \glspl{triple} with this \gls{predicate} may occur,
+but if they do occur, their \glspl{object} must still match the \gls{value constraint}),
+and \lstinline{+} means “one or more”.
+Multiple possible \glspl{triple constraint} for the same \gls{predicate} can be expressed
+by grouping them inside parentheses (\lstinline{()}), separated by vertical bars (\lstinline{|}).
 
 \begin{lstfloat}
 \begin{lstlisting}[language=sparql]
-ex:Human {
-  ex:parent @ex:Human+;
-  ex:child @ex:Human*;
-  ex:dateOfBirth xsd:dateTime;
-  ex:placeOfBirth @ex:Location;
+ex:CreativeWork {
+  ex:title rdf:langString;
+  (
+    ex:author @ex:Person+ |
+    ex:author @ex:Organization
+  );
+  ex:cites @ex:CreativeWork*;
+  ex:publicationDate xsd:dateTime?
 }
 
-ex:Location {
-  ex:containedWithin @ex:Location?;
+ex:Person {
+  ex:name rdf:langString;
+  ex:dateOfBirth xsd:dateTime?
+}
+
+ex:Organization {
+  ex:name rdf:langString+
 }
 \end{lstlisting}
-\caption{A simple example \gls{schema}.}
+\caption{An example \gls{schema} for creative works and their authors.}
 \label{listing:shex-example}
-% TODO this schema is impossible to satisfy without a circular parent relationship – not a great example :/
 \end{lstfloat}
 
-% TODO this needs more content, I think
-% TODO difference between v1 and v2?
-% TODO ShExC? at least mention it if I use the term elsewhere
+For example, the schema in \cref{listing:shex-example} defines three \glspl{shape}
+for creative works and their authors.
+It describes a creative work as having a title, a string in a certain language;
+being written by one or more persons or an organization;
+citing any number of other creative works;
+and optionally having been published on a certain date and time.
+(Scholarly articles would typically have human authors,
+cite multiple works and have a publication date,
+whereas a documentation page could be attributed to an organization as a whole
+and have no significant citations or publication date.)
+A person in this \gls{schema} has exactly one name in one language
+(not generally true \cite{falsehoods-programmers-believe-about-names},
+but judged by the schema author to be common enough
+that violations are more likely to be data entry errors than real exceptions to this rule,
+and are therefore worth investigating)
+and may have a date of birth, if known.
+An organization does not have any properties other than at least one name
+(it may have several, e.~g. in different languages or jurisdictions).
+
+% TODO also add example of validation with results?
+
+By default, \gls{shex} \glspl{shape} are not \emph{closed}:
+the graph may contain additional \glspl{triple} with the \gls{focus node} as the \gls{subject}
+whose \glspl{predicate} do not match any of the \glspl{triple constraint} in the \gls{shape}.
+For example, an organization with an \PName{ex:dateOfIncorporation} would still match the \PName{ex:Organization} shape in \cref{listing:shex-example}
+even though that \gls{schema} does not mention an \PName{ex:dateOfIncorporation} \gls{predicate} anywhere.
+This means that removing all \glspl{triple constraint} with a certain \gls{predicate} from a \gls{shape}
+will never cause a previously matching \gls{focus node} to no longer match the \gls{shape}.
+% TODO I feel like this is missing one or two sentences at the end
 
 \section{\gls{RDF2Graph}}
 \label{sec:Background:RDF2Graph}
@@ -544,7 +586,7 @@ The \gls{shex} exporter loads parts of these results into a temporary \gls{rdf} 
 applies some transformations to them via \gls{sparql},
 converts them to JSON-LD,
 further transforms the JSON,
-and finally exports the result into ShExC text via the Jade template engine.
+and finally exports the result into \gls{shexc} text via the Jade template engine.
 
 \section{Wikimedia Toolforge}
 \label{sec:Background:Toolforge}
