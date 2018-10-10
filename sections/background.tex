@@ -22,6 +22,77 @@ The sections below are not intended to be comprehensive introductions to the res
 but focus on the aspects that are necessary to understand the thesis.
 More information can be found in the bibliography. % TODO this sentence feels weird. the bibliography doesn’t have more information, it just points you to it
 
+\section{RDF}
+\label{sec:Background:RDF}
+
+\acrfull{rdf}
+\cite{Lanthaler:14:RCA}
+is a framework for describing and working with linked data.
+In \gls{rdf}, information is arranged in \gls{subject}-\gls{predicate}-\gls{object} \glspl{triple},
+such as “<Alan Turing> <is a> <human>”
+or “<Lima> <was founded in> <18 January 1535>”.
+All three elements of a \gls{triple} are typically \glspl{resource},
+identified by an \gls{iri} like \url{http://example.com/Alan_Turing} or \url{http://www.wikidata.org/entity/Q5},
+but the \gls{object} of a \gls{triple} can also be some other kind of value,
+such as a textual, numerical or other literal
+(e.~g. the date literal “18 January 1535” above). % TODO blank nodes are elided for brevity, but perhaps rephrase this to make sure the text isn’t factually wrong
+A collection of such \glspl{triple} forms a directed, labeled graph,
+where the \glspl{triple} describe individual edges
+and the nodes are the \glspl{subject} and \glspl{object} of the \glspl{triple}:
+\glspl{triple} with the same \gls{subject} constitute different outgoing arcs from the same node.
+This graph can then be queried using the \acrfull{sparql} \cite{9569543}. % TODO is SPARQL really important enough to be mentioned here, and nothing else?
+For a more detailed introduction,
+see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
+% TODO the previous sentence should probably be at the end of the section, not of the paragraph
+
+To improve readability, the \glspl{iri} identifying a \gls{resource} are usually abbreviated using \emph{prefixes}:
+for example, once the prefix \prefix{wd:} has been defined to mean \url{http://www.wikidata.org/entity/},
+the \glspl{iri} \url{http://www.wikidata.org/entity/Q7251} and \url{http://www.wikidata.org/entity/Q5}
+can be abbreviated as \PName{wd:Q7251} and \PName{wd:Q5}.
+The rest of this thesis will use the following prefixes,
+also given in \cref{listing:prefixes}:
+
+\begin{description}
+\item[\PName{wd:}] A \gls{Wikidata} \gls{item}, like \PName{wd:Q7251}.
+\item[\PName{wdt:}] Predicate for a triple representing a \gls{Wikidata} \gls{statement}, e.~g. \PName{wdt:P31}.
+\item[\PName{rdf:}] Part of the RDF Schema vocabulary (see below).
+\item[\PName{rdfs:}] Part of the RDF Schema vocabulary.
+  (The distinction between \PName{rdf:} and \PName{rdfs:} is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
+  with no real significance today.)
+\item[\PName{ex:}] An example entity.
+  Following the naming conventions of schema.org \cite{schema.org-old-extension},
+  types and entities are in upper camel case (\PName{ex:Human})
+  while predicates are in lower camel case (\PName{ex:dateOfBirth}).
+\end{description}
+
+\begin{lstfloat}
+\begin{lstlisting}[language=sparql]
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ex: <http://shex.example/>
+\end{lstlisting}
+\caption{Default prefixes used in this thesis.}
+\label{listing:prefixes}
+\end{lstfloat}
+
+While \gls{rdf} can be used with any \gls{resource} \glspl{iri},
+one of its strengths is the ability to reuse the same \emph{vocabularies}
+(effectively, sets of \glspl{resource})
+in many different graphs.
+For example, many graphs use the same \gls{predicate}, \PName{rdfs:label},
+to link a \gls{resource} to a human-readable version of its name (its label);
+a tool based on \gls{rdf} can thus offer human-readable names for \glspl{resource} from all these graphs
+without requiring any specific knowledge about them,
+and the graphs are more useful when used in combination.
+One common vocabulary is RDF Schema \cite{Guha:14:RS}, % acronym for RDFS?
+which among others provides two important predicates:
+\PName{rdf:type} and \PName{rdfs:subClassOf}.
+\PName{rdf:type} connects an object to its class,
+and \PName{rdfs:subClassOf} connects a class to its parent class.
+% TODO continue writing: example for rdf:type and rdfs:subClassOf
+
 \section{Wikidata}
 \label{sec:Background:Wikidata}
 
@@ -161,77 +232,6 @@ However, this interface is export-only:
 it is not possible to edit \gls{Wikidata} via \gls{rdf}.
 
 % TODO explain some fundamental properties? P31, P279?
-
-\section{RDF}
-\label{sec:Background:RDF}
-
-\acrfull{rdf}
-\cite{Lanthaler:14:RCA}
-is a framework for describing and working with linked data.
-In \gls{rdf}, information is arranged in \gls{subject}-\gls{predicate}-\gls{object} \glspl{triple},
-such as “<Alan Turing> <is a> <human>”
-or “<Lima> <was founded in> <18 January 1535>”.
-All three elements of a \gls{triple} are typically \glspl{resource},
-identified by an \gls{iri} like \url{http://example.com/Alan_Turing} or \url{http://www.wikidata.org/entity/Q5},
-but the \gls{object} of a \gls{triple} can also be some other kind of value,
-such as a textual, numerical or other literal
-(e.~g. the date literal “18 January 1535” above). % TODO blank nodes are elided for brevity, but perhaps rephrase this to make sure the text isn’t factually wrong
-A collection of such \glspl{triple} forms a directed, labeled graph,
-where the \glspl{triple} describe individual edges
-and the nodes are the \glspl{subject} and \glspl{object} of the \glspl{triple}:
-\glspl{triple} with the same \gls{subject} constitute different outgoing arcs from the same node.
-This graph can then be queried using the \acrfull{sparql} \cite{9569543}. % TODO is SPARQL really important enough to be mentioned here, and nothing else?
-For a more detailed introduction,
-see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
-% TODO the previous sentence should probably be at the end of the section, not of the paragraph
-
-To improve readability, the \glspl{iri} identifying a \gls{resource} are usually abbreviated using \emph{prefixes}:
-for example, once the prefix \prefix{wd:} has been defined to mean \url{http://www.wikidata.org/entity/},
-the \glspl{iri} \url{http://www.wikidata.org/entity/Q7251} and \url{http://www.wikidata.org/entity/Q5}
-can be abbreviated as \PName{wd:Q7251} and \PName{wd:Q5}.
-The rest of this thesis will use the following prefixes,
-also given in \cref{listing:prefixes}:
-
-\begin{description}
-\item[\PName{wd:}] A \gls{Wikidata} \gls{item}, like \PName{wd:Q7251}.
-\item[\PName{wdt:}] Predicate for a triple representing a \gls{Wikidata} \gls{statement}, e.~g. \PName{wdt:P31}.
-\item[\PName{rdf:}] Part of the RDF Schema vocabulary (see below).
-\item[\PName{rdfs:}] Part of the RDF Schema vocabulary.
-  (The distinction between \PName{rdf:} and \PName{rdfs:} is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
-  with no real significance today.)
-\item[\PName{ex:}] An example entity.
-  Following the naming conventions of schema.org \cite{schema.org-old-extension},
-  types and entities are in upper camel case (\PName{ex:Human})
-  while predicates are in lower camel case (\PName{ex:dateOfBirth}).
-\end{description}
-
-\begin{lstfloat}
-\begin{lstlisting}[language=sparql]
-PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX ex: <http://shex.example/>
-\end{lstlisting}
-\caption{Default prefixes used in this thesis.}
-\label{listing:prefixes}
-\end{lstfloat}
-
-While \gls{rdf} can be used with any \gls{resource} \glspl{iri},
-one of its strengths is the ability to reuse the same \emph{vocabularies}
-(effectively, sets of \glspl{resource})
-in many different graphs.
-For example, many graphs use the same \gls{predicate}, \PName{rdfs:label},
-to link a \gls{resource} to a human-readable version of its name (its label);
-a tool based on \gls{rdf} can thus offer human-readable names for \glspl{resource} from all these graphs
-without requiring any specific knowledge about them,
-and the graphs are more useful when used in combination.
-One common vocabulary is RDF Schema \cite{Guha:14:RS}, % acronym for RDFS?
-which among others provides two important predicates:
-\PName{rdf:type} and \PName{rdfs:subClassOf}.
-\PName{rdf:type} connects an object to its class,
-and \PName{rdfs:subClassOf} connects a class to its parent class.
-% TODO continue writing: example for rdf:type and rdfs:subClassOf
 
 \section{Shape Expressions}
 \label{sec:Background:ShEx}
