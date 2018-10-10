@@ -824,8 +824,8 @@ At this point, the information which \gls{RDF2Graph} extracted is available in a
 From there, it can be exported into various formats by different exporters.
 The \gls{shex} exporter loads parts of these results into a temporary \gls{rdf} database of its own,
 applies some transformations to them via \gls{sparql},
-converts them to JSON-LD,
-further transforms the JSON,
+converts them to \gls{json-ld},
+further transforms the \gls{json},
 and finally exports the result into \gls{shexc} text via the Jade template engine.
 
 \section{Wikimedia Toolforge}
@@ -838,7 +838,7 @@ where trusted members of the \gls{Wikimedia} community may host and develop thei
 Most tools are web-based and reachable under the \href{https://tools.wmflabs.org/}{tools.wmflabs.org} domain,
 but it is also possible to run bots or analysis jobs on Toolforge.
 Tools can be written in a variety of languages
-(e.~g. PHP, Python, Java, JavaScript)
+(e.~g. PHP, Python, Java, \gls{JavaScript})
 and have access to live replicas of the \gls{Wikimedia} production databases,
 data dumps of \gls{Wikimedia} projects,
 custom tool-specific databases,

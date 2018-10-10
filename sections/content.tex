@@ -42,13 +42,13 @@ which has some more recent changes including a few fixes,
 but most of them are not relevant to the issues discussed here.)
 
 The final step of the \gls{shex} export was mostly rewritten from scratch.
-This is the step that translates a JSON-LD file describing the shapes of the schema
+This is the step that translates a \gls{json-ld} file describing the shapes of the schema
 into a \gls{shexc} file;
 the previous version did this using Jade,
 a templating engine for \gls{html} documents (renamed to Pug in 2016),
 constructing an \gls{html} document containing a single plain-text \lstinline[language=html]{<pre>} element,
 then extracting this text from the document using an \gls{html}-to-text converter.
-The new version directly produces the text from JavaScript
+The new version directly produces the text from \gls{JavaScript}
 and includes several improvements:
 datatypes are now properly supported,
 whereas the previous version only supported a handful of hard-coded \glspl{iri} as datatypes
@@ -151,8 +151,8 @@ The generated query selects all \glspl{statement} of the exemplary \glspl{item} 
 all \glspl{statement} of \glspl{item} which occur as values of the direct \glspl{statement} (“indirect \glspl{statement}”),
 and all \PL{P31}{instance of} \glspl{statement} of \glspl{item} which occur as values of the indirect \glspl{statement}.
 This query is run against \gls{wdqs},
-which returns the results in JSON format; % TODO glossary for JSON?
-they are then piped into a script for the \command{jq} tool (“JSON query”),
+which returns the results in \gls{json} format;
+they are then piped into a script for the \command{jq} tool (“\gls{json} query”),
 which transforms them into \gls{N-Triples} format,
 and stored in an \gls{N-Triples} file.
 
@@ -408,10 +408,10 @@ it proved to be almost impossible to validate \glspl{item} against the inferred 
 for all but the most simple data sets.
 Two \gls{shex} implementations were evaluated:
 shex.js, % TODO link? cite?
-a JavaScript implementation running in Node.js,
+a \gls{JavaScript} implementation running in \gls{Node.js},
 and shex-java,
 a Java implementation offering two different validation algorithms \cite{boneva:hal-01590350}.
-shex.js would usually crash with an out-of-memory error from Node.js within a few minutes,
+shex.js would usually crash with an out-of-memory error from \gls{Node.js} within a few minutes,
 whereas shex-java would run for hours on end without any output or apparent progress
 (with either algorithm).
 
@@ -693,7 +693,7 @@ and which could therefore be installed.
 On the other hand, there is no obvious way to make the \command{jq}-based part of the data download step
 work with \command{jq} version 1.4, which has no general string replacement capabilities.
 Therefore, \command{jq} version 1.5 was installed locally into the tool’s home directory –
-as was the latest version of Node.js, which was similarly outdated.
+as was the latest version of \gls{Node.js}, which was similarly outdated.
 (The Pygments syntax highlighter mentioned in \cref{sec:wdsi:utilities} was also installed locally,
 since \gls{shexc} syntax support is not yet available in any released version.)
 
