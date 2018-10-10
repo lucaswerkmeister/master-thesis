@@ -89,15 +89,15 @@ Franklin D.~Roosevelt is a person, Fala is a dog,
 and both persons and dogs are kinds of creatures.
 
 The same graph may also be written textually in several syntaxes.
-The simplest \gls{rdf} syntax is N-Triples, % TODO glossary?
+The simplest \gls{rdf} syntax is \gls{N-Triples} \cite{Seaborne:14:RN},
 which lists \glspl{triple} one per line, each terminated with a period.
 \Glspl{iri} are enclosed in angle brackets,
 and literals are enclosed in double quotes,
 optionally followed by two carets and their datatype
 (otherwise the implied datatype is \PName{xsd:string}).
-The N-Triples representation of the same graph as in \cref{fig:rdf-example}
+The \gls{N-Triples} representation of the same graph as in \cref{fig:rdf-example}
 is presented in \cref{lst:rdf-example};
-since N-Triples does not allow the use of prefixes to abbreviate \glspl{iri},
+since \gls{N-Triples} does not allow the use of prefixes to abbreviate \glspl{iri},
 the \namecref{lst:rdf-example} has been rotated to fit the full width on the page.
 
 \begin{figure}
