@@ -363,9 +363,8 @@ for example, step 2 is implemented under a code comment for “7.4.2”.)
 
 % TODO justify somewhere (not sure if in Background) why we are using simplification
 
-% TODO review the layout of the figures here
-% TODO figures or listings?
-% TODO some of the figures are too high for their page. perhaps remove blank lines between shapes
+% TODO review the layout of the listings here
+% TODO some of the listings are too high for their page. perhaps remove blank lines between shapes
 % TODO simplification is concerned with *type links*, but some of the examples here use *datatypes*
 
 In step 2, all \glspl{predicate} from child classes are copied to parent classes.
@@ -374,9 +373,9 @@ the \PName{ex:WebResource} and \PName{ex:CreativeWork} classes are initially emp
 but then inherit several \glspl{predicate} from their child classes.
 (The \lstinline{.} in the \PName{ex:url} \gls{value constraint} means “any value”.)
 
-\begin{figure}[ht]
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}[showlines=true]
+\begin{lstfloat}[ht]
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}[showlines=true]
 ex:CreativeWork {}
 
 ex:ScholarlyArticle
@@ -420,12 +419,12 @@ ex:DocumentationPage
 
 
 
-    \end{lstlisting}
-    \caption{Before step 2.}
-    \label{fig:simplify-7.4.2-before}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}
+\end{lstlisting}
+\caption{Before step 2.}
+\label{fig:simplify-7.4.2-before}
+\end{sublstfloat}
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}
 ex:CreativeWork {
   ex:url .;
   ex:title rdf:langString;
@@ -469,13 +468,13 @@ ex:DocumentationPage
   ex:title rdf:langString;
   ex:author @ex:Organization;
 }
-    \end{lstlisting}
-    \caption{After step 2.}
-    \label{fig:simplify-7.4.2-after}
-  \end{subfigure}
-  \caption[Simplification step 2.]{Simplification step 2 (in \gls{shexc}-like pseudo-syntax).}
-  \label{fig:simplify-7.4.2}
-\end{figure}
+\end{lstlisting}
+\caption{After step 2.}
+\label{fig:simplify-7.4.2-after}
+\end{sublstfloat}
+\caption[Simplification step 2.]{Simplification step 2 (in \gls{shexc}-like pseudo-syntax).}
+\label{fig:simplify-7.4.2}
+\end{lstfloat}
 
 Step 3 removes \glspl{predicate} which are only found in a single subclass
 from the parent class again.
@@ -489,9 +488,9 @@ all \glspl{predicate} will be kept because they occur in both subclasses,
 \PName{ex:BlogPost} and \PName{ex:DocumentationPage}.
 See \cref{fig:simplify-7.4.3} for the result.
 
-\begin{figure}[ht]
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}
+\begin{lstfloat}[ht]
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}
 ex:CreativeWork {
   ex:url .;
   ex:title rdf:langString;
@@ -535,12 +534,12 @@ ex:DocumentationPage
   ex:title rdf:langString;
   ex:author @ex:Organization;
 }
-    \end{lstlisting}
-    \caption{Before step 3.}
-    \label{fig:simplify-7.4.3-before}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}[showlines=true]
+\end{lstlisting}
+\caption{Before step 3.}
+\label{fig:simplify-7.4.3-before}
+\end{sublstfloat}
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}[showlines=true]
 ex:CreativeWork {
   ex:title rdf:langString;
   (
@@ -584,13 +583,13 @@ ex:DocumentationPage
 }
 
 
-    \end{lstlisting}
-    \caption{After step 3.}
-    \label{fig:simplify-7.4.3-after}
-  \end{subfigure}
-  \caption[Simplification step 3.]{Simplification step 3 (in \gls{shexc}-like pseudo-syntax).}
-  \label{fig:simplify-7.4.3}
-\end{figure}
+\end{lstlisting}
+\caption{After step 3.}
+\label{fig:simplify-7.4.3-after}
+\end{sublstfloat}
+\caption[Simplification step 3.]{Simplification step 3 (in \gls{shexc}-like pseudo-syntax).}
+\label{fig:simplify-7.4.3}
+\end{lstfloat}
 
 After that, in step 4 all references which are still found in a parent class
 are removed from the child classes, where they are now redundant.
@@ -599,9 +598,9 @@ most \glspl{predicate} are found in \PName{ex:CreativeWork},
 and only \PName{ex:WebResource} retains another \gls{predicate}, \PName{ex:url}.
 Note that this step was later disabled, see \cref{sec:RDF2Graph+Wikidata:updates}.
 
-\begin{figure}[ht]
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}
+\begin{lstfloat}[ht]
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}
 ex:CreativeWork {
   ex:title rdf:langString;
   (
@@ -643,12 +642,12 @@ ex:DocumentationPage
   ex:title rdf:langString;
   ex:author @ex:Organization;
 }
-    \end{lstlisting}
-    \caption{Before step 4.}
-    \label{fig:simplify-7.4.4-before}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}[showlines=true]
+\end{lstlisting}
+\caption{Before step 4.}
+\label{fig:simplify-7.4.4-before}
+\end{sublstfloat}
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}[showlines=true]
 ex:CreativeWork {
   ex:title rdf:langString;
   (
@@ -690,13 +689,13 @@ ex:DocumentationPage
 
 
 
-    \end{lstlisting}
-    \caption{After step 4.}
-    \label{fig:simplify-7.4.4-after}
-  \end{subfigure}
-  \caption[Simplification step 4.]{Simplification step 4 (in \gls{shexc}-like pseudo-syntax).}
-  \label{fig:simplify-7.4.4}
-\end{figure}
+\end{lstlisting}
+\caption{After step 4.}
+\label{fig:simplify-7.4.4-after}
+\end{sublstfloat}
+\caption[Simplification step 4.]{Simplification step 4 (in \gls{shexc}-like pseudo-syntax).}
+\label{fig:simplify-7.4.4}
+\end{lstfloat}
 
 Step 2 also merges references to parent classes,
 and the other steps take this into account by respecting subclass relations as well.
@@ -709,9 +708,9 @@ were merged while copying the \PName{ex:cites} predicate into the \PName{ex:Crea
 and afterwards the individual \glspl{predicate} were removed from the child classes
 because they are covered by the merged reference in the parent class.
 
-\begin{figure}[ht]
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}
+\begin{lstfloat}[ht]
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}
 ex:CreativeWork {}
 
 ex:ScholarlyArticle
@@ -723,12 +722,12 @@ ex:WebResource
     EXTENDS ex:CreativeWork {
   ex:cites @ex:WebResource*
 }
-    \end{lstlisting}
-    \caption{Before simplification.}
-    \label{fig:simplify-classes-before}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.45\textwidth}
-    \begin{lstlisting}[showlines=true]
+\end{lstlisting}
+\caption{Before simplification.}
+\label{fig:simplify-classes-before}
+\end{sublstfloat}
+\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{lstlisting}[showlines=true]
 ex:CreativeWork {
   ex:cites @ex:CreativeWork*
 }
@@ -740,16 +739,16 @@ ex:WebResource
     EXTENDS ex:CreativeWork {}
 
 
-    \end{lstlisting}
-    \caption{After simplification.}
-    \label{fig:simplify-classes-after}
-  \end{subfigure}
-  \caption[Simplification, with class relations.]{
-    Simplification (in \gls{shexc}-like pseudo-syntax), with class relations.
-    (This example is independent from the previous example.)
-  }
-  \label{fig:simplify-classes}
-\end{figure}
+\end{lstlisting}
+\caption{After simplification.}
+\label{fig:simplify-classes-after}
+\end{sublstfloat}
+\caption[Simplification, with class relations.]{
+  Simplification (in \gls{shexc}-like pseudo-syntax), with class relations.
+  (This example is independent from the previous example.)
+}
+\label{fig:simplify-classes}
+\end{lstfloat}
 
 % TODO I haven’t looked too closely into any of these steps except the very last one,
 % which I practically rewrote from scratch.
