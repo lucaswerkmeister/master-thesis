@@ -85,6 +85,7 @@
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{cleveref}
+\usepackage{rotating}
 \newfloat{lstfloat}{htbp}{lop} % TODO I’m not sure about that placement, perhaps just tbp (top, bottom, own page)?
 \floatname{lstfloat}{Listing}
 \crefalias{lstfloat}{listing}
@@ -93,6 +94,10 @@
 \lstset{
   basicstyle=\ttfamily,
 }
+\makeatletter
+\def\sidewayslstfloat{\@rotfloat{lstfloat}}
+\let\endsidewayslstfloat\end@rotfloat
+\makeatother
 
 %% --------------------------------
 %% | Pseudo-code                  |
@@ -145,6 +150,8 @@
 % \minsec is always used in a context where it is clear that m means minutes and not metres
 \DeclareSIUnit{\shortMinute}{m}
 \newcommand{\minsec}[2]{\SI{#1}{\shortMinute}~\SI{#2}{\second}}
+
+\newcommand{\graphRdfLiteral}[2]{#1\\\textit{(\PName{#2})}}
 
 %% ====================================
 %% ====================================

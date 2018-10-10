@@ -46,36 +46,13 @@ see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
 % TODO the previous sentence should probably be at the end of the section, not of the paragraph
 
 To improve readability, the \glspl{iri} identifying a \gls{resource} are usually abbreviated using \emph{prefixes}:
-for example, once the prefix \prefix{wd:} has been defined to mean \url{http://www.wikidata.org/entity/},
-the \glspl{iri} \url{http://www.wikidata.org/entity/Q7251} and \url{http://www.wikidata.org/entity/Q5}
-can be abbreviated as \PName{wd:Q7251} and \PName{wd:Q5}.
-The rest of this thesis will use the following prefixes,
-also given in \cref{listing:prefixes}:
-
-\begin{description}
-\item[\PName{wd:}] A \gls{Wikidata} \gls{item}, like \PName{wd:Q7251}.
-\item[\PName{wdt:}] Predicate for a triple representing a \gls{Wikidata} \gls{statement}, e.~g. \PName{wdt:P31}.
-\item[\PName{rdf:}] Part of the RDF Schema vocabulary (see below).
-\item[\PName{rdfs:}] Part of the RDF Schema vocabulary.
-  (The distinction between \PName{rdf:} and \PName{rdfs:} is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
-  with no real significance today.)
-\item[\PName{ex:}] An example entity.
-  Following the naming conventions of schema.org \cite{schema.org-old-extension},
-  types and entities are in upper camel case (\PName{ex:Person})
-  while predicates are in lower camel case (\PName{ex:dateOfBirth}).
-\end{description}
-
-\begin{lstfloat}
-\begin{lstlisting}[language=sparql]
-PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX ex: <http://shex.example/>
-\end{lstlisting}
-\caption{Default prefixes used in this thesis.}
-\label{listing:prefixes}
-\end{lstfloat}
+for example, once the prefix \prefix{ex:} has been defined to mean \url{http://shex.example/},
+the \glspl{iri} \url{http://shex.example/Person} and \url{http://shex.example/dateOfBirth}
+can be abbreviated as \PName{ex:Person} and \PName{ex:dateOfBirth}.
+(This “example” prefix, also used below for other examples,
+follows the naming conventions of schema.org \cite{schema.org-old-extension},
+in that types (\PName{ex:Person}) and entities (\PName{ex:JohnDoe}) are in upper camel case
+while predicates (\PName{ex:dateOfBirth}) are in lower camel case.)
 
 While \gls{rdf} can be used with any \gls{resource} \glspl{iri},
 one of its strengths is the ability to reuse the same \emph{vocabularies}
@@ -91,7 +68,93 @@ which among others provides two important predicates:
 \PName{rdf:type} and \PName{rdfs:subClassOf}.
 \PName{rdf:type} connects an object to its class,
 and \PName{rdfs:subClassOf} connects a class to its parent class.
-% TODO continue writing: example for rdf:type and rdfs:subClassOf
+(The \prefix{rdf:} and \prefix{rdfs:} prefixes are both part of RDF Schema;
+the distinction between them is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
+with no real significance today.)
+Another commonly used vocabulary is \gls{xsd} \cite{Malhotra:04:XSP},
+which provides several basic datatypes:
+for example, \PName{xsd:string} is the datatype for a simple text string (language-agnostic),
+and \PName{xsd:date} and \PName{xsd:dateTime} are used to notate points in time.
+
+\Cref{fig:rdf-example} shows a small example \gls{rdf} graph
+for President Franklin D.~ Roosevelt and his pet dog, Fala.
+The nodes with rounded corners represent \glspl{resource},
+whereas the nodes with pointed corners are literals,
+with their datatype given below them in parentheses.
+Each arrow denotes a \gls{triple}, pointing from the \gls{subject} to the \gls{object},
+with the \gls{predicate} written next to the arrow.
+The graph describes the name and date of birth of the president and his dog,
+their ownership relation,
+and their types, including subtype relations:
+Franklin D.~Roosevelt is a person, Fala is a dog,
+and both persons and dogs are kinds of creatures.
+
+The same graph may also be written textually in several syntaxes.
+The simplest \gls{rdf} syntax is N-Triples, % TODO glossary?
+which lists \glspl{triple} one per line, each terminated with a period.
+\Glspl{iri} are enclosed in angle brackets,
+and literals are enclosed in double quotes,
+optionally followed by two carets and their datatype
+(otherwise the implied datatype is \PName{xsd:string}).
+The N-Triples representation of the same graph as in \cref{fig:rdf-example}
+is presented in \cref{lst:rdf-example};
+since N-Triples does not allow the use of prefixes to abbreviate \glspl{iri},
+the \namecref{lst:rdf-example} has been rotated to fit the full width on the page.
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{resource} = [rectangle, draw, rounded corners, text centered]
+    \tikzstyle{literal} = [draw, text centered]
+    \tikzstyle{arrow} = [draw, -latex']
+
+    \begin{scope}
+      \node[resource] (Creature) {\PName{ex:Creature}};
+      \node[resource, below left=1cm and 1.5cm of Creature] (Human) {\PName{ex:Human}};
+      \node[resource, below right=1cm and 1.5cm of Creature] (Dog) {\PName{ex:Dog}};
+      \node[resource, below=1cm of Human] (FDR) {\PName{ex:FDR}};
+      \node[resource, below=1cm of Dog] (Fala) {\PName{ex:Fala}};
+    \end{scope}
+    \begin{scope}[node distance=3cm, every text node part/.style={align=center}]
+      \node[literal, below left of=FDR] (FDRDOB) {\graphRdfLiteral{1882-01-30}{xsd:date}};
+      \node[literal, below of=FDR, node distance=4cm] (FDRName) {\graphRdfLiteral{Franklin Delano Roosevelt}{xsd:string}};
+      \node[literal, below left of=Fala] (FalaName) {\graphRdfLiteral{Fala}{xsd:string}};
+      \node[literal, below right of=Fala] (FalaDOB) {\graphRdfLiteral{1940-04-07}{xsd:date}};
+    \end{scope}
+
+    \begin{scope}[every path/.style=arrow, midway, auto]
+      \path[left] (Human) -- node {\PName{rdfs:subClassOf}} (Creature);
+      \path[right] (Dog) -- node {\PName{rdfs:subClassOf}} (Creature);
+      \path[left] (FDR) -- node {\PName{rdf:type}} (Human);
+      \path[right] (Fala) -- node {\PName{rdf:type}} (Dog);
+      \path (FDR.north east) -- node {\PName{ex:pet}} (Fala.north west);
+      \path (Fala.south west) -- node {\PName{ex:owner}} (FDR.south east);
+      \path[left] (FDR) -- node {\PName{ex:dateOfBirth}} (FDRDOB);
+      \path[right] (FDR) -- node {\PName{rdfs:label}} (FDRName);
+      \path[left] (Fala) -- node {\PName{rdfs:label}} (FalaName);
+      \path[right] (Fala) -- node {\PName{ex:dateOfBirth}} (FalaDOB);
+    \end{scope}
+  \end{tikzpicture}
+  \caption{An \gls{rdf} graph for President Franklin D.~Roosevelt and his dog.}
+  \label{fig:rdf-example}
+\end{figure}
+
+\begin{sidewayslstfloat}
+\begin{lstlisting}
+<http://shex.example/FDR> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://shex.example/Human>.
+<http://shex.example/FDR> <http://www.w3.org/2000/01/rdf-schema#label> "Franklin Delano Roosevelt".
+<http://shex.example/FDR> <http://shex.example/dateOfBirth> "1882-01-30"^^<http://www.w3.org/2001/XMLSchema#date>.
+<http://shex.example/FDR> <http://shex.example/pet> <http://shex.example/Fala>.
+<http://shex.example/Fala> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://shex.example/Dog>.
+<http://shex.example/Fala> <http://www.w3.org/2000/01/rdf-schema#label> "Fala".
+<http://shex.example/Fala> <http://shex.example/dateOfBirth> "1940-04-07"^^<http://www.w3.org/2001/XMLSchema#date>.
+<http://shex.example/Fala> <http://shex.example/owner> <http://shex.example/FDR>.
+<http://shex.example/Human> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://shex.example/Creature>.
+<http://shex.example/Dog> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://shex.example/Creature>.
+\end{lstlisting}
+\caption{An \gls{rdf} graph for President Franklin D.~Roosevelt and his dog.}
+\label{lst:rdf-example}
+\end{sidewayslstfloat}
 
 \section{Wikidata}
 \label{sec:Background:Wikidata}
@@ -228,8 +291,14 @@ However, to enable usage of \gls{rdf} technologies and interoperation with \gls{
 the data about any \gls{item} can be downloaded in various \gls{rdf} formats through a linked data interface, % TODO *the* linked data interface?
 and a full, up-to-date \gls{rdf} export of \gls{Wikidata} is available in \gls{wdqs},
 a \gls{sparql} endpoint to which anyone may submit queries.
-However, this interface is export-only:
-it is not possible to edit \gls{Wikidata} via \gls{rdf}.
+In the \gls{Wikidata} \gls{rdf} exports,
+items use the prefix \prefix{wd:} and properties in a statement use the prefix \prefix{wdt:}.
+For example, the statement
+\begin{quotation}
+  \QL{Q7251}{Alan Turing}’s \PL{P19}{place of birth} was \QL{Q122744}{Maida Vale}
+\end{quotation}
+is represented in \gls{rdf} as the \gls{triple} \lstinline[language=sparql]{wd:Q7251 wdt:P19 wd:P12274}.
+% TODO review layout of this statement/quote. (Using it inline is problematic because of ““double quotes””.)
 
 % TODO explain some fundamental properties? P31, P279?
 
