@@ -179,7 +179,7 @@ which makes the \gls{shex} code more readable.
 The most fundamental change to make \gls{RDF2Graph} support \gls{Wikidata}
 was % TODO is?
 to change the type predicates used.
-\gls{RDF2Graph} heavily relies on the type information of the RDF graph it inspects,
+\Gls{RDF2Graph} heavily relies on the type information of the RDF graph it inspects,
 assuming a one-to-one mapping between classes and shapes,
 and it uses the standard \glspl{predicate} \PName{rdf:type} and \PName{rdfs:subClassOf}
 to determine the class of a subject and the superclasses of a class, respectively.
@@ -373,7 +373,7 @@ running the first part the first time and the second part the second time.
 \subsection{Node distances}
 \label{subsec:RDF2Graph+Wikidata:cyclic-graph:distance}
 
-\gls{RDF2Graph} also has a method to determine the distance of all indirect parents from a certain node,
+\Gls{RDF2Graph} also has a method to determine the distance of all indirect parents from a certain node,
 which is used when searching for common superclasses of a class.
 Like the other methods, this was implemented recursively,
 setting the distance of a parent node to the current value of a counter
@@ -425,7 +425,7 @@ it is also possible to further trim the \gls{schema} after the inference process
 This was implemented in the final step of the \gls{shex} exporter, % TODO mention shexbuilder.js file name?
 which had already been mostly rewritten for different reasons
 (see \cref{sec:RDF2Graph+Wikidata:updates}).
-\gls{RDF2Graph} tracks the number of instances of each class it encounters,
+\Gls{RDF2Graph} tracks the number of instances of each class it encounters,
 and this information is still available to the \gls{shex} exporter,
 which makes it possible to decide which elements of a \gls{schema} to keep and which to drop
 based on how often those elements were used in the original data. % TODO add example?
@@ -682,7 +682,7 @@ The response to this was twofold:
 to cope with older software versions where feasible,
 and to install newer software versions where not.
 
-\gls{RDF2Graph} required Java 8,
+\Gls{RDF2Graph} required Java 8,
 but only Java 7 is installed on Toolforge.
 Fortunately, \gls{RDF2Graph} only used Java 8 for syntactic constructs (“lambda” syntax)
 and those only sparingly, so it was not too much work to make it compatible with Java 7 again.
