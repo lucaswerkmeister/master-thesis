@@ -233,7 +233,7 @@ which reduces the available options during the simplification step. % TODO not h
 To mitigate this, \gls{RDF2Graph} was patched % TODO awkward passive voice
 to allow specifying an alternative \gls{sparql} endpoint for all queries that require a full view of the data,
 and uses this alternative endpoint for the query to get all parent and child classes of a class.
-The Makefile-controlled process mentioned above % TODO awkward phrasing
+The Makefile mentioned in \cref{subsec:RDF2Graph+Wikidata:Wikidata:download}
 specifies the \gls{wdqs} \gls{sparql} endpoint for this option,
 so that \gls{RDF2Graph} can learn the full class hierarchy around all relevant items % TODO is “learn” the right word?
 even when running against a subset of \gls{Wikidata}. % TODO “subset of Wikidata”? not quite happy with that phrasing
@@ -305,7 +305,7 @@ and the correct way to break them is not always obvious.
 
 While these cycles are usually eventually found and fixed by the community, % TODO “usually eventually” sounds stupid
 it’s possible that, in the meantime, \gls{RDF2Graph} will run on a subclass graph containing cycles.
-Therefore, to make the process more robust, % TODO “the process” is probably a weasel word here
+Therefore, to make the process more robust,
 several algorithms in the simplification step were adjusted to be able to cope with cyclic graphs.
 This is valuable even though the results in the cycle may no longer make sense,
 since it means that a cycle somewhere in the class hierarchy,
