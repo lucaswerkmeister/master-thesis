@@ -285,13 +285,33 @@ that occasional emergence of subclass cycles is almost unavoidable on \gls{Wikid
 any one of the subclass links may appear reasonable for just the two \glspl{item} it connects,
 and an editor looking at these \glspl{item} will not necessarily notice that a cycle has been formed,
 since the other statements forming the cycle are not visible when looking at these two \glspl{item}.
-These cycles are eventually found and fixed by the community,
-but in the meantime, it’s possible that \gls{RDF2Graph} will run on a subclass graph containing cycles.
-% TODO example? https://www.wikidata.org/wiki/Special:Diff/735108434
+For example, as of 2018-10-11, % TODO date macro?
+there exists a cycle in \gls{Wikidata} in the following classes:
+\QL{Q4393498}{representation}, \QL{Q937228}{property}, \QL{Q714737}{category of being},
+\QL{Q151885}{concept}, \QL{Q2145290}{mental representation}, \QL{Q4393498}{representation}.
+It was first introduced in \wikidataRevision{726473098},
+when the parent class of \QL{Q2145290}{mental representation}
+was changed from \QL{Q1272626}{representation} to \QL{Q4393498}{representation},
+and reinforced in \wikidataRevision{726473565};
+the latter revision was later reverted in \wikidataRevision{735108434},
+citing the created subclass loop as part of the reason,
+but as the first revision was not reverted nor the \gls{item} otherwise edited since then,
+the cycle persists so far.
+The fact that editors work in different languages,
+and different items may share the same label in the same language
+(see \Q{Q1272626} and \Q{Q4393498}, both “representation”, above),
+contributes to the problem that such cycles can be introduced accidentally
+and the correct way to break them is not always obvious.
+
+While these cycles are usually eventually found and fixed by the community, % TODO “usually eventually” sounds stupid
+it’s possible that, in the meantime, \gls{RDF2Graph} will run on a subclass graph containing cycles.
 Therefore, to make the process more robust, % TODO “the process” is probably a weasel word here
 several algorithms in the simplification step were adjusted to be able to cope with cyclic graphs.
-% TODO explain why we even bother with this:
-% though the results *in the cycle* may be nonsensical, the rest of the schema should not be affected
+This is valuable even though the results in the cycle may no longer make sense,
+since it means that a cycle somewhere in the class hierarchy,
+typically among very abstract classes,
+will no longer impede simplification in other, more concrete classes,
+where simplification is much more useful anyways.
 
 \subsection{\FunctionName{GetAllChildren}}
 \label{subsec:RDF2Graph+Wikidata:cyclic-graphs:GetAllChildren}
