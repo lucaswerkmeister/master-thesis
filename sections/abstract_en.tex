@@ -11,14 +11,18 @@
 %% Version 1.3.3, 2018-04-17
 
 \Abstract
-% TODO should be longer (1-2 paragraphs, not more than half a page), including a few sentences about Wikidata and its importance, the problem, and my contribution
-\acrlong{shex} are a promising additional quality control mechanism for \gls{Wikidata},
-the free knowledge base in the \gls{Wikimedia} movement,
-but larger \glspl{schema} can be tedious to write,
-making automatic inference of \glspl{schema} from a set of exemplary \glspl{item} an attractive prospect.
+\Gls{Wikidata}, the free knowledge base in the \gls{Wikimedia} movement,
+is used by various \gls{Wikimedia} projects and third parties to provide machine-readable information and data.
+Its data quality is managed and monitored by its community using several quality control mechanisms,
+recently including formal \glspl{schema} in the \acrlong{shex} language.
+However, larger \glspl{schema} can be tedious to write,
+making automatic inference of \glspl{schema} from a set of exemplary \glspl{item}
+an attractive prospect.
+
 This thesis investigates % TODO investigated? which tense?
-this option by updating and adapting the \gls{RDF2Graph} program to infer \glspl{schema} from a set of \gls{Wikidata} \glspl{item},
-and provides a web-based tool which makes this process available to the \gls{Wikidata} community.
+this option by updating and adapting the \gls{RDF2Graph} program
+to infer \glspl{schema} from a set of \gls{Wikidata} \glspl{item},
+and providing a web-based tool which makes this process available to the \gls{Wikidata} community.
 Though the resulting \glspl{schema} are usually not fit for direct validation,
 they can still be useful as a form of describing the layout of an area of \gls{Wikidata}’s data model,
 a way to notice potential issues in the source data,
