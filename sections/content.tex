@@ -229,7 +229,7 @@ for example, depending on how much data was downloaded,
 it may or may not be aware that the classes \QL{Q112099}{island nation} and \QL{Q3624078}{sovereign state}
 have a common superclass, \QL{Q7275}{state},
 which reduces the available options during the simplification step. % TODO not happy with this phrasing
-To mitigate this, \gls{RDF2Graph} was patched % TODO awkward passive voice
+To mitigate this, \gls{RDF2Graph} was patched
 to allow specifying an alternative \gls{sparql} endpoint for all queries that require a full view of the data,
 and uses this alternative endpoint for the query to get all parent and child classes of a class.
 The Makefile mentioned in \cref{subsec:RDF2Graph+Wikidata:Wikidata:download}
@@ -250,7 +250,7 @@ but it also has a complex hierarchy of abstract classes below that root class,
 and merging other classes into those abstract classes
 (like \QL{Q151885}{concept}, \QL{Q7184903}{abstract object} or \QL{Q830077}{subject})
 would not result in useful schemas.
-Therefore, step 2 in the simplification process was adapted % TODO awkward passive voice
+Therefore, step 2 in the simplification process was adapted
 to add a number of \gls{Wikidata} \glspl{item} to the set of classes which other classes should not be merged into
 (originally only containing \PName{owl:Thing}),
 and to stop looking for common superclasses of two classes after checking five levels in the class hierarchy.
