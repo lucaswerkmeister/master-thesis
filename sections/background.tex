@@ -62,12 +62,12 @@ to link a \gls{resource} to a human-readable version of its name (its label);
 a tool based on \gls{rdf} can thus offer human-readable names for \glspl{resource} from all these graphs
 without requiring any specific knowledge about them,
 and the graphs are more useful when used in combination.
-One common vocabulary is RDF Schema \cite{Guha:14:RS}, % acronym for RDFS?
+One common vocabulary is \acrfull{rdfs} \cite{Guha:14:RS},
 which among others provides two important predicates:
 \PName{rdf:type} and \PName{rdfs:subClassOf}.
 \PName{rdf:type} connects an object to its class,
 and \PName{rdfs:subClassOf} connects a class to its parent class.
-(The \prefix{rdf:} and \prefix{rdfs:} prefixes are both part of RDF Schema;
+(The \prefix{rdf:} and \prefix{rdfs:} prefixes are both part of \acrlong{rdfs};
 the distinction between them is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
 with no real significance today.)
 Another commonly used vocabulary is \gls{xsd} \cite{Malhotra:04:XSP},
