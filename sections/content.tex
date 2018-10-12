@@ -39,7 +39,7 @@ which has some more recent changes including a few fixes,
 but most of them are not relevant to the issues discussed here.)
 
 The final step of the \gls{shex} export was mostly rewritten from scratch.
-This is the step that translates a \gls{json-ld} file describing the shapes of the schema
+This is the step that translates a \gls{json-ld} file describing the \glspl{shape} of the \gls{schema}
 into a \gls{shexc} file;
 the previous version did this using Jade,
 a templating engine for \gls{html} documents (renamed to Pug in 2016),
@@ -176,7 +176,7 @@ The most fundamental change to make \gls{RDF2Graph} support \gls{Wikidata}
 was % TODO is?
 to change the type predicates used.
 \Gls{RDF2Graph} heavily relies on the type information of the RDF graph it inspects,
-assuming a one-to-one mapping between classes and shapes,
+assuming a one-to-one mapping between classes and \glspl{shape},
 and it uses the standard \glspl{predicate} \PName{rdf:type} and \PName{rdfs:subClassOf}
 to determine the class of a subject and the superclasses of a class, respectively.
 However, \gls{Wikidata} does not use these standard \glspl{predicate}:
@@ -195,7 +195,7 @@ instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
 
 During the data download step, some data is dropped from the \glspl{item}.
 For one, the \glspl{label}, \glspl{description} and \glspl{alias} of an \gls{item} can make up a large portion of its data,
-but are generally not interesting for \gls{shex} schemas,
+but are generally not interesting for \gls{shex} \glspl{schema},
 since there is rarely more to say about them than
 “an \gls{item} has one or more \glspl{label}, zero or more \glspl{description}, and zero or more \glspl{alias}”.
 (A manually curated \gls{schema} might go beyond this –
@@ -245,7 +245,7 @@ not only does \gls{Wikidata} have a different root class (\QL{Q35120}{entity}),
 but it also has a complex hierarchy of abstract classes below that root class,
 and merging other classes into those abstract classes
 (like \QL{Q151885}{concept}, \QL{Q7184903}{abstract object} or \QL{Q830077}{subject})
-would not result in useful schemas.
+would not result in useful \glspl{schema}.
 Therefore, step 2 in the simplification process was adapted
 to add a number of \gls{Wikidata} \glspl{item} to the set of classes which other classes should not be merged into
 (originally only containing \PName{owl:Thing}),
@@ -418,7 +418,7 @@ using \cref{alg:GetAllChildren}.
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
 
 An unexpected problem emerged once the \gls{schema} inference itself was in place: % TODO phrasing: “in place”?
-it proved to be almost impossible to validate \glspl{item} against the inferred schemas
+it proved to be almost impossible to validate \glspl{item} against the inferred \glspl{schema}
 for all but the most simple data sets.
 Two \gls{shex} implementations were evaluated:
 shex.js, % TODO link? cite?
@@ -517,7 +517,7 @@ With this change, if the depth limit was reached,
 the validator would skip recursing into another \gls{shape}
 and instead only record the fact that the limit was reached before continuing.
 Unfortunately, however, this proved unsuccessful.
-When testing some \glspl{item} against several inferred schemas,
+When testing some \glspl{item} against several inferred \glspl{schema},
 low limits (2–4) would yield unpredictable results
 (sometimes validate successfully, sometimes report problems, sometimes crash),
 whereas higher limits (up to 10) would typically have the same result as validation without any depth limit
@@ -660,15 +660,15 @@ can be seen in \cref{fig:shexc-syntax-highlighting}.
     \centering
     \includegraphics[trim={0 2.5cm 0 0},clip]{screenshots/shexc-no-syntax-highlighting}
     \caption{
-      Excerpt of an inferred schema for Linux distributions.
+      Excerpt of an inferred \gls{schema} for Linux distributions.
     }
     \label{fig:shexc-syntax-highlighting-without}
   \end{subfigure}
   \begin{subfigure}[t]{0.45\textwidth}
     \centering
     \includegraphics[trim={0 2.5cm 0 0},clip]{screenshots/shexc-with-syntax-highlighting}
-    \caption[The same schema with syntax highlighting and the script applied.]{
-      The same schema with syntax highlighting and the script applied.
+    \caption[The same \gls{schema} with syntax highlighting and the script applied.]{
+      The same \gls{schema} with syntax highlighting and the script applied.
       The cursor is over the \lstinline{P277} \gls{property ID}.
     }
     \label{fig:shexc-syntax-highlighting-with}
