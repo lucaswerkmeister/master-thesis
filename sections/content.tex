@@ -568,16 +568,16 @@ and make the \gls{shexc} output available to the user.
 The simplest process for that would be
 to directly return the \gls{shexc} code in the server’s response to the user’s \gls{http} request,
 but that is not possible:
-even simple inference jobs % TODO “jobs” okay?
+even simple inference \glspl{job}
 from a single \gls{item} take at least several minutes,
-and more complicated jobs % TODO “jobs” again
+and more complicated \glspl{job}
 over several dozens of \glspl{item} can take multiple hours –
 the connection to the user would time out long before that,
 and the user might also become impatient and simply close their browser window or tab.
 
 Instead, the inference process runs in the background,
 and after submitting the \gls{sparql} query and starting the process,
-the user is redirected to a page describing the currently running job.
+the user is redirected to a page describing the currently running \gls{job}.
 They can periodically reload the page,
 and each time the page is loaded,
 the tool checks if the background process is still running.
@@ -589,8 +589,8 @@ and finally makes the output
 available to the user.
 
 Since this already more or less requires storing inputs and outputs persistently,
-a natural extension of this scheme is to make this job page available to others,
-so that not only the original submitter but also other users can inspect a running or completed job.
+a natural extension of this scheme is to make this \gls{job} page available to others,
+so that not only the original submitter but also other users can inspect a running or completed \gls{job}.
 (The input data is entirely public data from \gls{Wikidata},
 so there is no reason to restrict the visibility of the outputs.)
 This facilitates easy collaboration on \glspl{schema} between multiple users
@@ -606,19 +606,19 @@ it doesn’t run directly on the same system as the web server providing the too
 Instead, it is submitted as a job for the Sun Grid Engine system also offered by the Toolforge environment,
 where it will be run on some execution host with sufficient free resources.
 To ensure that the system’s resources are not exhausted by this one tool,
-the tool only allows at most two jobs to run in parallel,
-and prevents users from submitting any more jobs if too many jobs are currently running,
+the tool only allows at most two \glspl{job} to run in parallel,
+and prevents users from submitting any more \glspl{job} if too many \glspl{job} are currently running,
 instead asking them to try again later.
-Job submission is also restricted to users with a valid \gls{Wikidata} account,
+\Gls{job} submission is also restricted to users with a valid \gls{Wikidata} account,
 authenticated via OAuth.
-The identity of the submitting user is another attribute of a job,
+The identity of the submitting user is another attribute of a \gls{job},
 along with its title, description, \gls{url}, and \gls{sparql} query,
-and can be seen by other users who look at the pending or finished jobs of the tool.
+and can be seen by other users who look at the pending or finished \glspl{job} of the tool.
 
-Details of each job,
+Details of each \gls{job},
 such as its title, submitting user, and submission time,
 are stored in a tool-specific SQL database on the Toolforge database servers.
-However, the outputs of a job
+However, the outputs of a \gls{job}
 (\gls{shexc} file, standard output of the process, standard error of the process),
 as well as to a lesser degree the \gls{sparql} query forming its input,
 are too large to store in a database.
@@ -629,7 +629,7 @@ Instead, they are stored directly on the file system.
 
 To make the \gls{shex} output more readable,
 support for the \gls{shexc} syntax was added to the popular Pygments syntax highlighter. % TODO link to pull request?
-If the \gls{shex} code for a job % TODO is “a job” okay?
+If the \gls{shex} code for a \gls{job}
 is requested by a browser
 or some other kind of client which declares that it can accept HTML
 (using \gls{http} content negotiation),

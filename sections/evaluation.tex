@@ -163,12 +163,12 @@ Three insights emerge:
   and they will also often match other data sets less well
   if the other data sets involve subclasses that were not encountered in the original input data.
 
-  This can be seen in some of the older jobs of the \gls{wdsi}:
+  This can be seen in some of the older \glspl{job} of the \gls{wdsi}:
   if there is a \lstinline[language=java]{StackOverflowError} in the standard error of the inference process,
   it means that \gls{RDF2Graph} crashed during the simplification step
   and the \gls{shex} export ran on the original, unsimplified graph.
   (Later, the inference step was made more robust,
-  which is why newer jobs do not have this problem.)
+  which is why newer \glspl{job} do not have this problem.)
 
 \item Sometimes, biases in the \gls{schema} are visible, due to biases in the input data set.
   (In one particularly egregious case,
@@ -361,19 +361,19 @@ suffer due to the size of the input data and the \glspl{schema},
 no such problems appear to plague the inference process,
 which, while slow, has a more reliable runtime.
 To some degree, this was already apparent in the execution times
-of the various jobs that were run on the \gls{wdsi}:
+of the various \glspl{job} that were run on the \gls{wdsi}:
 ranging from five or ten minutes to several hours,
 they roughly follow the size of the input data linearly.
 
 However, the timing data from the \gls{wdsi}
 is not without its problems:
-as the tool was tested with different jobs,
+as the tool was tested with different \glspl{job},
 various problems were discovered and subsequently fixed
 (some of them described in more detail earlier, others too minor to be worth mentioning),
 so the runtimes available from the tool apply to a range of software versions,
-with several instances of the same job being repeated (to verify a software fix)
+with several instances of the same \gls{job} being repeated (to verify a software fix)
 with highly different runtimes.
-Therefore, a subset of the tool’s jobs was selected
+Therefore, a subset of the tool’s \glspl{job} was selected
 and repeated locally, with a single software version,
 to get more reliable execution times.
 \Cref{sec:jobs-over-various} contains graphs of runtime over various factors,
@@ -488,12 +488,12 @@ in the jobs listed in \cref{sec:jobs-over-various},
 the download never takes more than twenty seconds,
 and for most jobs it finishes within about five seconds.
 This means that it takes less than half a minute
-to be able to mostly predict the duration of the full job, which can be several hours.
+to be able to mostly predict the duration of the full \gls{job}, which can be several hours.
 This suggests two possible future improvements
 for the \gls{wdsi}:
-to report to the user how long a job is expected to take,
+to report to the user how long a \gls{job} is expected to take,
 as soon as the download step has finished;
-and to reject jobs which resulted in too much data,
+and to reject \glspl{job} which resulted in too much data,
 and are expected to take far too long to be tolerable.
 Currently, the tool merely suggests to its users
 that their queries should not select more than about fifty \glspl{item},
