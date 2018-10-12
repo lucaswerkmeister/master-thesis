@@ -10,7 +10,6 @@
 %%
 %% Version 1.3.3, 2018-04-17
 
-% TODO find a better title for this chapter
 \chapter{Applying \gls{RDF2Graph} to Wikidata}
 \label{ch:RDF2Graph+Wikidata}
 
@@ -25,7 +24,6 @@ All the changes are available in the source code repositories at
 in the \branchname{master} and \branchname{wikidata} branches;
 some of them may also be merged into the upstream \gls{RDF2Graph} and \gls{RDFSimpleCon} repositories in the future.
 
-% TODO find a better title for this section
 \section{General \gls{RDF2Graph} Updates}
 \label{sec:RDF2Graph+Wikidata:updates}
 
@@ -78,7 +76,6 @@ and simplification step 4 (see \cref{sec:Background:RDF2Graph}) was disabled
 so that the redundant \glspl{predicate} are included after all,
 since they are no longer automatically inherited.
 
-% TODO find a better title for this section
 \section{Wikidata Support}
 \label{sec:RDF2Graph+Wikidata:Wikidata}
 
@@ -417,7 +414,6 @@ This was originally implemented recursively,
 but could be replaced with a simple check whether the potential parent node is an element of the set of the child node’s parent nodes,
 using \cref{alg:GetAllChildren}.
 
-% TODO find a better title for this section
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
 
@@ -489,7 +485,6 @@ manual bisecting of the \glspl{schema} which failed to validate
 would often turn up a fairly small problematic part of a \gls{schema}
 which a simple count-based threshold was ill-suited to detect automatically.
 
-% TODO find a better title for this section
 \section{Depth Limits in Validation}
 \label{sec:RDF2Graph+Wikidata:depth-limit}
 
@@ -538,7 +533,6 @@ which may previously not have been necessary if the pruned part would otherwise 
 % I have a patch stashed away for that, but I don’t remember how it worked out,
 % except that generally it didn’t help that much, I think
 
-% TODO find a better title for this chapter
 \chapter{The Wikidata ShEx Inference Tool}
 \label{ch:wdsi}
 
@@ -552,7 +546,6 @@ and a few utilities to make it more pleasant to use (\cref{sec:wdsi:utilities}).
 The tool is online at \url{https://tools.wmflabs.org/wd-shex-infer/}
 and its source code may be found at \url{https://phabricator.wikimedia.org/source/tool-wd-shex-infer/}.
 
-% TODO find a better title for this section
 \section{General design and implementation}
 \label{sec:wdsi:abstract}
 
@@ -631,8 +624,7 @@ as well as to a lesser degree the \gls{sparql} query forming its input,
 are too large to store in a database.
 Instead, they are stored directly on the file system.
 
-% TODO find a better title for this section
-\section{Utilities}
+\section{Utilities} % TODO Schema Reading Utilities? HTML Utilities?
 \label{sec:wdsi:utilities}
 
 To make the \gls{shex} output more readable,
@@ -687,7 +679,6 @@ can be seen in \cref{fig:shexc-syntax-highlighting}.
   \label{fig:shexc-syntax-highlighting}
 \end{figure}
 
-% TODO find a better title for this section
 \section{Toolforge Support}
 \label{sec:wdsi:Toolforge}
 
