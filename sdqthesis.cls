@@ -166,6 +166,12 @@
 \end{tabular}
 \vskip2em
 \theeditstart{} -- \theeditend
+\begin{figure}[b!]
+  \centering
+  \begin{subfigure}{0.9\textwidth}
+    \doclicenseThis
+  \end{subfigure}
+\end{figure}
 }
 }
 
