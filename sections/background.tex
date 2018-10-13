@@ -44,11 +44,12 @@ This graph can then be queried using the \acrfull{sparql} \cite{9569543}.
 For a more detailed introduction to \gls{rdf} and related technologies,
 see the RDF 1.1 Primer \cite{Schreiber:14:RP}.
 
-To improve readability, the \glspl{iri} identifying a \gls{resource} are usually abbreviated using \emph{prefixes}:
-for example, once the prefix \prefix{ex:} has been defined to mean \url{http://shex.example/},
+To improve readability, the \glspl{iri} identifying a \gls{resource}
+are usually abbreviated using \glspl{prefix}:
+for example, once the \gls{prefix} \prefix{ex:} has been defined to mean \url{http://shex.example/},
 the \glspl{iri} \url{http://shex.example/Person} and \url{http://shex.example/dateOfBirth}
 can be abbreviated as \PName{ex:Person} and \PName{ex:dateOfBirth}.
-(This “example” prefix, also used below for other examples,
+(This “example” \gls{prefix}, also used below for other examples,
 follows the naming conventions of schema.org \cite{schema.org-old-extension},
 in that types (\PName{ex:Person}) and entities (\PName{ex:JohnDoe}) are in upper camel case
 while predicates (\PName{ex:dateOfBirth}) are in lower camel case.)
@@ -67,7 +68,7 @@ which among others provides two important predicates:
 \PName{rdf:type} and \PName{rdfs:subClassOf}.
 \PName{rdf:type} connects an object to its class,
 and \PName{rdfs:subClassOf} connects a class to its parent class.
-(The \prefix{rdf:} and \prefix{rdfs:} prefixes are both part of \acrlong{rdfs};
+(The \prefix{rdf:} and \prefix{rdfs:} \glspl{prefix} are both part of \acrlong{rdfs};
 the distinction between them is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
 with no real significance today.)
 Another commonly used vocabulary is \gls{xsd} \cite{Malhotra:04:XSP},
@@ -97,7 +98,7 @@ optionally followed by two carets and their datatype
 (otherwise the implied datatype is \PName{xsd:string}).
 The \gls{N-Triples} representation of the same graph as in \cref{fig:rdf-example}
 is presented in \cref{lst:rdf-example};
-since \gls{N-Triples} does not allow the use of prefixes to abbreviate \glspl{iri},
+since \gls{N-Triples} does not allow the use of \glspl{prefix} to abbreviate \glspl{iri},
 the \namecref{lst:rdf-example} has been rotated to fit the full width on the page.
 
 \begin{figure}
@@ -289,7 +290,7 @@ the data about any \gls{item} can be downloaded in various \gls{rdf} formats thr
 and a full, up-to-date \gls{rdf} export of \gls{Wikidata} is available in \gls{wdqs},
 a \gls{sparql} endpoint to which anyone may submit queries.
 In the \gls{Wikidata} \gls{rdf} exports,
-items use the prefix \prefix{wd:} and properties in a statement use the prefix \prefix{wdt:}.
+items use the \gls{prefix} \prefix{wd:} and properties in a statement use the \gls{prefix} \prefix{wdt:}.
 For example, the statement
 \begin{quotation}
   \QL{Q7251}{Alan Turing}’s \PL{P19}{place of birth} was \QL{Q122744}{Maida Vale}
