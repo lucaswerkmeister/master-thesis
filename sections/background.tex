@@ -306,7 +306,6 @@ is represented in \gls{rdf} as the \gls{triple} \lstinline[language=sparql]{wd:Q
 \label{sec:Background:ShEx}
 
 % TODO somewhere, there needs to be a clear explanation why it’s so okay for us to constantly discard type links. here? not sure
-% TODO example for validation
 
 \acrfull{shex} \cite{shex}
 is a standard for describing data shapes within an \gls{rdf} graph,
@@ -383,7 +382,30 @@ and may have a date of birth, if known.
 An organization does not have any properties other than at least one name
 (it may have several, e.~g. in different languages or jurisdictions).
 
-% TODO also add example of validation with results?
+Full examples of data sets matching or violating this \gls{schema} in some way
+are beyond the scope of this section,
+but reasons why a node may not match one of the \glspl{shape} in \cref{listing:shex-example} include:
+
+\begin{itemize}
+\item A creative work is missing a title.
+\item A person is missing a name.
+\item An organization has a name which is a plain string not tagged with a language code.
+\item A creative work is authored by more than one organization,
+  all of which have more than one name.
+  (Organizations with a single name are indistinguishable from persons
+  as far as this schema is concerned.)
+\item A creative work cites a work without a title.
+\item A creative work was authored by a person whose date of birth is a numeric literal.
+\item A creative work cites a work which cites a work which does not have any authors.
+\end{itemize}
+
+As the last examples show,
+a node may fail to match a \gls{shape} not just because of that node’s data,
+but also because of the data of nodes that the node links to,
+directly or indirectly:
+in the last example,
+the chain of citations between the original \gls{focus node} and the work that is missing authors
+can be arbitrarily long.
 
 By default, \gls{shex} \glspl{shape} are not “closed”:
 the graph may contain additional \glspl{triple} with the \gls{focus node} as the \gls{subject}
