@@ -153,8 +153,8 @@ which transforms them into \gls{N-Triples} format,
 and stored in an \gls{N-Triples} file.
 
 Next, the Apache Jena Fuseki \gls{sparql} server is run locally,
-serving the data from this \gls{N-Triples} file,
-and as soon as it has finished loading the data file,
+serving the data from this \gls{N-Triples} file.
+As soon as it has finished loading the data file,
 \gls{RDF2Graph} is run against this local \gls{sparql} endpoint for the main inference process,
 including \gls{RDF2Graph}’s simplification step.
 Once \gls{RDF2Graph} terminates, the Fuseki server is stopped.
