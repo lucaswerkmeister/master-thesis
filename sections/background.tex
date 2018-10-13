@@ -383,12 +383,13 @@ An organization does not have any properties other than at least one name
 
 % TODO also add example of validation with results?
 
-By default, \gls{shex} \glspl{shape} are not \emph{closed}:
+By default, \gls{shex} \glspl{shape} are not “closed”:
 the graph may contain additional \glspl{triple} with the \gls{focus node} as the \gls{subject}
 whose \glspl{predicate} do not match any of the \glspl{triple constraint} in the \gls{shape}.
 For example, an organization with an \PName{ex:dateOfIncorporation} would still match the \PName{ex:Organization} shape in \cref{listing:shex-example}
 even though that \gls{schema} does not mention an \PName{ex:dateOfIncorporation} \gls{predicate} anywhere.
-This means that removing all \glspl{triple constraint} with a certain \gls{predicate} from a \gls{shape}
+Since closed shapes are never used in this thesis,
+this means that removing all \glspl{triple constraint} with a certain \gls{predicate} from a \gls{shape}
 will never cause a previously matching \gls{focus node} to no longer match the \gls{shape}.
 % TODO I feel like this is missing one or two sentences at the end
 
