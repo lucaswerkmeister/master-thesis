@@ -86,17 +86,17 @@
 \usepackage{listings}
 \usepackage{cleveref}
 \usepackage{rotating}
-\newfloat{lstfloat}{htbp}{lop} % TODO I’m not sure about that placement, perhaps just tbp (top, bottom, own page)?
-\floatname{lstfloat}{Listing}
-\crefalias{lstfloat}{listing}
-\DeclareCaptionSubType{lstfloat}
-\crefalias{sublstfloat}{listing}
+\newfloat{listing}{htbp}{lop} % TODO I’m not sure about that placement, perhaps just tbp (top, bottom, own page)?
+\floatname{listing}{Listing}
+\crefalias{listing}{listing}
+\DeclareCaptionSubType{listing}
+\crefalias{sublisting}{listing}
 \lstset{
   basicstyle=\ttfamily,
 }
 \makeatletter
-\def\sidewayslstfloat{\@rotfloat{lstfloat}}
-\let\endsidewayslstfloat\end@rotfloat
+\def\sidewayslisting{\@rotfloat{listing}}
+\let\endsidewayslisting\end@rotfloat
 \makeatother
 
 %% --------------------------------
@@ -210,7 +210,7 @@
 \tableofcontents
 
 \listoffigures
-\listof{lstfloat}{List of Listings}
+\listof{listing}{List of Listings}
 %\listof{algorithm}{List of Algorithms}
 \listoftables
 

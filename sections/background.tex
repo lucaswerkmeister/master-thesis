@@ -137,7 +137,7 @@ is presented in \cref{lst:rdf-example}.
   \label{fig:rdf-example}
 \end{figure}
 
-\begin{sidewayslstfloat}
+\begin{sidewayslisting}
 \begin{lstlisting}
 <http://shex.example/FDR> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://shex.example/Human>.
 <http://shex.example/FDR> <http://www.w3.org/2000/01/rdf-schema#label> "Franklin Delano Roosevelt".
@@ -152,7 +152,7 @@ is presented in \cref{lst:rdf-example}.
 \end{lstlisting}
 \caption{\acrshort{rdf} graph for President Franklin D.~Roosevelt and his dog}
 \label{lst:rdf-example}
-\end{sidewayslstfloat}
+\end{sidewayslisting}
 
 \section{Wikidata}
 \label{sec:Background:Wikidata}
@@ -336,7 +336,7 @@ and \lstinline{+} means “one or more”.
 Multiple possible \glspl{triple constraint} for the same \gls{predicate} can be expressed
 by grouping them inside parentheses (\lstinline{()}), separated by vertical bars (\lstinline{|}).
 
-\begin{lstfloat}
+\begin{listing}
 \begin{lstlisting}[language=sparql]
 ex:CreativeWork {
   ex:title rdf:langString;
@@ -359,7 +359,7 @@ ex:Organization {
 \end{lstlisting}
 \caption{Example \gls{schema} for creative works and their authors}
 \label{listing:shex-example}
-\end{lstfloat}
+\end{listing}
 
 For example, the schema in \cref{listing:shex-example} defines three \glspl{shape}
 for creative works and their authors.
@@ -435,8 +435,8 @@ the \PName{ex:WebResource} and \PName{ex:CreativeWork} classes are initially emp
 but then inherit several \glspl{predicate} from their child classes.
 (The \lstinline{.} in the \PName{ex:url} \gls{value constraint} means “any value”.)
 
-\begin{lstfloat}[ht]
-\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{listing}[ht]
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}[showlines=true]
 ex:CreativeWork {}
 
@@ -484,8 +484,8 @@ ex:DocumentationPage
 \end{lstlisting}
 \caption{Before step 2}
 \label{fig:simplify-7.4.2-before}
-\end{sublstfloat}
-\begin{sublstfloat}[t]{0.45\textwidth}
+\end{sublisting}
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}
 ex:CreativeWork {
   ex:url .;
@@ -533,10 +533,10 @@ ex:DocumentationPage
 \end{lstlisting}
 \caption{After step 2}
 \label{fig:simplify-7.4.2-after}
-\end{sublstfloat}
+\end{sublisting}
 \caption[Simplification step 2]{Simplification step 2 (in \acrshort{shexc}-like pseudo-syntax)}
 \label{fig:simplify-7.4.2}
-\end{lstfloat}
+\end{listing}
 
 Step 3 removes \glspl{predicate} which are only found in a single subclass
 from the parent class again.
@@ -550,8 +550,8 @@ all \glspl{predicate} will be kept because they occur in both subclasses,
 \PName{ex:BlogPost} and \PName{ex:DocumentationPage}.
 See \cref{fig:simplify-7.4.3} for the result.
 
-\begin{lstfloat}[ht]
-\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{listing}[ht]
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}
 ex:CreativeWork {
   ex:url .;
@@ -599,8 +599,8 @@ ex:DocumentationPage
 \end{lstlisting}
 \caption{Before step 3}
 \label{fig:simplify-7.4.3-before}
-\end{sublstfloat}
-\begin{sublstfloat}[t]{0.45\textwidth}
+\end{sublisting}
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}[showlines=true]
 ex:CreativeWork {
   ex:title rdf:langString;
@@ -648,10 +648,10 @@ ex:DocumentationPage
 \end{lstlisting}
 \caption{After step 3}
 \label{fig:simplify-7.4.3-after}
-\end{sublstfloat}
+\end{sublisting}
 \caption[Simplification step 3]{Simplification step 3 (in \acrshort{shexc}-like pseudo-syntax)}
 \label{fig:simplify-7.4.3}
-\end{lstfloat}
+\end{listing}
 
 After that, in step 4 all references which are still found in a parent class
 are removed from the child classes, where they are now redundant.
@@ -660,8 +660,8 @@ most \glspl{predicate} are found in \PName{ex:CreativeWork},
 and only \PName{ex:WebResource} retains another \gls{predicate}, \PName{ex:url}.
 Note that this step was later disabled, see \cref{sec:RDF2Graph+Wikidata:updates}.
 
-\begin{lstfloat}[ht]
-\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{listing}[ht]
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}
 ex:CreativeWork {
   ex:title rdf:langString;
@@ -707,8 +707,8 @@ ex:DocumentationPage
 \end{lstlisting}
 \caption{Before step 4}
 \label{fig:simplify-7.4.4-before}
-\end{sublstfloat}
-\begin{sublstfloat}[t]{0.45\textwidth}
+\end{sublisting}
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}[showlines=true]
 ex:CreativeWork {
   ex:title rdf:langString;
@@ -754,10 +754,10 @@ ex:DocumentationPage
 \end{lstlisting}
 \caption{After step 4}
 \label{fig:simplify-7.4.4-after}
-\end{sublstfloat}
+\end{sublisting}
 \caption[Simplification step 4]{Simplification step 4 (in \acrshort{shexc}-like pseudo-syntax)}
 \label{fig:simplify-7.4.4}
-\end{lstfloat}
+\end{listing}
 
 Step 2 also merges references to parent classes,
 and the other steps take this into account by respecting subclass relations as well.
@@ -770,8 +770,8 @@ were merged while copying the \PName{ex:cites} predicate into the \PName{ex:Crea
 and afterwards the individual \glspl{predicate} were removed from the child classes
 because they are covered by the merged reference in the parent class.
 
-\begin{lstfloat}[ht]
-\begin{sublstfloat}[t]{0.45\textwidth}
+\begin{listing}[ht]
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}
 ex:CreativeWork {}
 
@@ -787,8 +787,8 @@ ex:WebResource
 \end{lstlisting}
 \caption{Before simplification}
 \label{fig:simplify-classes-before}
-\end{sublstfloat}
-\begin{sublstfloat}[t]{0.45\textwidth}
+\end{sublisting}
+\begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}[showlines=true]
 ex:CreativeWork {
   ex:cites @ex:CreativeWork*
@@ -804,13 +804,13 @@ ex:WebResource
 \end{lstlisting}
 \caption{After simplification}
 \label{fig:simplify-classes-after}
-\end{sublstfloat}
+\end{sublisting}
 \caption[Simplification, with class relations]{
   Simplification (in \acrshort{shexc}-like pseudo-syntax), with class relations
   (this example is independent from the previous example)
 }
 \label{fig:simplify-classes}
-\end{lstfloat}
+\end{listing}
 
 At this point, the information which \gls{RDF2Graph} extracted is available in a private \gls{rdf} graph.
 From there, it can be exported into various formats by different exporters.
