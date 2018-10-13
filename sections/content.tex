@@ -399,9 +399,6 @@ if it has not been visited before, or if its current distance is larger than the
 The second part of the condition is necessary to ensure that the distance is set correctly
 if a node is visited first via a longer path and then later again via a shorter path,
 which is possible since the method implements a depth-first search instead of a breadth-first search.
-(In fact, the previous implementation had a bug here,
-where the distance would be incorrect if a node was visited first via a shorter path and then later again via a longer path,
-since it would always unconditionally override the distance.)
 % TODO pseudocode for this?
 
 \subsection{Parent check}
