@@ -556,6 +556,18 @@ Installing such a program on Wikimedia Toolforge
 and making it available to users via a web interface
 is a common approach in the Wikimedia universe.
 
+\begin{figure}
+  \includegraphics[width=\textwidth]{screenshots/wdsi-index}
+  \caption{Index page of the \gls{wdsi}}
+  \label{fig:wdsi-index}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{screenshots/wdsi-zika}
+  \caption{Detail page for \wdsiJob{37}}
+  \label{fig:wdsi-zika}
+\end{figure}
+
 % TODO what tense / mood to use in this section? not sure if subjunctive mood makes sense
 In this Wikimedia-hosted tool,
 users would enter a \gls{sparql} query selecting the set of exemplary \glspl{item} from which to infer a \gls{schema},
@@ -597,6 +609,13 @@ without having to start their own inference process.
 To make each result easier to comprehend for others,
 users can also submit a title, description, and/or \gls{url} for additional information
 along with their \gls{sparql} query.
+\Cref{fig:wdsi-zika} shows the page for one finished \gls{job},
+with its title, description, and \gls{url} (the “more information” link,)
+and \cref{fig:wdsi-index} shows the index page of the tool,
+listing all the finished jobs that were submitted.
+(At the time of taking the screenshot,
+no jobs were currently running,
+otherwise they would also be listed.)
 
 As the inference process consumes a lot of resources,
 it does not run directly on the same system as the web server providing the tool’s front-end.
