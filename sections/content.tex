@@ -198,8 +198,7 @@ still use those \glspl{predicate}.)
 \subsection{Data reduction}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:reduction}
 
-During the data download step, some data is dropped from the \glspl{item}.
-For one, the \glspl{label}, \glspl{description} and \glspl{alias} of an \gls{item} can make up a large portion of its data,
+The \glspl{label}, \glspl{description} and \glspl{alias} of an \gls{item} can make up a large portion of its data,
 but are generally not interesting for \gls{shex} \glspl{schema},
 since there is rarely more to say about them than
 “an \gls{item} has one or more \glspl{label}, zero or more \glspl{description}, and zero or more \glspl{alias}”.
@@ -216,10 +215,14 @@ and dozens of other external identifiers.
 All these external identifiers are technically just ordinary \glspl{statement},
 but since they carry a rather different kind of information than other \glspl{statement},
 they are sorted into a separate section when viewing the \gls{item} on the \gls{Wikidata} website.
-To reduce the runtime of the \gls{RDF2Graph} inference process,
+
+In order to reduce the runtime of the \gls{RDF2Graph} inference process,
 and to reduce clutter in the inferred \glspl{schema},
 the \glspl{label}, \glspl{description}, \glspl{alias}, and external identifiers of an \gls{item}
-are therefore excluded when downloading the data for a set of exemplary \glspl{item}.
+are excluded when downloading the data for a set of exemplary \glspl{item}:
+the generated query selecting the required data
+(\filename{\variable{example}.data.sparql} in \cref{fig:process})
+only selects triples for statements of non-external identifier properties.
 
 \subsection{Full type hierarchy}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:hierarchy}
