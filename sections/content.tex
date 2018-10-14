@@ -92,9 +92,10 @@ However, simply running \gls{RDF2Graph} against \acrfull{wdqs}, the public \gls{
 would mean attempting to infer a \gls{schema} from all of \gls{Wikidata},
 which is neither the goal of this thesis
 (that is to infer \glspl{schema} from a small set of exemplary \glspl{item})
-nor even remotely feasible given the amount of data in \gls{Wikidata}
-(for example, the 2018-08-20 full \gls{Wikidata} dump, uncompressed,
-is \SI{309.7}{\giga\byte} large and \num{8316156305} lines long).
+nor even remotely feasible given the amount of data in \gls{Wikidata}.
+For example, the 2018-10-08 full \gls{Wikidata} dump, in \gls{N-Triples} format,
+is \SI{1.1}{\tera\byte} large after decompression % 1168298616230 bytes
+and contains \num{7523105374} triples.
 
 Instead, a process was set up which,
 given a query which selects the exemplary \glspl{item},
