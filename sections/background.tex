@@ -55,7 +55,7 @@ in that types (\PName{ex:Person}) and entities (\PName{ex:JohnDoe}) are in \gls{
 while predicates (\PName{ex:dateOfBirth}) are in \gls{lower camel case}.)
 
 While \gls{rdf} can be used with any \gls{resource} \glspl{iri},
-one of its strengths is the ability to reuse the same \emph{vocabularies}
+one of its strengths is the ability to reuse the same \glspl{vocabulary}
 (effectively, sets of \glspl{resource})
 in many different graphs.
 For example, many graphs use the same \gls{predicate}, \PName{rdfs:label},
@@ -63,7 +63,7 @@ to link a \gls{resource} to a human-readable version of its name (its label);
 a tool based on \gls{rdf} can thus offer human-readable names for \glspl{resource} from all these graphs
 without requiring any specific knowledge about them,
 and the graphs are more useful when used in combination.
-One common vocabulary is \acrfull{rdfs} \cite{Guha:14:RS},
+One common \gls{vocabulary} is \acrfull{rdfs} \cite{Guha:14:RS},
 which among others provides two important predicates:
 \PName{rdf:type} and \PName{rdfs:subClassOf}.
 \PName{rdf:type} connects an object to its class,
@@ -71,7 +71,7 @@ and \PName{rdfs:subClassOf} connects a class to its parent class.
 (The \prefix{rdf:} and \prefix{rdfs:} \glspl{prefix} are both part of \acrlong{rdfs};
 the distinction between them is “a somewhat annoying historical artifact” \cite{Schreiber:14:RP}
 with no real significance today.)
-Another commonly used vocabulary is \gls{xsd} \cite{Malhotra:04:XSP},
+Another commonly used \gls{vocabulary} is \gls{xsd} \cite{Malhotra:04:XSP},
 which provides several basic datatypes:
 for example, \PName{xsd:string} is the datatype for a simple text string (language-agnostic),
 and \PName{xsd:date} and \PName{xsd:dateTime} are used to notate points in time.
