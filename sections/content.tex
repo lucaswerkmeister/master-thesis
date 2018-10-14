@@ -430,7 +430,7 @@ Two \gls{shex} implementations were evaluated:
 \gls{shex.js},
 a \gls{JavaScript} implementation running in \gls{Node.js},
 and \gls{shex-java},
-a Java implementation offering two different validation algorithms \cite{boneva:hal-01590350}.
+a \gls{Java} implementation offering two different validation algorithms \cite{boneva:hal-01590350}.
 \gls{shex.js} would usually crash with an out-of-memory error from \gls{Node.js} within a few minutes,
 whereas \gls{shex-java} would run for hours on end without any output or apparent progress
 (with either algorithm).
@@ -733,12 +733,12 @@ The response to this was twofold:
 to cope with older software versions where feasible,
 and to install newer software versions where not.
 
-\Gls{RDF2Graph} required Java 8,
-but only Java 7 is installed on \gls{Wikimedia Toolforge}.
-Fortunately, \gls{RDF2Graph} only used Java 8 for syntactic constructs (“lambda” syntax)
-and those only sparingly, so it was not too much work to make it compatible with Java 7 again.
-Similarly, Apache Jena and Fuseki have required Java 8 for some time already,
-but fortunately \gls{RDF2Graph} is compatible with their older versions which support Java 7,
+\Gls{RDF2Graph} required \gls{Java} 8,
+but only \gls{Java} 7 is installed on \gls{Wikimedia Toolforge}.
+Fortunately, \gls{RDF2Graph} only used \gls{Java} 8 for syntactic constructs (“lambda” syntax)
+and those only sparingly, so it was not too much work to make it compatible with \gls{Java} 7 again.
+Similarly, Apache Jena and Fuseki have required \gls{Java} 8 for some time already,
+but fortunately \gls{RDF2Graph} is compatible with their older versions which support \gls{Java} 7,
 and which could therefore be installed.
 
 On the other hand, there is no obvious way to make the \command{jq}-based part of the data download step
