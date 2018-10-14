@@ -173,13 +173,11 @@ which makes the \gls{shex} code more readable.
 \subsection{Type predicates}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:predicates}
 
-The most fundamental change to make \gls{RDF2Graph} support \gls{Wikidata}
-was % TODO is?
-to change the type predicates used.
-\Gls{RDF2Graph} heavily relies on the type information of the RDF graph it inspects,
-assuming a one-to-one mapping between classes and \glspl{shape},
-and it uses the standard \glspl{predicate} \PName{rdf:type} and \PName{rdfs:subClassOf}
-to determine the class of a subject and the superclasses of a class, respectively.
+\Gls{RDF2Graph} heavily relies on the type information of the RDF graph it inspects:
+it uses the \PName{rdf:type} \gls{predicate} to map a node to its \gls{shape}
+(assuming a one-to-one mapping between classes and \glspl{shape})
+and the \PName{rdfs:subClassOf} \gls{predicate} to determine the parent classes of a class,
+which are used in the simplification step.
 However, \gls{Wikidata} does not use these standard \glspl{predicate}:
 the class(es) and superclass(es) of an item
 are regular \glspl{statement} like any other \gls{Wikidata} \gls{statement},
@@ -187,9 +185,15 @@ using the \glspl{property} \PL{P31}{instance of} and \PL{P279}{subclass of}.
 In the \gls{rdf} export, \PName{rdf:type} and \PName{rdfs:subClassOf} are only used
 as part of the meta-model, % TODO meta-model? hm
 assigning each item the class \PName{wikibase:Item}, a subclass of \PName{wikibase:Entity}.
+
 To use the type information within the data instead of this meta-model,
-\gls{RDF2Graph} was changed to use the \glspl{predicate} \PName{wdt:P31} and \PName{wdt:P279}
+the queries which \gls{RDF2Graph} uses to explore the input graph
+were changed to use the \glspl{predicate} \PName{wdt:P31} and \PName{wdt:P279}
 instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
+(Note that \gls{RDF2Graph} still uses \PName{rdf:type} and \PName{rdfs:subClassOf}
+when writing its internal results graph,
+so queries operating on that graph as part of the simplification step
+still use those \glspl{predicate}.)
 
 \subsection{Data reduction}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:reduction}
