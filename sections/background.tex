@@ -448,7 +448,6 @@ See \cite{vanDam2015} and the \gls{RDF2Graph} source code for the full descripti
 for example, step 2 is implemented under a code comment for “7.4.2”.)
 
 % TODO review the layout of the listings here
-% TODO some of the listings are too high for their page. perhaps remove blank lines between shapes
 
 In step 2, all \glspl{predicate} from child classes are copied to parent classes.
 For example, in \cref{fig:simplify-7.4.2},
@@ -461,15 +460,27 @@ but then inherit several \glspl{predicate} from their child classes.
 \begin{lstlisting}[showlines=true]
 ex:CreativeWork {}
 
+
+
+
+
+
+
+
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {
   ex:title rdf:langString;
   ex:author @ex:Person+;
   ex:cites @ex:CreativeWork+;
 }
-
 ex:WebResource
     EXTENDS ex:CreativeWork {}
+
+
+
+
+
+
 
 ex:BlogPost
     EXTENDS ex:WebResource {
@@ -480,28 +491,12 @@ ex:BlogPost
     ex:author @ex:Organization
   );
 }
-
 ex:DocumentationPage
     EXTENDS ex:BlogPost {
   ex:url .;
   ex:title rdf:langString;
   ex:author @ex:Organization;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \end{lstlisting}
 \caption{Before step 2}
 \label{fig:simplify-7.4.2-before}
@@ -517,14 +512,12 @@ ex:CreativeWork {
   );
   ex:cites @ex:CreativeWork+;
 }
-
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {
   ex:title rdf:langString;
   ex:author @ex:Person+;
   ex:cites @ex:CreativeWork+;
 }
-
 ex:WebResource
     EXTENDS ex:CreativeWork {
   ex:url .;
@@ -534,7 +527,6 @@ ex:WebResource
     ex:author @ex:Organization
   );
 }
-
 ex:BlogPost
     EXTENDS ex:WebResource {
   ex:url .;
@@ -544,7 +536,6 @@ ex:BlogPost
     ex:author @ex:Organization
   );
 }
-
 ex:DocumentationPage
     EXTENDS ex:WebResource {
   ex:url .;
@@ -583,14 +574,12 @@ ex:CreativeWork {
   );
   ex:cites @ex:CreativeWork+;
 }
-
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {
   ex:title rdf:langString;
   ex:author @ex:Person+;
   ex:cites @ex:CreativeWork+;
 }
-
 ex:WebResource
     EXTENDS ex:CreativeWork {
   ex:url .;
@@ -600,7 +589,6 @@ ex:WebResource
     ex:author @ex:Organization
   );
 }
-
 ex:BlogPost
     EXTENDS ex:WebResource {
   ex:url .;
@@ -610,7 +598,6 @@ ex:BlogPost
     ex:author @ex:Organization
   );
 }
-
 ex:DocumentationPage
     EXTENDS ex:WebResource {
   ex:url .;
@@ -631,13 +618,13 @@ ex:CreativeWork {
   );
 }
 
+
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {
   ex:title rdf:langString;
   ex:author @ex:Person+;
   ex:cites @ex:CreativeWork+;
 }
-
 ex:WebResource
     EXTENDS ex:CreativeWork {
   ex:url .;
@@ -647,7 +634,6 @@ ex:WebResource
     ex:author @ex:Organization
   );
 }
-
 ex:BlogPost
     EXTENDS ex:WebResource {
   ex:url .;
@@ -657,7 +643,6 @@ ex:BlogPost
     ex:author @ex:Organization
   );
 }
-
 ex:DocumentationPage
     EXTENDS ex:WebResource {
   ex:url .;
@@ -691,14 +676,12 @@ ex:CreativeWork {
     ex:author @ex:Organization
   );
 }
-
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {
   ex:title rdf:langString;
   ex:author @ex:Person+;
   ex:cites @ex:CreativeWork+;
 }
-
 ex:WebResource
     EXTENDS ex:CreativeWork {
   ex:url .;
@@ -708,7 +691,6 @@ ex:WebResource
     ex:author @ex:Organization
   );
 }
-
 ex:BlogPost
     EXTENDS ex:WebResource {
   ex:url .;
@@ -718,7 +700,6 @@ ex:BlogPost
     ex:author @ex:Organization
   );
 }
-
 ex:DocumentationPage
     EXTENDS ex:WebResource {
   ex:url .;
@@ -738,36 +719,32 @@ ex:CreativeWork {
     ex:author @ex:Organization
   );
 }
-
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {}
+
+
+
 
 ex:WebResource
     EXTENDS ex:CreativeWork {
   ex:url .;
 }
 
+
+
+
+
 ex:BlogPost
     EXTENDS ex:WebResource {}
 
+
+
+
+
+
+
 ex:DocumentationPage
     EXTENDS ex:WebResource {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -796,6 +773,8 @@ because they are covered by the merged reference in the parent class.
 \begin{lstlisting}
 ex:CreativeWork {}
 
+
+
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {
   ex:cites @ex:ScholarlyArticle+
@@ -817,6 +796,8 @@ ex:CreativeWork {
 
 ex:ScholarlyArticle
     EXTENDS ex:CreativeWork {}
+
+
 
 ex:WebResource
     EXTENDS ex:CreativeWork {}
