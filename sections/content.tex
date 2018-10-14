@@ -374,22 +374,22 @@ and then sums up their direct instance counts.
 \label{subsec:RDF2Graph+Wikidata:cyclic-graphs:simplify-step-3+4}
 
 Two steps of the simplification process
-remove some of the temporary (added) type links of a node,
-based on the temporary type links of its neighboring nodes:
-step 3 removes temporary type links from parent classes that are only found in one child class,
-and step 4 removes temporary type links from child classes that are made redundant by a type link in the parent class.
-Both steps were originally implemented as inspecting the neighboring nodes’ temporary type links
-and then directly manipulating the node’s own temporary type links.
+remove some of the temporary (added) \glspl{type link} of a node,
+based on the temporary \glspl{type link} of its neighboring nodes:
+step 3 removes temporary \glspl{type link} from parent classes that are only found in one child class,
+and step 4 removes temporary \glspl{type link} from child classes that are made redundant by a \gls{type link} in the parent class.
+Both steps were originally implemented as inspecting the neighboring nodes’ temporary \glspl{type link}
+and then directly manipulating the node’s own temporary \glspl{type link}.
 This required that each step traversed the nodes in the correct order
 (parents before children for step 3,
 children before parents for step 4)
 and was implemented by traversing the graph recursively,
 which is problematic if the graph contains cycles.
 
-This problem was solved by splitting up the analysis and modification of the temporary type links:
+This problem was solved by splitting up the analysis and modification of the temporary \glspl{type link}:
 each step now has two parts,
-where the first part marks all temporary type links that should be removed,
-and the second part actually removes them from a node’s temporary type links.
+where the first part marks all temporary \glspl{type link} that should be removed,
+and the second part actually removes them from a node’s temporary \glspl{type link}.
 As long as the first part (“mark”) for all nodes is run before the second part (“remove”) for any node,
 these parts can visit the nodes in any order,
 and instead of recursively traversing the graph,
@@ -458,23 +458,23 @@ based on how often those elements were used in the original data. % TODO add exa
 % (does “open world” vs. “closed world” factor into this?)
 
 Elements can be removed from a \gls{schema} on three different levels:
-an individual type link can be removed from a \gls{predicate}, % TODO probably needs explanation
+an individual \gls{type link} can be removed from a \gls{predicate}, % TODO probably needs explanation
 a \gls{predicate} can be removed from a \gls{shape},
 or an entire \gls{shape} can be removed from the \gls{schema}.
 Removal on the first two levels can be decided for each element independently,
 but whether a \gls{shape} can be removed from the \gls{schema} depends not only on how many instances of that \gls{shape} exist,
-but also whether the \gls{shape} is referred to by any type links that were not dropped from this \gls{schema}.
+but also whether the \gls{shape} is referred to by any \glspl{type link} that were not dropped from this \gls{schema}.
 To avoid dropping \glspl{shape} which are needed by other parts of the \gls{schema},
 while still dropping \glspl{shape} that are otherwise unused,
 the exporter maintains two sets of \glspl{shape}:
-one for \glspl{shape} which are referenced from type links,
+one for \glspl{shape} which are referenced from \glspl{type link},
 and one for \glspl{shape} which may be dropped.
 When printing the final \gls{schema}, only \glspl{shape} found in the latter set but not in the former are skipped.
 
 The decision whether to drop an element or not
 was implemented as a simple numeric threshold on all three levels:
-if a type link is used less than $m$ times,
-a \gls{predicate} is used less than $n$ times (sum of all type link uses),
+if a \gls{type link} is used less than $m$ times,
+a \gls{predicate} is used less than $n$ times (sum of all \gls{type link} uses),
 or a class has less than $o$ instances,
 the element is dropped.
 The three limits are independent,
