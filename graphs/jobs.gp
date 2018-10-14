@@ -5,7 +5,7 @@ quadratic(x) = quadratic_a + quadratic_b*x + quadratic_c*x**2
 power(x) = power_a + power_b*x**power_c
 
 set terminal latex
-# set ylabel 'execution time (seconds)' # TODO not rotated (might need different terminal)
+# set ylabel 'execution time (seconds)'
 
 SSR(SST) = SST - (FIT_WSSR / (FIT_NDF + 2)) # assuming a function with two variables (i. e. two less degrees of freedom than records)
 R2(SST) = SSR(SST) / SST
