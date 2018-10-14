@@ -40,9 +40,9 @@ do for [file in 'jobs jobs-without-outliers'] {
     set key Left # alignment
     set key reverse # sample to the left of text
     plot infile using (column(x_axis)):@total_real title 'data', \
-         linear(x) title sprintf('$%.2f %+.2fx$ ($r^2 = %.2f$)', linear_a, linear_b, linear_r2), \
-         quadratic(x) title sprintf('$%.2f %+.2fx %+.2fx^2$ ($r^2 = %.2f$)', quadratic_a, quadratic_b, quadratic_c, quadratic_r2), \
-         power(x) title sprintf('$%.2f %+.2fx^{%.2f}$ ($r^2 = %.2f$)', power_a, power_b, power_c, power_r2)
+         linear(x) title sprintf('$%.2f %+.2fx$ ($R^2 = %.2f$)', linear_a, linear_b, linear_r2), \
+         quadratic(x) title sprintf('$%.2f %+.2fx %+.2fx^2$ ($R^2 = %.2f$)', quadratic_a, quadratic_b, quadratic_c, quadratic_r2), \
+         power(x) title sprintf('$%.2f %+.2fx^{%.2f}$ ($R^2 = %.2f$)', power_a, power_b, power_c, power_r2)
   }
 }
 # TODO probably check the r² calculations
