@@ -227,15 +227,19 @@ only selects triples for statements of non-external identifier properties.
 \subsection{Full type hierarchy}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:hierarchy}
 
-However, one unfortunate consequence of running \gls{RDF2Graph} against a reduced data set
+One undesirable consequence of running \gls{RDF2Graph} against a reduced data set
 is that \gls{RDF2Graph} cannot see the full type hierarchy of the classes involved:
 for example, depending on how much data was downloaded,
 it may or may not be aware that the classes \QL{Q112099}{island nation} and \QL{Q3624078}{sovereign state}
-have a common superclass, \QL{Q7275}{state},
-which reduces the available options during the simplification step. % TODO not happy with this phrasing
-To mitigate this, \gls{RDF2Graph} was patched
-to allow specifying an alternative \gls{sparql} endpoint for all queries that require a full view of the data,
-and uses this alternative endpoint for the query to get all parent and child classes of a class.
+have a common superclass, \QL{Q7275}{state}.
+And if \gls{RDF2Graph} does not know that two classes have a common superclass,
+it cannot merge them during the simplification step.
+
+To avoid this, an option was added to \gls{RDF2Graph}
+which allows specifying an alternative \gls{sparql} endpoint
+for all queries that require a full view of the data,
+and this alternative endpoint is used for the query to get all parent and child classes of a class.
+(If the option is not specified, it falls back to the default \gls{sparql} endpoint.)
 The Makefile mentioned in \cref{subsec:RDF2Graph+Wikidata:Wikidata:download}
 specifies the \gls{wdqs} \gls{sparql} endpoint for this option,
 so that \gls{RDF2Graph} can discover the full class hierarchy around all relevant items
