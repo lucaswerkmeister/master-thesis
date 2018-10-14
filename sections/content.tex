@@ -267,7 +267,6 @@ but it seems to work out well enough in practice.)
 
 \section{Support for Cyclic Type Hierarchies}
 \label{sec:RDF2Graph+Wikidata:cyclic-graphs}
-% TODO this whole section mixes parent/child and parent class / subclass terminology :/
 
 As outlined in \cref{sec:Background:RDF2Graph},
 \gls{RDF2Graph} has an optional simplification feature
@@ -276,7 +275,7 @@ based on the type hierarchy of the classes involved.
 For this, the type hierarchy is loaded into an in-memory data structure,
 which in the code is referred to as a “tree”.
 In fact, the data structure forms a generic, directed graph,
-where each node may have any number of children and any number of parents,
+where each node may have any number of children (subclasses) and any number of parents (superclasses),
 and no restrictions on the structure are enforced during construction.
 However, while the algorithms subsequently operating on the data structure support classes with multiple parent classes,
 they do assume that the graph is acyclic,
