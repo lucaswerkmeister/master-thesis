@@ -318,6 +318,11 @@ since it means that a cycle somewhere in the class hierarchy,
 typically among very abstract classes,
 will no longer impede simplification in other, more concrete classes,
 where simplification is much more useful anyways.
+Without these improvements,
+if any part of the simplification step failed
+(typically with a \lstinline[language=java]{StackOverflowError}),
+all simplification results would be lost
+and the \gls{shex} export would run on the original, completely unsimplified graph.
 
 \subsection{\FunctionName{GetAllChildren}}
 \label{subsec:RDF2Graph+Wikidata:cyclic-graphs:GetAllChildren}
