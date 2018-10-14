@@ -248,20 +248,23 @@ even when running against a subset of \gls{Wikidata}. % TODO “subset of Wikida
 \subsection{Simplification}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:simplification}
 
-The simplification process also required some changes to support \gls{Wikidata}.
-Originally, \gls{RDF2Graph} would merge all classes into their superclass,
+\Gls{RDF2Graph}’s simplification step would originally merge all classes into their superclasses,
 almost completely unconditionally,
 stopping only at the root class \PName{owl:Thing}.
-This was much too aggressive for \gls{Wikidata}:
+This works well for \gls{rdf} graphs with a lot of different subclasses directly beneath \PName{owl:Thing},
+but is much too aggressive for \gls{Wikidata}:
 not only does \gls{Wikidata} have a different root class (\QL{Q35120}{entity}),
 but it also has a complex hierarchy of abstract classes below that root class,
 and merging other classes into those abstract classes
 (like \QL{Q151885}{concept}, \QL{Q7184903}{abstract object} or \QL{Q830077}{subject})
 would not result in useful \glspl{schema}.
+
 Therefore, step 2 in the simplification process was adapted
-to add a number of \gls{Wikidata} \glspl{item} to the set of classes which other classes should not be merged into
+to add a number of \gls{Wikidata} \glspl{item} to the set of classes
+which other classes should not be merged into
 (originally only containing \PName{owl:Thing}),
-and to stop looking for common superclasses of two classes after checking five levels in the class hierarchy.
+and to stop looking for common superclasses of two classes
+after walking up five levels in the class hierarchy.
 (The limit of five levels is an arbitrary choice
 and could also be made configurable if deemed necessary in the future.) % TODO look a bit more into this?
 
