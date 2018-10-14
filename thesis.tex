@@ -67,12 +67,13 @@
 %% Use biber instead of BibTeX, see README
 \usepackage[citestyle=numeric,style=numeric,backend=biber,sortcites]{biblatex}
 \addbibresource{thesis.bib}
+\AtBeginBibliography{\label{bibliography}}
 
 %% --------------------------------
 %% | Glossary                     |
 %% --------------------------------
 
-\usepackage{glossaries}
+\usepackage[numberedsection=nameref]{glossaries}
 \makeglossaries
 \input{sections/glossary-terms.tex}
 
