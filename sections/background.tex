@@ -447,8 +447,6 @@ See \cite{vanDam2015} and the \gls{RDF2Graph} source code for the full descripti
 (In the source code, the steps are counted as sub-steps of the general step 7.4 “simplification”:
 for example, step 2 is implemented under a code comment for “7.4.2”.)
 
-% TODO review the layout of the listings here
-
 In step 2, all \glspl{predicate} from child classes are copied to parent classes.
 For example, in \cref{fig:simplify-7.4.2},
 the \PName{ex:WebResource} and \PName{ex:CreativeWork} classes are initially empty
@@ -768,7 +766,21 @@ were merged while copying the \PName{ex:cites} predicate into the \PName{ex:Crea
 and afterwards the individual \glspl{predicate} were removed from the child classes
 because they are covered by the merged reference in the parent class.
 
-\begin{listing}[ht]
+At this point, the information which \gls{RDF2Graph} extracted is available in a private \gls{rdf} graph.
+From there, it can be exported into various formats by different exporters.
+The \gls{shex} exporter loads parts of these results into a temporary \gls{rdf} database of its own,
+applies some transformations to them via \gls{sparql},
+converts them to \gls{json-ld},
+further transforms the \gls{json},
+and finally exports the result into \gls{shexc} text via the Jade template engine.
+
+\section{Wikimedia Toolforge}
+\label{sec:Background:Toolforge}
+
+% note: this listing really belongs to the previous section,
+% but I couldn’t find a way to put it on the same page as this section
+% without moving it below this section
+\begin{listing}[t]
 \begin{sublisting}[t]{0.45\textwidth}
 \begin{lstlisting}
 ex:CreativeWork {}
@@ -813,17 +825,6 @@ ex:WebResource
 }
 \label{fig:simplify-classes}
 \end{listing}
-
-At this point, the information which \gls{RDF2Graph} extracted is available in a private \gls{rdf} graph.
-From there, it can be exported into various formats by different exporters.
-The \gls{shex} exporter loads parts of these results into a temporary \gls{rdf} database of its own,
-applies some transformations to them via \gls{sparql},
-converts them to \gls{json-ld},
-further transforms the \gls{json},
-and finally exports the result into \gls{shexc} text via the Jade template engine.
-
-\section{Wikimedia Toolforge}
-\label{sec:Background:Toolforge}
 
 \gls{Wikimedia Toolforge} is a hosting environment provided by the \gls{Wikimedia Foundation}
 where trusted members of the \gls{Wikimedia} community may host and develop their “tools” or other work.
