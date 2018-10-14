@@ -549,6 +549,7 @@ a patch to add an optional depth limit to the shex.js implementation was develop
 With this change, if the depth limit was reached,
 the validator would skip recursing into another \gls{shape}
 and instead only record the fact that the limit was reached before continuing.
+
 Unfortunately, however, this proved unsuccessful.
 When testing some \glspl{item} against several inferred \glspl{schema},
 low limits (2–4) would yield unpredictable results
@@ -560,7 +561,6 @@ though sometimes with wildly varying runtimes.
 One possible explanation for this is that pruning one part of the validation process when reaching the depth limit
 may cause the validator to spend more time in other areas,
 which may previously not have been necessary if the pruned part would otherwise have resulted in a violation.
-% TODO I’m not sure if that makes sense
 
 \chapter{The Wikidata Shape Expressions Inference Tool}
 \label{ch:wdsi}
