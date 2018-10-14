@@ -427,12 +427,12 @@ An unexpected problem emerged once the \gls{schema} inference itself was in plac
 it proved to be almost impossible to validate \glspl{item} against the inferred \glspl{schema}
 for all but the most simple data sets.
 Two \gls{shex} implementations were evaluated:
-shex.js,
+\gls{shex.js},
 a \gls{JavaScript} implementation running in \gls{Node.js},
-and shex-java,
+and \gls{shex-java},
 a Java implementation offering two different validation algorithms \cite{boneva:hal-01590350}.
-shex.js would usually crash with an out-of-memory error from \gls{Node.js} within a few minutes,
-whereas shex-java would run for hours on end without any output or apparent progress
+\gls{shex.js} would usually crash with an out-of-memory error from \gls{Node.js} within a few minutes,
+whereas \gls{shex-java} would run for hours on end without any output or apparent progress
 (with either algorithm).
 
 One attempted strategy to be able to validate the inferred \glspl{schema}
@@ -542,7 +542,7 @@ happens to be missing an \PL{P1279}{inflation rate} statement.
 
 Therefore, in an attempt to reduce the amount of irrelevant violations
 and to make the validation terminate without crashing,
-a patch to add an optional depth limit to the shex.js implementation was developed.
+a patch to add an optional depth limit to the \gls{shex.js} implementation was developed.
 With this change, if the depth limit was reached,
 the validator would skip recursing into another \gls{shape}
 and instead only record the fact that the limit was reached before continuing.
