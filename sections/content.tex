@@ -385,19 +385,17 @@ This required that each step traversed the nodes in the correct order
 children before parents for step 4)
 and was implemented by traversing the graph recursively,
 which is problematic if the graph contains cycles.
-% TODO all this anonymous steps and parts business sounds clumsy
-% give all of them numbers and/or names and then rephrase this
+
 This problem was solved by splitting up the analysis and modification of the temporary type links:
 each step now has two parts,
 where the first part marks all temporary type links that should be removed,
 and the second part actually removes them from a node’s temporary type links.
-As long as the first part for all nodes is run before the second part for any node,
-these parts can now be run in any order,
+As long as the first part (“mark”) for all nodes is run before the second part (“remove”) for any node,
+these parts can visit the nodes in any order,
 and instead of recursively traversing the graph,
 both steps now first collect all child nodes of the root node
 and then iterate them twice,
-running the first part the first time and the second part the second time.
-% TODO pseudocode algorithms for any of this paragraph?
+running the first part (“mark”) the first time and the second part (“remove”) the second time.
 
 \subsection{Node distances}
 \label{subsec:RDF2Graph+Wikidata:cyclic-graph:distance}
