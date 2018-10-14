@@ -11,5 +11,22 @@
 %% Version 1.3.3, 2018-04-17
 
 \Abstract
-% TODO translate abstract_en.tex once finalized
-Deutsche Zusammenfassung
+\Gls{Wikidata}, die freie Wissensdatenbank in der \gls{Wikimedia}-Bewegung,
+wird von verschiedenen \gls{Wikimedia}- und anderen Projekten
+als Quelle für maschinenlesbare Informationen und Daten verwendet.
+Die Datenqualität wird durch die \gls{Wikidata}-Community verwaltet und überwacht,
+wobei verschiedene Mechanismen zur Qualitätskontrolle zum Einsatz kommen,
+in letzter Zeit auch formale Schemata in der \acrlong{shex}-Sprache.
+Allerdings ist es langwierig, größere Schemata zu schreiben,
+was automatischen Rückschluss solcher Schemata aus einem Satz beispielhafter Datenobjekte
+attraktiv macht.
+
+Diese Arbeit untersucht diese Option,
+indem das \gls{RDF2Graph}-Programm aktualisiert und angepasst wird,
+um Schemata aus einem Satz von \gls{Wikidata}-Datenobjekten rückzuschließen,
+und durch das Angebot eines webbasierten Werkzeugs,
+welches diesen Vorgang der \gls{Wikidata}-Community zugänglich macht.
+Obwohl die resultierenden Schemata meist nicht für direkte Validierung geeignet sind,
+können sie immer noch als Beschreibung eines Bereichs des \gls{Wikidata}-Datenmodells,
+als Mittel, mögliche Probleme in den Eingabedaten zu bemerken,
+oder als Basis für manuell betreute Schemata nützlich sein.
