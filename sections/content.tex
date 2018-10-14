@@ -416,12 +416,11 @@ which is possible since the method implements a depth-first search instead of a 
 \subsection{Parent check}
 \label{subsec:RDF2Graph+Wikidata:cyclic-graph:IsParent}
 
-% TODO perhaps just drop this paragraph? it’s really trivial
-And finally, there is also a method to determine whether a certain node is a (direct or indirect) parent node of another node.
-This was originally implemented recursively,
-% TODO phrasing here feels convoluted
-but could be replaced with a simple check whether the potential parent node is an element of the set of the child node’s parent nodes,
-using \cref{alg:GetAllChildren}.
+There is also a method to determine whether a certain node is a (direct or indirect) parent node of another node,
+originally implemented recursively.
+This was replaced by a version which first retrieves the set of the potential child node’s parent nodes,
+using \cref{alg:GetAllChildren},
+and then checks whether the potential parent node is an element of it.
 
 \section{Schema Reduction}
 \label{sec:RDF2Graph+Wikidata:schema-reduction}
