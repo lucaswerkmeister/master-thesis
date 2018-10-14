@@ -448,35 +448,59 @@ This was implemented in the final step of the \gls{shex} exporter,
 the \filename{shexbuilder.js} program,
 which had already been mostly rewritten for different reasons
 (see \cref{sec:RDF2Graph+Wikidata:updates}).
-\Gls{RDF2Graph} tracks the number of instances of each class it encounters,
-and this information is still available to the \gls{shex} exporter,
-which makes it possible to decide which elements of a \gls{schema} to keep and which to drop
-based on how often those elements were used in the original data. % TODO add example?
-
-% TODO somewhere around here we need to explain why it’s okay to drop elements.
-% type links → our schemas aren’t perfect anyways; predicates → shapes are not closed; shapes → unused
-% (does “open world” vs. “closed world” factor into this?)
 
 Elements can be removed from a \gls{schema} on three different levels:
-an individual \gls{type link} can be removed from a \gls{predicate}, % TODO probably needs explanation
+an individual \gls{type link} can be removed from a \gls{predicate},
 a \gls{predicate} can be removed from a \gls{shape},
 or an entire \gls{shape} can be removed from the \gls{schema}.
-Removal on the first two levels can be decided for each element independently,
-but whether a \gls{shape} can be removed from the \gls{schema} depends not only on how many instances of that \gls{shape} exist,
-but also whether the \gls{shape} is referred to by any \glspl{type link} that were not dropped from this \gls{schema}.
-To avoid dropping \glspl{shape} which are needed by other parts of the \gls{schema},
-while still dropping \glspl{shape} that are otherwise unused,
-the exporter maintains two sets of \glspl{shape}:
+In each case, the decision on whether to keep or drop the element
+requires an assessment of whether the element \emph{can} be dropped,
+and whether it \emph{should} be dropped.
+
+\Glspl{shape} can be removed from a \gls{schema} as long as they are not referenced by any other shape,
+and as long as they are not interesting as “entry points” for the \gls{schema}
+(i.~e., \glspl{shape} to validate the initial \gls{focus node} against).
+The second condition is subjective,
+but in practice, \glspl{shape} that are interesting as “entry points”
+are usually also referred to by other \glspl{shape},
+so the condition can be ignored.
+The first condition is implemented in the exporter
+by maintaining two sets of \glspl{shape}:
 one for \glspl{shape} which are referenced from \glspl{type link},
-and one for \glspl{shape} which may be dropped.
-When printing the final \gls{schema}, only \glspl{shape} found in the latter set but not in the former are skipped.
+and one for \glspl{shape} which should perhaps be dropped.
+When printing the final \gls{schema},
+only \glspl{shape} found in the latter set but not in the former are skipped.
+
+\Glspl{predicate} can be removed from a \gls{shape} unconditionally:
+since the \glspl{shape} produced by \gls{RDF2Graph} are not closed,
+removing a \gls{predicate} from a \gls{shape} means that \glspl{triple} using that \gls{predicate}
+will now be ignored by the validator when testing against the \gls{shape}.
+However, a \gls{shape} without \glspl{predicate} is hardly useful,
+so a balance needs to be struck when deciding whether a \gls{predicate} \emph{should} be dropped.
+
+Individual \glspl{type link} can, in principle, never be removed from a \gls{predicate}:
+if a \gls{type link} occurs in the \gls{schema},
+then there must have been a corresponding \gls{triple} in the input data,
+and removing the \gls{type link} would turn that \gls{triple} into a violation,
+at least if simplification was applied to the \gls{schema}.
+(Without simplification, some \glspl{type link} may be redundant
+due to other \glspl{type link} for related classes.)
+However, this assumes a perfect input data set which should not have any violations,
+which is an unrealistic assumption at least for \gls{Wikidata} input data:
+even if the exemplary input \glspl{item} were carefully selected
+and have no incorrect \glspl{statement} themselves,
+it is unlikely that all the \glspl{item} which those \glspl{item} link to are also flawless.
+(See \cref{sec:Evaluation:quality} for an example of problems in a high-profile input data set.)
+Given this situation, it is defensible to drop \glspl{type link}
+which are likely to reflect errors in the input data.
 
 The decision whether to drop an element or not
-was implemented as a simple numeric threshold on all three levels:
-if a \gls{type link} is used less than $m$ times,
-a \gls{predicate} is used less than $n$ times (sum of all \gls{type link} uses),
-or a class has less than $o$ instances,
-the element is dropped.
+is implemented as a simple numeric threshold on all three levels.
+\Gls{RDF2Graph} tracks the number of instances of each class it encounters,
+and this information is still available to the \gls{shex} exporter,
+which can therefore drop \glspl{type link} that are used less than $m$ times,
+\glspl{predicate} that are used less than $n$ times (sum of all \gls{type link} uses),
+and \glspl{shape} for classes with less than $o$ instances.
 The three limits are independent,
 though in practice it makes most sense to choose them such that $m > n > o$.
 An alternative strategy to explore in the future might be
@@ -491,6 +515,8 @@ would validation succeed;
 manual bisecting of the \glspl{schema} which failed to validate
 would often turn up a fairly small problematic part of a \gls{schema}
 which a simple count-based threshold was ill-suited to detect automatically.
+Therefore, while the code implementing the limits remains in place,
+all three are disabled by default.
 
 \section{Depth Limits in Validation}
 \label{sec:RDF2Graph+Wikidata:depth-limit}
