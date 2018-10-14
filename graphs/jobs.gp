@@ -45,4 +45,3 @@ do for [file in 'jobs jobs-without-outliers'] {
          power(x) title sprintf('$%.2f %+.2fx^{%.2f}$ ($R^2 = %.2f$)', power_a, power_b, power_c, power_r2)
   }
 }
-# TODO probably check the r² calculations
