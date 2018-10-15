@@ -653,7 +653,9 @@ As the inference process consumes a lot of resources,
 it does not run directly on the same system as the web server providing the tool’s front-end.
 Instead, it is submitted as a job for the Sun Grid Engine system also offered by the \gls{Wikimedia Toolforge} environment,
 where it will be run on some execution host with sufficient free resources.
-To ensure that the system’s resources are not exhausted by this one tool,
+To ensure that the system’s resources,
+shared with all other \gls{Wikimedia Toolforge} users,
+are not exhausted by this one tool,
 the tool only allows at most two \glspl{job} to run in parallel,
 and prevents users from submitting any more \glspl{job} if too many \glspl{job} are currently running,
 instead asking them to try again later.
