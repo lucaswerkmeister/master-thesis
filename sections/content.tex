@@ -72,7 +72,7 @@ This feature has not made it into any released version of \gls{shex} yet
 though the syntax has slightly changed:
 it now uses the keyword \lstinline{EXTENDS} whereas \gls{RDF2Graph} used the symbol \lstinline{&}),
 so the \gls{shex} exporter was changed to only mention the parent classes for a \gls{shape} in a comment,
-and simplification step 4 (see \cref{sec:Background:RDF2Graph}) was disabled
+and \gls{simplification} step 4 (see \cref{sec:Background:RDF2Graph}) was disabled
 so that the redundant \glspl{predicate} are included after all,
 since they are no longer automatically inherited.
 
@@ -157,7 +157,7 @@ Next, the Apache Jena Fuseki \gls{sparql} server is run locally,
 serving the data from this \gls{N-Triples} file.
 As soon as it has finished loading the data file,
 \gls{RDF2Graph} is run against this local \gls{sparql} endpoint for the main inference process,
-including \gls{RDF2Graph}’s simplification step.
+including \gls{RDF2Graph}’s \gls{simplification} step.
 Once \gls{RDF2Graph} terminates, the Fuseki server is stopped.
 
 Afterwards, the results from \gls{RDF2Graph} are available as a graph of classes with associated information,
@@ -173,7 +173,7 @@ which makes the \gls{shex} code more readable.
 it uses the \PName{rdf:type} \gls{predicate} to map a node to its \gls{shape}
 (assuming a one-to-one mapping between classes and \glspl{shape})
 and the \PName{rdfs:subClassOf} \gls{predicate} to determine the parent classes of a class,
-which are used in the simplification step.
+which are used in the \gls{simplification} step.
 However, \gls{Wikidata} does not use these standard \glspl{predicate}:
 the class(es) and superclass(es) of an item
 are regular \glspl{statement} like any other \gls{Wikidata} \gls{statement},
@@ -188,7 +188,7 @@ were changed to use the \glspl{predicate} \PName{wdt:P31} and \PName{wdt:P279}
 instead of \PName{rdf:type} and \PName{rdfs:subClassOf}.
 (Note that \gls{RDF2Graph} still uses \PName{rdf:type} and \PName{rdfs:subClassOf}
 when writing its internal results graph,
-so queries operating on that graph as part of the simplification step
+so queries operating on that graph as part of the \gls{simplification} step
 still use those \glspl{predicate}.)
 
 \subsection{Data reduction}
@@ -229,7 +229,7 @@ for example, depending on how much data was downloaded,
 it may or may not be aware that the classes \QL{Q112099}{island nation} and \QL{Q3624078}{sovereign state}
 have a common superclass, \QL{Q7275}{state}.
 And if \gls{RDF2Graph} does not know that two classes have a common superclass,
-it cannot merge them during the simplification step.
+it cannot merge them during the \gls{simplification} step.
 
 To avoid this, an option was added to \gls{RDF2Graph}
 which allows specifying an alternative \gls{sparql} endpoint
@@ -244,7 +244,7 @@ even when running against a subset of \gls{Wikidata}.
 \subsection{Simplification}
 \label{subsec:RDF2Graph+Wikidata:Wikidata:simplification}
 
-\Gls{RDF2Graph}’s simplification step would originally merge all classes into their superclasses,
+\Gls{RDF2Graph}’s \gls{simplification} step would originally merge all classes into their superclasses,
 almost completely unconditionally,
 stopping only at the root class \PName{owl:Thing}.
 This works well for \gls{rdf} graphs with a lot of different subclasses directly beneath \PName{owl:Thing},
@@ -255,7 +255,7 @@ and merging other classes into those abstract classes
 (like \QL{Q151885}{concept}, \QL{Q7184903}{abstract object} or \QL{Q830077}{subject})
 would not result in useful \glspl{schema}.
 
-Therefore, step 2 in the simplification process was adapted
+Therefore, step 2 in the \gls{simplification} process was adapted
 to add a number of \gls{Wikidata} \glspl{item} to the set of classes
 which other classes should not be merged into
 (originally only containing \PName{owl:Thing}),
@@ -269,7 +269,7 @@ but it seems to work out well enough in practice.)
 \label{sec:RDF2Graph+Wikidata:cyclic-graphs}
 
 As outlined in \cref{sec:Background:RDF2Graph},
-\gls{RDF2Graph} has an optional simplification feature
+\gls{RDF2Graph} has an optional \gls{simplification} feature
 where the \gls{schema} will be simplified in several steps,
 based on the type hierarchy of the classes involved.
 For this, the type hierarchy is loaded into an in-memory data structure,
@@ -313,16 +313,16 @@ and the correct way to break them is not always obvious.
 While, by and large, these cycles are eventually found and fixed by the community,
 it is possible that, in the meantime, \gls{RDF2Graph} will run on a subclass graph containing cycles.
 Therefore, to make the process more robust,
-several algorithms in the simplification step were adjusted to be able to cope with cyclic graphs.
+several algorithms in the \gls{simplification} step were adjusted to be able to cope with cyclic graphs.
 This is valuable even though the results in the cycle may no longer make sense,
 since it means that a cycle somewhere in the class hierarchy,
 typically among very abstract classes,
-will no longer impede simplification in other, more concrete classes,
-where simplification is much more useful anyways.
+will no longer impede \gls{simplification} in other, more concrete classes,
+where \gls{simplification} is much more useful anyways.
 Without these improvements,
-if any part of the simplification step failed
+if any part of the \gls{simplification} step failed
 (typically with a \lstinline[language=java]{StackOverflowError}),
-all simplification results would be lost
+all \gls{simplification} results would be lost
 and the \gls{shex} export would run on the original, completely unsimplified graph.
 
 \subsection{\FunctionName{GetAllChildren}}
@@ -374,7 +374,7 @@ and then sums up their direct instance counts.
 \subsection{Simplification steps 3 and 4}
 \label{subsec:RDF2Graph+Wikidata:cyclic-graphs:simplify-step-3+4}
 
-Two steps of the simplification process
+Two steps of the \gls{simplification} process
 remove some of the temporary (added) \glspl{type link} of a node,
 based on the temporary \glspl{type link} of its neighboring nodes:
 step 3 removes temporary \glspl{type link} from parent classes that are only found in one child class,
@@ -482,8 +482,8 @@ Individual \glspl{type link} can, in principle, never be removed from a \gls{pre
 if a \gls{type link} occurs in the \gls{schema},
 then there must have been a corresponding \gls{triple} in the input data,
 and removing the \gls{type link} would turn that \gls{triple} into a violation,
-at least if simplification was applied to the \gls{schema}.
-(Without simplification, some \glspl{type link} may be redundant
+at least if \gls{simplification} was applied to the \gls{schema}.
+(Without \gls{simplification}, some \glspl{type link} may be redundant
 due to other \glspl{type link} for related classes.)
 However, this assumes a perfect input data set which should not have any violations,
 which is an unrealistic assumption at least for \gls{Wikidata} input data:

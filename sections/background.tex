@@ -437,7 +437,7 @@ but values can also be literals or external references),
 as well as forward and reverse multiplicity for each such \gls{type link}.
 All this information is stored in a separate \gls{rdf} graph private to \gls{RDF2Graph}.
 
-If the simplification step is enabled,
+If the \gls{simplification} step is enabled,
 \gls{RDF2Graph} will afterwards apply some transformations to the structure
 based on the hierarchy of the classes involved,
 which happens in several steps.
@@ -445,7 +445,7 @@ The following description uses the same step numbers as \cite{vanDam2015},
 but elides several steps which are mostly implementation details,
 which is why the step numbers are not consecutive here.
 See \cite{vanDam2015} and the \gls{RDF2Graph} source code for the full description.
-(In the source code, the steps are counted as sub-steps of the general step 7.4 “simplification”:
+(In the source code, the steps are counted as sub-steps of the general step 7.4 “\gls{simplification}”:
 for example, step 2 is implemented under a code comment for “7.4.2”.)
 
 In step 2, all \glspl{predicate} from child classes are copied to parent classes.
@@ -545,7 +545,7 @@ ex:DocumentationPage
 \caption{After step 2}
 \label{fig:simplify-7.4.2-after}
 \end{sublisting}
-\caption[Simplification step 2]{Simplification step 2 (in \acrshort{shexc}-like pseudo-syntax)}
+\caption[Simplification step 2]{\Gls{simplification} step 2 (in \acrshort{shexc}-like pseudo-syntax)}
 \label{fig:simplify-7.4.2}
 \end{listing}
 
@@ -652,7 +652,7 @@ ex:DocumentationPage
 \caption{After step 3}
 \label{fig:simplify-7.4.3-after}
 \end{sublisting}
-\caption[Simplification step 3]{Simplification step 3 (in \acrshort{shexc}-like pseudo-syntax)}
+\caption[Simplification step 3]{\Gls{simplification} step 3 (in \acrshort{shexc}-like pseudo-syntax)}
 \label{fig:simplify-7.4.3}
 \end{listing}
 
@@ -750,7 +750,7 @@ ex:DocumentationPage
 \caption{After step 4}
 \label{fig:simplify-7.4.4-after}
 \end{sublisting}
-\caption[Simplification step 4]{Simplification step 4 (in \acrshort{shexc}-like pseudo-syntax)}
+\caption[Simplification step 4]{\Gls{simplification} step 4 (in \acrshort{shexc}-like pseudo-syntax)}
 \label{fig:simplify-7.4.4}
 \end{listing}
 
@@ -759,7 +759,7 @@ and the other steps take this into account by respecting subclass relations as w
 For example, consider the \gls{schema} in \cref{fig:simplify-classes}.
 Initially, it states that scholarly articles only cite other scholarly articles,
 and web resources only cite other web resources;
-after simplification, it states that creative works cite other creative works of any kind:
+after \gls{simplification}, it states that creative works cite other creative works of any kind:
 the references to \PName{ex:ScholarlyArticle} and \PName{ex:WebResource}
 were merged while copying the \PName{ex:cites} predicate into the \PName{ex:CreativeWork} parent class,
 and afterwards the individual \glspl{predicate} were removed from the child classes
@@ -796,7 +796,7 @@ ex:WebResource
   ex:cites @ex:WebResource*
 }
 \end{lstlisting}
-\caption{Before simplification}
+\caption{Before \gls{simplification}}
 \label{fig:simplify-classes-before}
 \end{sublisting}
 \begin{sublisting}[t]{0.45\textwidth}
@@ -815,11 +815,11 @@ ex:WebResource
 
 
 \end{lstlisting}
-\caption{After simplification}
+\caption{After \gls{simplification}}
 \label{fig:simplify-classes-after}
 \end{sublisting}
 \caption[Simplification, with class relations]{
-  Simplification (in \acrshort{shexc}-like pseudo-syntax), with class relations
+  \Gls{simplification} (in \acrshort{shexc}-like pseudo-syntax), with class relations
   (this example is independent from the previous example)
 }
 \label{fig:simplify-classes}

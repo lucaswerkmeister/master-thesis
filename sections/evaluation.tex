@@ -107,7 +107,7 @@ the \glspl{schema} also tend to grow:
 in the number of \glspl{shape} (classes),
 the number of \glspl{predicate} in each \gls{shape},
 and also in the number of possible classes for a predicate.
-For example, before simplification,
+For example, before \gls{simplification},
 the \QL{Q5}{human} \gls{shape} from the \gls{schema} inferred from the set of US presidents
 lists \emph{nine} possible classes for someone’s \PL{P735}{given name}:
 \begin{itemize}
@@ -157,8 +157,8 @@ in order to find problems and possible improvements in the inference process.
 Three insights emerge:
 
 \begin{enumerate}
-\item The simplification step is vital for readable \glspl{schema}.
-  The \glspl{schema} are no less correct without simplification as far as the input data set is concerned,
+\item The \gls{simplification} step is vital for readable \glspl{schema}.
+  The \glspl{schema} are no less correct without \gls{simplification} as far as the input data set is concerned,
   but if the numerous subclasses in \gls{Wikidata}’s hierarchy are never merged,
   the \glspl{schema} become exceedingly tedious to read for humans,
   and they will also often match other data sets less well
@@ -166,7 +166,7 @@ Three insights emerge:
 
   This can be seen in some of the older \glspl{job} of the \gls{wdsi}:
   if there is a \lstinline[language=java]{StackOverflowError} in the standard error of the inference process,
-  it means that \gls{RDF2Graph} crashed during the simplification step
+  it means that \gls{RDF2Graph} crashed during the \gls{simplification} step
   and the \gls{shex} export ran on the original, unsimplified graph.
   (Later, the inference step was made more robust,
   which is why newer \glspl{job} do not have this problem.)
@@ -185,7 +185,7 @@ Three insights emerge:
   as in the case above where a family name \gls{item} was used for a given name.
   This can often be traced back to confusion between several \glspl{item} with similar labels.
   Such errors are usually visible in the resulting \gls{schema} if one takes the time to read it,
-  though they are not always obvious due to the simplification
+  though they are not always obvious due to the \gls{simplification}
   (as when the classes for given and family names were merged into anthroponyms above).
 \end{enumerate}
 
@@ -209,7 +209,7 @@ for example, the \PL{P27}{country of citizenship} \gls{shape} should be dropped
 if one is not interested in including \glspl{shape} for countries, states etc. in the reduced \gls{schema}.
 Some \glspl{predicate} may also need to be moved between \glspl{shape},
 or the target classes may need to be adjusted,
-if the results of the automatic simplification are not satisfactory,
+if the results of the automatic \gls{simplification} are not satisfactory,
 e.~g. if unrelated classes were merged into a very fundamental base class like \QL{Q937228}{property}
 despite the changes in \cref{subsec:RDF2Graph+Wikidata:Wikidata:simplification}.
 

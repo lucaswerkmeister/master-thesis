@@ -68,16 +68,16 @@ It may be possible to find optimizations in the validators
 and/or useful criteria for reducing the inferred \glspl{schema}
 which would enable direct validation against the \glspl{schema}
 without human intervention to manually extract their most useful parts.
-There is also some room for improvement in the simplification step
+There is also some room for improvement in the \gls{simplification} step
 regardless of the ability to validate against the inferred \glspl{schema}:
 sometimes, despite the changes in \cref{subsec:RDF2Graph+Wikidata:Wikidata:simplification},
 it still merges mostly-unrelated classes into very abstract base classes,
 so the criteria on when to merge or not merge classes could use some improvements.
 It may also be useful to apply some of the thresholds for schema reduction (\cref{sec:RDF2Graph+Wikidata:schema-reduction})
-before the simplification step starts,
+before the \gls{simplification} step starts,
 so that, for instance,
 a \gls{type link} of \QL{Q101352}{family name} for the \PL{P735}{given name} \gls{predicate}
-is filtered out before it is merged with \QL{Q202444}{given name} into \QL{Q10856962}{anthroponym} in simplification.
+is filtered out before it is merged with \QL{Q202444}{given name} into \QL{Q10856962}{anthroponym} in \gls{simplification}.
 
 The detailed timings for the jobs listed in \cref{sec:jobs-over-various}
 show that the \gls{shex} export step usually takes up about half of the total wall-clock time,

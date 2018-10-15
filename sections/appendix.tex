@@ -231,7 +231,7 @@ for various input queries collected from the \gls{wdsi}:
 
 For each input query,
 the different steps of the inference process
-(data download, initial \gls{RDF2Graph} run, \gls{RDF2Graph} simplification, \gls{shex} export)
+(data download, initial \gls{RDF2Graph} run, \gls{RDF2Graph} \gls{simplification}, \gls{shex} export)
 were timed individually,
 recording the real (“wall-clock”) time, user CPU time and system CPU time separately.
 Only the sum of the real time was used for the charts below,
@@ -243,12 +243,12 @@ and a network connection allowing download rates of up to \SI{23.6}{\mebi\byte\p
 with no significant other load of any kind at the time of measurement.
 
 In addition to the graphs shown here,
-the full data also shows that the simplification step of the process
+the full data also shows that the \gls{simplification} step of the process
 never takes more than a minute,
 which means that while the changes in \cref{sec:RDF2Graph+Wikidata:cyclic-graphs} potentially slowed this step down to some degree,
 it does not make a big difference for the total execution time,
 which is mostly dominated by other steps
-(\gls{RDF2Graph} without simplification and \gls{shex} export)
+(\gls{RDF2Graph} without \gls{simplification} and \gls{shex} export)
 anyways.
 
 \begin{figure}[ht]
