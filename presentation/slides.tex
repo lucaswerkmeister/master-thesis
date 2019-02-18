@@ -1,11 +1,19 @@
 \documentclass[aspectratio=169]{beamer}
 \usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes,shapes.multipart,arrows,positioning}
 
 \beamertemplatenavigationsymbolsempty
 
 \lstset{
   basicstyle=\ttfamily,
 }
+
+\newcommand{\filename}[1]{\texttt{#1}}
+\newcommand{\dirname}[1]{\texttt{#1/}}
+\newcommand{\command}[1]{\texttt{#1}}
+\newcommand{\variable}[1]{\textit{#1}}
+\newcommand{\branchname}[1]{\texttt{#1}}
 
 \title{Schema Inference on Wikidata}
 \subtitle{Final presentation}
@@ -60,6 +68,43 @@ wd:Q57387675 rdfs:label "Lucas Werkmeister"@en;
   wdt:P570 xsd:dateTime? # date of death
 }
     \end{lstlisting}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{RDF2Graph}
+  \vspace{-5cm}
+  \begin{figure}
+    \centering
+    % TODO horizontal zig-zag instead of 50% scale?
+    \begin{tikzpicture}[transform canvas={scale=0.5}]
+      \tikzstyle{file} = [rectangle, draw, rounded corners, text centered]
+      \tikzstyle{pipe} = [style=file, dashed]
+      \tikzstyle{directory} = [rectangle, draw, text centered]
+      \tikzstyle{arrow} = [draw, -latex', right]
+
+      \begin{scope}[node distance=2cm]
+        \node[file] (entities) {\filename{\variable{example}.entities.sparql}};
+        \node[file, below of=entities] (data) {\filename{\variable{example}.data.sparql}};
+        \node[pipe, below of=data] (JSON) {\filename{\variable{example}.json}};
+        \node[file, below of=JSON] (N-Triples) {\filename{\variable{example}.nt}};
+        \node[directory, below of=N-Triples] (Fuseki) [align=center] {\dirname{\variable{example}-fuseki} \\ \texttt{http://localhost:3030/\variable{example}/query}};
+        \node[directory, below of=Fuseki] (RDF2Graph) {\dirname{\variable{example}-results}};
+        \node[file, below of=RDF2Graph] (ShEx) {\filename{\variable{example}.shex}};
+        \node[file, below of=ShEx] (HTML) {\filename{\variable{example}.html}};
+      \end{scope}
+
+      \begin{scope}[every path/.style=arrow, midway]
+        \path (entities) -- node {\command{sed}} (data);
+        \path (data) -- node {WDQS} (JSON);
+        \path (JSON) -- node {\command{jq}} (N-Triples);
+        \path (N-Triples) -- node {Fuseki} (Fuseki);
+        \path (Fuseki) -- node {RDF2Graph} (RDF2Graph);
+        \path [dashed] (RDF2Graph.north east) to [out=30,in=330,looseness=5] node {RDF2Graph, simplify} (RDF2Graph.south east);
+        \path (RDF2Graph) -- node {ShEx exporter} (ShEx);
+        \path (ShEx) -- node {\command{pygmentize}} (HTML);
+      \end{scope}
+    \end{tikzpicture}
   \end{figure}
 \end{frame}
 
